@@ -1,0 +1,930 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historial Bélico | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    min-height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%),
+      var(--dark2);
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--dark));
+  }
+
+  .page-hero-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.6em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+  }
+
+  .page-hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(201,168,76,0.25), 0 0 120px rgba(201,168,76,0.1);
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s 0.15s ease both;
+  }
+
+  .page-hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+    letter-spacing: 0.5em;
+    color: rgba(245,234,208,0.35);
+    text-transform: uppercase;
+    margin-top: 1.2rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .page-hero-rule {
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.8rem auto 0;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1s 0.45s ease both;
+  }
+
+  .page-hero-intro {
+    max-width: 560px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: rgba(245,234,208,0.45);
+    line-height: 1.9;
+    margin-top: 1.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s 0.45s ease both;
+  }
+
+  /* ── TIMELINE SECTION ── */
+  .belico-section {
+    padding: 7rem 2rem;
+    background: var(--dark);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--gold);
+    line-height: 1.1;
+  }
+
+  .section-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 0;
+  }
+
+  /* timeline override para esta página */
+  .timeline {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dark), var(--gold), var(--gold-dark), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 4rem 3rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -6px; top: 6px;
+    width: 13px; height: 13px;
+    border: 1px solid var(--gold);
+    background: var(--dark);
+    transform: rotate(45deg);
+  }
+
+  .timeline-year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+  }
+
+  .timeline-desc {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(245,234,208,0.55);
+    margin-bottom: 1.2rem;
+  }
+
+  .timeline-img {
+    width: 100%;
+    max-width: 560px;
+    margin-top: 1rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: block;
+  }
+
+  /* ── LIBRO DE CONQUISTAS ── */
+  .conquistas-section {
+    padding: 7rem 2rem;
+    background: var(--dark2);
+    position: relative;
+  }
+
+  .conquistas-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .conquistas-intro {
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(245,234,208,0.5);
+    line-height: 1.9;
+  }
+
+  /* filtros */
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .filtro-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    color: rgba(201,168,76,0.5);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .filtro-btn:hover,
+  .filtro-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  /* tabla */
+  .conquistas-table-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+
+  .conquistas-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .conquistas-table thead tr {
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .conquistas-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 1rem 1.2rem;
+    text-align: left;
+    opacity: 0.8;
+  }
+
+  .conquistas-table td {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.9rem;
+    color: rgba(245,234,208,0.6);
+    border-bottom: 1px solid rgba(201,168,76,0.05);
+    vertical-align: middle;
+    transition: all 0.3s;
+  }
+
+  .conquistas-table tbody tr {
+    transition: background 0.3s;
+  }
+
+  .conquistas-table tbody tr:hover td {
+    background: rgba(201,168,76,0.04);
+    color: rgba(245,234,208,0.85);
+  }
+
+  .td-year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold) !important;
+    letter-spacing: 0.1em;
+    min-width: 60px;
+  }
+
+  .td-org {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    min-width: 160px;
+  }
+
+  .td-guerreros {
+    color: rgba(245,234,208,0.55) !important;
+    font-style: italic;
+    min-width: 200px;
+  }
+
+  /* método badge */
+  .metodo {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .m-persuasion  { color: #c9a84c; border-color: rgba(201,168,76,0.35); }
+  .m-infiltracion { color: #c0392b; border-color: rgba(192,57,43,0.35); }
+  .m-engano      { color: #8e44ad; border-color: rgba(142,68,173,0.35); }
+  .m-trampa      { color: #2980b9; border-color: rgba(41,128,185,0.35); }
+  .m-monetaria   { color: #27ae60; border-color: rgba(39,174,96,0.35); }
+
+  /* contador */
+  .conquistas-counter {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin: 4rem auto 0;
+    max-width: 700px;
+    flex-wrap: wrap;
+  }
+
+  .counter-item {
+    text-align: center;
+  }
+
+  .counter-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    display: block;
+    text-shadow: 0 0 20px rgba(201,168,76,0.2);
+  }
+
+  .counter-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(245,234,208,0.3);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ── CIERRE ── */
+  .belico-cierre {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .cierre-glyph {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3rem;
+    color: rgba(201,168,76,0.08);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .cierre-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .cierre-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(245,234,208,0.4);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.9;
+  }
+
+  /* responsive */
+  @media (max-width: 700px) {
+    .conquistas-table th:nth-child(3),
+    .conquistas-table td:nth-child(3) { display: none; }
+    .conquistas-counter { gap: 2rem; }
+    .counter-num { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/" class="nav-active">Historial Bélico</a></li>
+    <li><a href="/#school">Chicago School</a></li>
+    <li><a href="/#codigos">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div class="nav-social">
+      <a href="#">✕</a>
+      <a href="#">▶</a>
+    </div>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <span class="page-hero-label">AlCapone Family · Archivos de Guerra</span>
+  <h1 class="page-hero-title">Historial<br>Bélico</h1>
+  <p class="page-hero-sub">Guerras · Pettadas · Dominio</p>
+  <div class="page-hero-rule"></div>
+  <p class="page-hero-intro">
+    Las guerras marcaron generaciones enteras dentro de la AlCapone Family.
+    Cada victoria consolidó el respeto de la organización y cada caída
+    fortaleció el carácter de sus miembros.
+  </p>
+</div>
+
+
+
+
+
+<!-- ── LIBRO DE CONQUISTAS ── -->
+<section class="conquistas-section">
+  <div class="container">
+
+    <div class="section-header reveal">
+      <span class="section-label">Registro Oficial</span>
+      <h2 class="section-title">Libro de Conquistas</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="conquistas-intro reveal">
+      Por esta casa han pasado multitud de guerreros, que han dejado su nombre 
+      escrito en los libros de historia del mundillo. Aquí los guerreros que 
+      usaron su ingenio para obtener el pow y entregar la pettada a AlCapone.
+    </p>
+
+    <!-- filtros -->
+    <div class="filtros reveal">
+      <button class="filtro-btn active" data-filter="all">Todas</button>
+      <button class="filtro-btn" data-filter="Persuasión">Persuasión</button>
+      <button class="filtro-btn" data-filter="Infiltración">Infiltración</button>
+      <button class="filtro-btn" data-filter="Engaño">Engaño</button>
+      <button class="filtro-btn" data-filter="Trampa">Trampa</button>
+      <button class="filtro-btn" data-filter="Oferta monetaria">Oferta monetaria</button>
+    </div>
+
+    <div class="conquistas-table-wrap reveal">
+      <table class="conquistas-table" id="conquistasTable">
+        <thead>
+          <tr>
+            <th>Año</th>
+            <th>Organización</th>
+            <th>Guerreros</th>
+            <th>Método</th>
+          </tr>
+        </thead>
+        <tbody id="conquistasTbody">
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2022</td>
+            <td class="td-org">Mitelli</td>
+            <td class="td-guerreros">toxictrippin</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2021</td>
+            <td class="td-org">Vitelli</td>
+            <td class="td-guerreros">Yami · JulianCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2021</td>
+            <td class="td-org">Stalino</td>
+            <td class="td-guerreros">Jordan999! · -NestorC</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2021</td>
+            <td class="td-org">Corleone Old House</td>
+            <td class="td-guerreros">Vivacamilo10</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2021</td>
+            <td class="td-org">Galeano / N.O.S</td>
+            <td class="td-guerreros">Alex.Capone · -Lovegood- · Tope@francisco@</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2020</td>
+            <td class="td-org">Cosa Nostra</td>
+            <td class="td-guerreros">Alex.Capone · LuisStrazzio · F.Cassetti · JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Calderone</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Savianno</td>
+            <td class="td-guerreros">Alex.Capone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Varone</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Valacchi</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2018</td>
+            <td class="td-org">Valacchi</td>
+            <td class="td-guerreros">FedericoCapone</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2018</td>
+            <td class="td-org">Giordano</td>
+            <td class="td-guerreros">Zenit</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Marsellesa</td>
+            <td class="td-guerreros">AlbertoCapone · Alex.Capone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2018</td>
+            <td class="td-org">Milifiore</td>
+            <td class="td-guerreros">Zennin</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Rossellini</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Rizzo</td>
+            <td class="td-guerreros">AlbertoCapone · Alex.Capone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Strada</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2018</td>
+            <td class="td-org">Carminati</td>
+            <td class="td-guerreros">AlbertoCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2015</td>
+            <td class="td-org">Bonetto</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2014</td>
+            <td class="td-org">Saglieri</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Engaño">
+            <td class="td-year">2014</td>
+            <td class="td-org">Corleone Old House</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-engano">Engaño</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2014</td>
+            <td class="td-org">Rosatto</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2013</td>
+            <td class="td-org">Musso</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2013</td>
+            <td class="td-org">Ravinlli</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Oferta monetaria">
+            <td class="td-year">2013</td>
+            <td class="td-org">Foresta</td>
+            <td class="td-guerreros">F.Cassetti · JosephCapone</td>
+            <td><span class="metodo m-monetaria">Oferta monetaria</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Bonetto</td>
+            <td class="td-guerreros">F.Cassetti · JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Ravinlli</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2012</td>
+            <td class="td-org">Capriotti</td>
+            <td class="td-guerreros">@X.christian.X@</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Salvatore</td>
+            <td class="td-guerreros">george982 (F.Cassetti) · JosephCapone.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2012</td>
+            <td class="td-org">Mancini</td>
+            <td class="td-guerreros">F.Cassetti</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Colombo</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Leone</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2012</td>
+            <td class="td-org">Casteglia</td>
+            <td class="td-guerreros">Juanqui96</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Trampa">
+            <td class="td-year">2012</td>
+            <td class="td-org">Pentangeli</td>
+            <td class="td-guerreros">Ivanoxo</td>
+            <td><span class="metodo m-trampa">Trampa</span></td>
+          </tr>
+
+          <tr data-metodo="Infiltración">
+            <td class="td-year">2012</td>
+            <td class="td-org">Bonachesse</td>
+            <td class="td-guerreros">SoyAlberto13</td>
+            <td><span class="metodo m-infiltracion">Infiltración</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Bonachesse</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Gambetta</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2012</td>
+            <td class="td-org">Gianetti</td>
+            <td class="td-guerreros">JosephCapone</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2010</td>
+            <td class="td-org">Gabanelli</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2009</td>
+            <td class="td-org">Salvatore</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2009</td>
+            <td class="td-org">Berdasco</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2009</td>
+            <td class="td-org">Leggio</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2009</td>
+            <td class="td-org">Moretti</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2009</td>
+            <td class="td-org">Cassano</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+          <tr data-metodo="Persuasión">
+            <td class="td-year">2008</td>
+            <td class="td-org">Blazzeti</td>
+            <td class="td-guerreros">.lRoman.</td>
+            <td><span class="metodo m-persuasion">Persuasión</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- contadores -->
+    <div class="conquistas-counter reveal">
+      <div class="counter-item">
+        <span class="counter-num" id="totalConquistas">44</span>
+        <span class="counter-label">Total de conquistas</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num">14</span>
+        <span class="counter-label">Años de historia</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num">5</span>
+        <span class="counter-label">Métodos usados</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── CIERRE ── -->
+<div class="belico-cierre reveal">
+  <span class="cierre-glyph">⚔</span>
+  <h2 class="cierre-title">El Libro Sigue Abierto</h2>
+  <p class="cierre-text">
+    Cada pettada, cada conquista, cada guerrero que pasó por esta casa — 
+    todos forman parte del legado eterno de la AlCapone Family.
+  </p>
+  <a href="/" class="btn-gold">Volver al Inicio</a>
+</div>
+
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#inicio" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+
+    <!-- HISTORIAL BÉLICO CON SUBMENÚ -->
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+
+    <li><a href="#school">Chicago School</a></li>
+    <li><a href="#codigos">Códigos</a></li>
+    <li><a href="#multimedia">Multimedia</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div class="nav-social">
+      <a href="#" title="Twitter/X">✕</a>
+      <a href="#" title="YouTube">▶</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // ── Reveal on scroll ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.timeline-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.15}s`;
+    observer.observe(el);
+  });
+
+  // ── Filtros ──
+  const filtros = document.querySelectorAll('.filtro-btn');
+  const filas = document.querySelectorAll('#conquistasTbody tr');
+
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtros.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filtro = btn.dataset.filter;
+      let count = 0;
+
+      filas.forEach(fila => {
+        if (filtro === 'all' || fila.dataset.metodo === filtro) {
+          fila.style.display = '';
+          count++;
+        } else {
+          fila.style.display = 'none';
+        }
+      });
+
+      document.getElementById('totalConquistas').textContent = count;
+    });
+  });
+</script>
+</body>
+</html>

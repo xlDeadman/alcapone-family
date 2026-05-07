@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlCapone Family | Famiglia dei Intoccabili</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#inicio" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+
+    <!-- HISTORIAL BÉLICO CON SUBMENÚ -->
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+
+    <li><a href="#school">Chicago School</a></li>
+    <li><a href="#codigos">Códigos</a></li>
+    <li><a href="#multimedia">Multimedia</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div class="nav-social">
+      <a href="#" title="Twitter/X">✕</a>
+      <a href="#" title="YouTube">▶</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="fog"></div>
+
+  <span class="hero-ornament">— Famiglia dei Intoccabili — Est. 2008 —</span>
+
+  <h1 class="hero-title">AlCapone</h1>
+  <p class="hero-sub">Family &nbsp;·&nbsp; Onore &nbsp;·&nbsp; Omertà</p>
+  <div class="hero-divider"></div>
+  <p class="hero-intro">
+    Web oficial de la AlCapone Family, activa desde 2008. Aquí encontrarás información, 
+    jerarquía y noticias sobre nuestra historia y comunidad.
+  </p>
+  <div class="hero-cta">
+    <a href="#historia" class="btn-gold">Nuestra Historia</a>
+    <a href="#school" class="btn-outline">Chicago School</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+
+
+
+
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // ── Intersection Observer reveal ──
+  const revealEls = document.querySelectorAll('.reveal, .timeline-item, .codigo-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // staggered delays for grids
+  document.querySelectorAll('.school-card, .familia-card, .stat-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+  });
+
+  document.querySelectorAll('.timeline-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.15}s`;
+  });
+
+  document.querySelectorAll('.codigo-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.1}s`;
+  });
+
+  // ── Nav active on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+    });
+    navAs.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
+    });
+  });
+
+  // ── Radio toggle ──
+  let radioOn = false;
+  function toggleRadio() {
+    radioOn = !radioOn;
+    const btn = document.getElementById('radioBtn');
+    const dot = document.getElementById('radioDot');
+    if (radioOn) {
+      dot.style.display = 'inline-block';
+      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:inline-block"></span> ■ En Vivo';
+    } else {
+      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:none"></span> ▶ Transmisión en Vivo';
+    }
+  }
+
+  // ── Horarios dinámicos ──
+  function updateHorarios() {
+    const utc = new Date();
+    const zones = [
+      { id: 0, offset: -5, name: 'México' },
+      { id: 1, offset: -5, name: 'Colombia' },
+      { id: 2, offset: -4, name: 'Chile' },
+      { id: 3, offset: 2, name: 'España' },
+    ];
+    const items = document.querySelectorAll('.horario-item');
+    if (!items.length) return;
+    zones.forEach((z, i) => {
+      const local = new Date(utc.getTime() + z.offset * 3600000);
+      const h = local.getUTCHours().toString().padStart(2, '0');
+      const m = local.getUTCMinutes().toString().padStart(2, '0');
+      if (items[i]) {
+        items[i].innerHTML = `<strong>${z.name}</strong>${h}:${m}`;
+      }
+    });
+  }
+  updateHorarios();
+  setInterval(updateHorarios, 60000);
+
+  // ── Title flicker ──
+  const title = document.querySelector('.hero-title');
+  if (title) {
+    title.style.animation = 'fadeUp 1.4s ease both, flickerGold 8s 3s ease-in-out infinite';
+  }
+</script>
+</body>
+</html>
