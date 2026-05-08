@@ -4,20 +4,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlCapone Family | Famiglia dei Intoccabili</title>
+<title>Multimedia Pettadas | AlCapone Family</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  .page-hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 5rem; position: relative; overflow: hidden; text-align: center; }
+  .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%), var(--dark2); }
+  .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--dark)); }
+  .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.6em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1.5rem; position: relative; z-index: 2; animation: fadeUp 1s ease both; }
+  .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.25); position: relative; z-index: 2; animation: fadeUp 1s 0.15s ease both; }
+  .page-hero-rule { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.8rem auto 0; position: relative; z-index: 2; }
+
+  .videos-section { background: var(--dark); padding: 6rem 2rem; }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem; display: block; }
+  .section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 3.5vw, 2.8rem); color: var(--gold); }
+  .section-rule { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto 0; }
+
+  /* ── VIDEO CARDS ── */
+  .videos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+
+  .video-card {
+    background: rgba(10,8,4,0.8);
+    border: 1px solid rgba(201,168,76,0.1);
+    position: relative; overflow: hidden;
+    transition: all 0.3s; text-decoration: none;
+    display: block;
+  }
+  .video-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .video-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
+
+  .video-thumb {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+  }
+  .video-thumb img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: brightness(0.8); transition: filter 0.3s;
+  }
+  .video-card:hover .video-thumb img { filter: brightness(1); }
+
+  .video-play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 60px; height: 60px; border-radius: 50%;
+    background: rgba(201,168,76,0.9);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: #0a0804;
+    transition: all 0.3s; z-index: 2;
+  }
+  .video-card:hover .video-play-btn { background: var(--gold); transform: translate(-50%, -50%) scale(1.1); }
+
+  .video-info { padding: 1.2rem 1.5rem; }
+  .video-titulo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.8); margin-bottom: 0.6rem; }
+  .video-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.4); margin-bottom: 0.8rem; }
+  .video-link-btn {
+    display: inline-block;
+    font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7);
+    transition: all 0.3s;
+  }
+  .video-card:hover .video-link-btn { border-color: var(--gold); color: var(--gold); }
+
+  /* ── CARRUSEL ── */
+  .galeria-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
+  .galeria-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .carrusel-wrap { position: relative; max-width: 1200px; margin: 0 auto; }
+  .carrusel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,8,4,0.9); border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.8); font-size: 1.5rem; cursor: pointer; padding: 1rem 1.2rem; transition: all 0.3s; z-index: 10; font-family: 'Cinzel', serif; }
+  .carrusel-arrow:hover { background: rgba(201,168,76,0.15); color: var(--gold); border-color: var(--gold); }
+  .carrusel-arrow.prev { left: -3rem; }
+  .carrusel-arrow.next { right: -3rem; }
+  .carrusel-viewport { overflow: hidden; }
+  .carrusel-track { display: flex; gap: 4px; transition: transform 0.5s ease; }
+  .carrusel-item { flex: 0 0 calc(25% - 3px); aspect-ratio: 4/3; overflow: hidden; cursor: pointer; position: relative; border: 1px solid rgba(201,168,76,0.07); }
+  .carrusel-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.3s; filter: brightness(0.8) sepia(0.2); }
+  .carrusel-item:hover img { transform: scale(1.05); filter: brightness(1) sepia(0); }
+  .carrusel-item-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.8rem; }
+  .carrusel-item:hover .carrusel-item-overlay { opacity: 1; }
+  .carrusel-item-titulo { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); }
+  .carrusel-counter { text-align: center; margin-top: 1.5rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.25); text-transform: uppercase; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 9999; display: none; align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.5); cursor: pointer; text-transform: uppercase; background: none; border: none; transition: color 0.3s; z-index: 10; }
+  .lightbox-close:hover { color: var(--gold); }
+  .lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.2); color: rgba(201,168,76,0.7); font-size: 1.5rem; cursor: pointer; padding: 1rem 1.2rem; transition: all 0.3s; z-index: 10; font-family: 'Cinzel', serif; }
+  .lightbox-arrow:hover { background: rgba(201,168,76,0.15); color: var(--gold); border-color: var(--gold); }
+  .lightbox-arrow.prev { left: 1.5rem; }
+  .lightbox-arrow.next { right: 1.5rem; }
+  .lightbox-img-wrap { display: flex; align-items: center; justify-content: center; max-width: calc(100vw - 160px); max-height: 85vh; }
+  .lightbox-img { max-width: 100%; max-height: 85vh; object-fit: contain; border: 1px solid rgba(201,168,76,0.2); transition: opacity 0.2s; }
+  .lightbox-info { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+  .lightbox-titulo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.8); text-transform: uppercase; }
+  .lightbox-counter { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); margin-top: 0.3rem; }
+
+  .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.25); font-size: 1rem; }
+  @media (max-width: 900px) { .carrusel-item { flex: 0 0 calc(33.33% - 3px); } .carrusel-arrow.prev { left: -1.5rem; } .carrusel-arrow.next { right: -1.5rem; } }
+  @media (max-width: 600px) { .carrusel-item { flex: 0 0 calc(50% - 2px); } .videos-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
 <!-- ── NAV ── -->
 <nav>
-  <a href="#inicio" class="nav-logo">AlCapone</a>
+  <a href="/" class="nav-logo">AlCapone</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="/">Inicio</a></li>
     <li><a href="/historia/">Historia</a></li>
-
-    <!-- HISTORIAL BÉLICO CON SUBMENÚ -->
     <li class="has-dropdown">
       <a href="/historia-belico/">Historial Bélico ▾</a>
       <ul class="dropdown">
@@ -25,10 +118,9 @@
         <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
       </ul>
     </li>
-
-    <li><a href="#school">Chicago School</a></li>
-    <li><a href="#codigos">Códigos</a></li>
-    <li><a href="#multimedia">Multimedia</a></li>
+    <li><a href="/chicago-school/">Chicago School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     <div class="nav-social">
@@ -41,128 +133,186 @@
   </div>
 </nav>
 
-<!-- ── HERO ── -->
-<section id="inicio">
-  <div class="hero-bg"></div>
-  <div class="fog"></div>
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <span class="page-hero-label">AlCapone Family · Archivo Visual</span>
+  <h1 class="page-hero-title">Multimedia<br>Pettadas</h1>
+  <div class="page-hero-rule"></div>
+</div>
 
-  <span class="hero-ornament">— Famiglia dei Intoccabili — Est. 2008 —</span>
-
-  <h1 class="hero-title">AlCapone</h1>
-  <p class="hero-sub">Family &nbsp;·&nbsp; Onore &nbsp;·&nbsp; Omertà</p>
-  <div class="hero-divider"></div>
-  <p class="hero-intro">
-    Web oficial de la AlCapone Family, activa desde 2008. Aquí encontrarás información, 
-    jerarquía y noticias sobre nuestra historia y comunidad.
-  </p>
-  <div class="hero-cta">
-    <a href="/historia/"class="btn-gold">Nuestra Historia</a>
-    <a href="#school" class="btn-outline">Chicago School</a>
-  </div>
-
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+<!-- ── VIDEOS ── -->
+<section class="videos-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Registro en Video</span>
+      <h2 class="section-title">Videos de Pettadas</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="videos-grid">
+      {% for video in videos %}
+      <a class="video-card reveal" href="https://www.youtube.com/watch?v={{ video.youtube_id }}" target="_blank" rel="noopener">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/{{ video.youtube_id }}/hqdefault.jpg" alt="{{ video.titulo }}">
+          <div class="video-play-btn">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-titulo">{{ video.titulo }}</div>
+          {% if video.descripcion %}<div class="video-desc">{{ video.descripcion }}</div>{% endif %}
+          <span class="video-link-btn">▶ Ver en YouTube</span>
+        </div>
+      </a>
+      {% empty %}
+      <div class="empty-msg">Aún no hay videos disponibles.</div>
+      {% endfor %}
+    </div>
   </div>
 </section>
 
+<!-- ── GALERÍA CARRUSEL ── -->
+<section class="galeria-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Archivo Fotográfico</span>
+      <h2 class="section-title">Galería de Pettadas</h2>
+      <div class="section-rule"></div>
+    </div>
+    {% if fotos %}
+    <div class="carrusel-wrap">
+      <button class="carrusel-arrow prev" onclick="moverCarrusel(-1)">&#8592;</button>
+      <div class="carrusel-viewport">
+        <div class="carrusel-track" id="carruselTrack">
+          {% for foto in fotos %}
+          <div class="carrusel-item" onclick="openLightbox({{ forloop.counter0 }})">
+            <img src="{{ foto.imagen.url }}" alt="{{ foto.titulo }}" loading="lazy">
+            <div class="carrusel-item-overlay">
+              <div class="carrusel-item-titulo">{{ foto.titulo }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <button class="carrusel-arrow next" onclick="moverCarrusel(1)">&#8594;</button>
+    </div>
+    <div class="carrusel-counter" id="carruselCounter"></div>
+    {% else %}
+    <div class="empty-msg">Aún no hay fotos disponibles.</div>
+    {% endif %}
+  </div>
+</section>
 
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ Cerrar</button>
+  <button class="lightbox-arrow prev" onclick="navigateLightbox(-1)">&#8592;</button>
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  </div>
+  <button class="lightbox-arrow next" onclick="navigateLightbox(1)">&#8594;</button>
+  <div class="lightbox-info">
+    <div class="lightbox-titulo" id="lightboxTitulo"></div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+</div>
 
-
-
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
 
 <script>
-  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
-  // ── Intersection Observer reveal ──
-  const revealEls = document.querySelectorAll('.reveal, .timeline-item, .codigo-item');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, 100);
-        observer.unobserve(entry.target);
-      }
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  revealEls.forEach(el => observer.observe(el));
+  // ── CARRUSEL ──
+  const track = document.getElementById('carruselTrack');
+  const items = track ? track.querySelectorAll('.carrusel-item') : [];
+  const visibles = 4;
+  let carruselIndex = 0;
+  const total = items.length;
+  const maxIndex = Math.max(0, total - visibles);
 
-  // staggered delays for grids
-  document.querySelectorAll('.school-card, .familia-card, .stat-card').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.08}s`;
-  });
+  function moverCarrusel(dir) {
+    carruselIndex = Math.min(Math.max(carruselIndex + dir, 0), maxIndex);
+    const itemWidth = items[0] ? items[0].offsetWidth + 4 : 0;
+    track.style.transform = `translateX(-${carruselIndex * itemWidth}px)`;
+    actualizarContador();
+  }
 
-  document.querySelectorAll('.timeline-item').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.15}s`;
-  });
-
-  document.querySelectorAll('.codigo-item').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.1}s`;
-  });
-
-  // ── Nav active on scroll ──
-  const sections = document.querySelectorAll('section[id]');
-  const navAs = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-    });
-    navAs.forEach(a => {
-      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
-    });
-  });
-
-  // ── Radio toggle ──
-  let radioOn = false;
-  function toggleRadio() {
-    radioOn = !radioOn;
-    const btn = document.getElementById('radioBtn');
-    const dot = document.getElementById('radioDot');
-    if (radioOn) {
-      dot.style.display = 'inline-block';
-      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:inline-block"></span> ■ En Vivo';
-    } else {
-      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:none"></span> ▶ Transmisión en Vivo';
+  function actualizarContador() {
+    const el = document.getElementById('carruselCounter');
+    if (el && total > 0) {
+      el.textContent = `${carruselIndex + 1} — ${Math.min(carruselIndex + visibles, total)} de ${total} fotos`;
     }
   }
 
-  // ── Horarios dinámicos ──
-  function updateHorarios() {
-    const utc = new Date();
-    const zones = [
-      { id: 0, offset: -5, name: 'México' },
-      { id: 1, offset: -5, name: 'Colombia' },
-      { id: 2, offset: -4, name: 'Chile' },
-      { id: 3, offset: 2, name: 'España' },
-    ];
-    const items = document.querySelectorAll('.horario-item');
-    if (!items.length) return;
-    zones.forEach((z, i) => {
-      const local = new Date(utc.getTime() + z.offset * 3600000);
-      const h = local.getUTCHours().toString().padStart(2, '0');
-      const m = local.getUTCMinutes().toString().padStart(2, '0');
-      if (items[i]) {
-        items[i].innerHTML = `<strong>${z.name}</strong>${h}:${m}`;
-      }
-    });
-  }
-  updateHorarios();
-  setInterval(updateHorarios, 60000);
+  if (total > 0) actualizarContador();
 
-  // ── Title flicker ──
-  const title = document.querySelector('.hero-title');
-  if (title) {
-    title.style.animation = 'fadeUp 1.4s ease both, flickerGold 8s 3s ease-in-out infinite';
+  // ── LIGHTBOX ──
+  const fotos = [
+    {% for foto in fotos %}
+    { url: "{{ foto.imagen.url|escapejs }}", titulo: "{{ foto.titulo|escapejs }}" },
+    {% endfor %}
+  ];
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(dir) {
+    currentIndex = (currentIndex + dir + fotos.length) % fotos.length;
+    updateLightbox();
+  }
+
+  function updateLightbox() {
+    const foto = fotos[currentIndex];
+    const img = document.getElementById('lightboxImg');
+    img.style.opacity = '0';
+    setTimeout(() => { img.src = foto.url; img.style.opacity = '1'; }, 150);
+    document.getElementById('lightboxTitulo').textContent = foto.titulo;
+    document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} de ${fotos.length}`;
+  }
+
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+    if (e.key === 'Escape') closeLightbox();
+  });
 </script>
 </body>
 </html>

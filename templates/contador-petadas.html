@@ -8,414 +8,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
-
-  .page-hero {
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 120px 2rem 5rem;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .page-hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%),
-      var(--dark2);
-  }
-
-  .page-hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--dark));
-  }
-
-  .page-hero-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.6em;
-    color: rgba(201,168,76,0.5);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 1s ease both;
-  }
-
-  .page-hero-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2.2rem, 6vw, 5.5rem);
-    color: var(--gold);
-    line-height: 1;
-    text-shadow: 0 0 60px rgba(201,168,76,0.25);
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 1s 0.15s ease both;
-  }
-
-  .page-hero-rule {
-    width: 160px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.8rem auto 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ── TOTAL BANNER ── */
-  .total-banner {
-    background: var(--dark);
-    padding: 5rem 2rem 3rem;
-    text-align: center;
-  }
-
-  .total-numero {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(5rem, 15vw, 12rem);
-    color: var(--gold);
-    line-height: 0.9;
-    text-shadow:
-      0 0 80px rgba(201,168,76,0.3),
-      0 0 160px rgba(201,168,76,0.1);
-    display: block;
-    animation: fadeUp 1s 0.3s ease both;
-  }
-
-  .total-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.6em;
-    color: rgba(245,234,208,0.35);
-    text-transform: uppercase;
-    margin-top: 1rem;
-    display: block;
-    animation: fadeUp 1s 0.5s ease both;
-  }
-
-  .total-rule {
-    width: 200px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 2rem auto;
-  }
-
-  /* stats row */
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-  }
-
-  .stat-pill {
-    text-align: center;
-  }
-
-  .stat-pill-num {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2rem;
-    color: var(--gold);
-    display: block;
-    opacity: 0.8;
-  }
-
-  .stat-pill-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: rgba(245,234,208,0.3);
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-    display: block;
-  }
-
-  /* ── GRID SECTION ── */
-  .grid-section {
-    background: var(--dark2);
-    padding: 6rem 2rem;
-    position: relative;
-  }
-
-  .grid-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .section-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.5em;
-    color: var(--gold);
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-    color: var(--gold);
-  }
-
-  .section-rule {
-    width: 120px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.5rem auto 0;
-  }
-
-  /* buscar */
-  .search-wrap {
-    max-width: 420px;
-    margin: 0 auto 3rem;
-    position: relative;
-  }
-
-  .search-input {
-    width: 100%;
-    background: rgba(10,8,4,0.8);
-    border: 1px solid rgba(201,168,76,0.2);
-    color: var(--cream);
-    font-family: 'Cinzel', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    padding: 0.9rem 1.5rem;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-
-  .search-input::placeholder {
-    color: rgba(245,234,208,0.2);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-  }
-
-  .search-input:focus {
-    border-color: rgba(201,168,76,0.5);
-  }
-
-  /* grid */
-  .familias-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 2px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .famiglia-card {
-    background: rgba(10,8,4,0.5);
-    border: 1px solid rgba(201,168,76,0.07);
-    padding: 1.8rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .famiglia-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 2px;
-    background: var(--gold);
-    transform: scaleY(0);
-    transition: transform 0.3s;
-  }
-
-  .famiglia-card:hover {
-    border-color: rgba(201,168,76,0.2);
-    background: rgba(201,168,76,0.04);
-  }
-
-  .famiglia-card:hover::before {
-    transform: scaleY(1);
-  }
-
-  .famiglia-name {
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    color: rgba(245,234,208,0.7);
-    transition: color 0.3s;
-  }
-
-  .famiglia-card:hover .famiglia-name {
-    color: var(--gold);
-  }
-
-  .famiglia-count {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.6rem;
-    color: var(--gold);
-    opacity: 0.9;
-    flex-shrink: 0;
-    text-shadow: 0 0 15px rgba(201,168,76,0.2);
-    min-width: 2rem;
-    text-align: right;
-  }
-
-  .famiglia-count.multiple {
-    color: #c0392b;
-    text-shadow: 0 0 15px rgba(192,57,43,0.2);
-  }
-
-  /* barra de progreso */
-  .famiglia-bar {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    transition: width 0.6s ease;
-  }
-
-  /* no results */
-  .no-results {
-    text-align: center;
-    padding: 3rem;
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    color: rgba(245,234,208,0.3);
-    font-size: 1rem;
-    display: none;
-  }
-
-  /* ── RANKING ── */
-  .ranking-section {
-    background: var(--dark);
-    padding: 6rem 2rem;
-    position: relative;
-  }
-
-  .ranking-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
-  }
-
-  .ranking-list {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .ranking-item {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid rgba(201,168,76,0.06);
-    opacity: 0;
-    transform: translateX(-15px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
-  .ranking-item.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .ranking-pos {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.2rem;
-    color: rgba(201,168,76,0.25);
-    min-width: 2.5rem;
-    text-align: right;
-  }
-
+  .page-hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 5rem; position: relative; overflow: hidden; text-align: center; }
+  .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%), var(--dark2); }
+  .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--dark)); }
+  .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.6em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1.5rem; position: relative; z-index: 2; animation: fadeUp 1s ease both; }
+  .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.25); position: relative; z-index: 2; animation: fadeUp 1s 0.15s ease both; }
+  .page-hero-rule { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.8rem auto 0; position: relative; z-index: 2; }
+  .total-banner { background: var(--dark); padding: 5rem 2rem 3rem; text-align: center; }
+  .total-numero { font-family: 'Cinzel Decorative', serif; font-size: clamp(5rem, 15vw, 12rem); color: var(--gold); line-height: 0.9; text-shadow: 0 0 80px rgba(201,168,76,0.3), 0 0 160px rgba(201,168,76,0.1); display: block; animation: fadeUp 1s 0.3s ease both; }
+  .total-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.6em; color: rgba(245,234,208,0.35); text-transform: uppercase; margin-top: 1rem; display: block; animation: fadeUp 1s 0.5s ease both; }
+  .total-rule { width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto; }
+  .stats-row { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; margin-top: 2rem; }
+  .stat-pill { text-align: center; }
+  .stat-pill-num { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: var(--gold); display: block; opacity: 0.8; }
+  .stat-pill-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .grid-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
+  .grid-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem; display: block; }
+  .section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 3.5vw, 2.8rem); color: var(--gold); }
+  .section-rule { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto 0; }
+  .search-wrap { max-width: 420px; margin: 0 auto 3rem; position: relative; }
+  .search-input { width: 100%; background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.2); color: var(--cream); font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.15em; padding: 0.9rem 1.5rem; outline: none; transition: border-color 0.3s; }
+  .search-input::placeholder { color: rgba(245,234,208,0.2); letter-spacing: 0.3em; text-transform: uppercase; }
+  .search-input:focus { border-color: rgba(201,168,76,0.5); }
+  .familias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; }
+  .famiglia-card { background: rgba(10,8,4,0.5); border: 1px solid rgba(201,168,76,0.07); padding: 1.8rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; transition: all 0.3s; position: relative; overflow: hidden; }
+  .famiglia-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gold); transform: scaleY(0); transition: transform 0.3s; }
+  .famiglia-card:hover { border-color: rgba(201,168,76,0.2); background: rgba(201,168,76,0.04); }
+  .famiglia-card:hover::before { transform: scaleY(1); }
+  .famiglia-name { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.7); transition: color 0.3s; }
+  .famiglia-card:hover .famiglia-name { color: var(--gold); }
+  .famiglia-count { font-family: 'Cinzel Decorative', serif; font-size: 1.6rem; color: var(--gold); opacity: 0.9; flex-shrink: 0; text-shadow: 0 0 15px rgba(201,168,76,0.2); min-width: 2rem; text-align: right; }
+  .famiglia-count.multiple { color: #c0392b; text-shadow: 0 0 15px rgba(192,57,43,0.2); }
+  .famiglia-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); transition: width 0.6s ease; }
+  .no-results { text-align: center; padding: 3rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.3); font-size: 1rem; display: none; }
+  .ranking-section { background: var(--dark); padding: 6rem 2rem; position: relative; }
+  .ranking-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent); }
+  .ranking-list { max-width: 700px; margin: 0 auto; }
+  .ranking-item { display: flex; align-items: center; gap: 1.5rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(201,168,76,0.06); opacity: 0; transform: translateX(-15px); transition: opacity 0.5s, transform 0.5s; }
+  .ranking-item.visible { opacity: 1; transform: translateX(0); }
+  .ranking-pos { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: rgba(201,168,76,0.25); min-width: 2.5rem; text-align: right; }
   .ranking-pos.top { color: var(--gold); opacity: 1; }
-
-  .ranking-name {
-    font-family: 'Cinzel', serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    color: rgba(245,234,208,0.6);
-    flex: 1;
-  }
-
-  .ranking-bar-wrap {
-    flex: 1;
-    height: 3px;
-    background: rgba(201,168,76,0.08);
-    position: relative;
-    max-width: 200px;
-  }
-
-  .ranking-bar-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
-    transition: width 1s ease;
-  }
-
-  .ranking-num {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.4rem;
-    color: var(--gold);
-    min-width: 2rem;
-    text-align: right;
-  }
-
-  /* cierre */
-  .contador-cierre {
-    background: var(--dark2);
-    border-top: 1px solid rgba(201,168,76,0.12);
-    padding: 5rem 2rem;
-    text-align: center;
-  }
-
-  .cierre-glyph {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 3rem;
-    color: rgba(201,168,76,0.08);
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .cierre-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .cierre-text {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: rgba(245,234,208,0.4);
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    line-height: 1.9;
-  }
-
-  @media (max-width: 600px) {
-    .stats-row { gap: 2rem; }
-    .familias-grid { grid-template-columns: 1fr; }
-    .ranking-bar-wrap { display: none; }
-  }
+  .ranking-name { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.6); flex: 1; }
+  .ranking-bar-wrap { flex: 1; height: 3px; background: rgba(201,168,76,0.08); position: relative; max-width: 200px; }
+  .ranking-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); transition: width 1s ease; }
+  .ranking-num { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: var(--gold); min-width: 2rem; text-align: right; }
+  .contador-cierre { background: var(--dark2); border-top: 1px solid rgba(201,168,76,0.12); padding: 5rem 2rem; text-align: center; }
+  .cierre-glyph { font-family: 'Cinzel Decorative', serif; font-size: 3rem; color: rgba(201,168,76,0.08); margin-bottom: 1rem; display: block; }
+  .cierre-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--gold); margin-bottom: 1rem; }
+  .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.4); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
+  @media (max-width: 600px) { .stats-row { gap: 2rem; } .familias-grid { grid-template-columns: 1fr; } .ranking-bar-wrap { display: none; } }
 </style>
 </head>
 <body>
@@ -430,7 +73,7 @@
       <a href="/historia-belico/">Historial Bélico ▾</a>
       <ul class="dropdown">
         <li><a href="/contador-petadas/">Contador de Pettadas</a></li>
-        <li><a href="/multimedia-petadas/">Multimedia de Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
       </ul>
     </li>
     <li><a href="/chicago-school/">Chicago School</a></li>
@@ -458,12 +101,12 @@
 
 <!-- ── TOTAL ── -->
 <div class="total-banner">
-  <span class="total-numero">55</span>
+  <span class="total-numero">{{ total_pettadas }}</span>
   <span class="total-label">Pettadas entregadas en la historia de la Famiglia</span>
   <div class="total-rule"></div>
   <div class="stats-row">
     <div class="stat-pill">
-      <span class="stat-pill-num">46</span>
+      <span class="stat-pill-num">{{ total_familias }}</span>
       <span class="stat-pill-label">Famiglie caídas</span>
     </div>
     <div class="stat-pill">
@@ -471,7 +114,7 @@
       <span class="stat-pill-label">Años de dominio</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-pill-num">9</span>
+      <span class="stat-pill-num">{{ con_multiple }}</span>
       <span class="stat-pill-label">Con 2+ pettadas</span>
     </div>
   </div>
@@ -480,365 +123,62 @@
 <!-- ── GRID DE FAMILIAS ── -->
 <section class="grid-section">
   <div class="container">
-
     <div class="section-header reveal">
       <span class="section-label">Registro Completo</span>
       <h2 class="section-title">Familias Derrotadas</h2>
       <div class="section-rule"></div>
     </div>
-
     <div class="search-wrap reveal">
       <input type="text" class="search-input" id="searchInput" placeholder="Buscar famiglia...">
     </div>
-
     <div class="familias-grid" id="famigliasGrid">
-
-      {% for item in familias %}
-      <!-- se puede usar Django para renderizar dinámicamente -->
+      {% for f in familias %}
+      <div class="famiglia-card" data-name="{{ f.organizacion }}">
+        <span class="famiglia-name">Famiglia {{ f.organizacion }}</span>
+        <span class="famiglia-count {% if f.total >= 2 %}multiple{% endif %}">{{ f.total }}</span>
+        <div class="famiglia-bar" style="width:{% widthratio f.total max_total 100 %}%"></div>
+      </div>
       {% endfor %}
-
-      <!-- CARDS ESTÁTICAS -->
-      <div class="famiglia-card" data-name="Salvatore">
-        <span class="famiglia-name">Famiglia Salvatore</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Berdasco">
-        <span class="famiglia-name">Famiglia Berdasco</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Cassano">
-        <span class="famiglia-name">Famiglia Cassano</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Moretti">
-        <span class="famiglia-name">Famiglia Moretti</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Leggio">
-        <span class="famiglia-name">Famiglia Leggio</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Gabanelli">
-        <span class="famiglia-name">Famiglia Gabanelli</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Ravinlli">
-        <span class="famiglia-name">Famiglia Ravinlli's</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Leone">
-        <span class="famiglia-name">Famiglia Leone</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Manccini">
-        <span class="famiglia-name">Famiglia Manccini</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Bonachesse">
-        <span class="famiglia-name">Famiglia Bonachesse</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Casteglia">
-        <span class="famiglia-name">Famiglia Casteglia</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Capriotti">
-        <span class="famiglia-name">Famiglia Capriotti</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Pentangeli">
-        <span class="famiglia-name">Famiglia Pentangeli</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Colombo">
-        <span class="famiglia-name">Famiglia Colombo</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Gambetta">
-        <span class="famiglia-name">Famiglia Gambetta</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Bonetto">
-        <span class="famiglia-name">Famiglia Bonetto</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Musso">
-        <span class="famiglia-name">Famiglia Musso</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Foresta">
-        <span class="famiglia-name">Famiglia Foresta</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Rosatto">
-        <span class="famiglia-name">Famiglia Rosatto</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Saglieri">
-        <span class="famiglia-name">Famiglia Saglieri</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Gotti">
-        <span class="famiglia-name">Famiglia Gotti</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Corleone">
-        <span class="famiglia-name">Famiglia Corleone Old House</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Calderone">
-        <span class="famiglia-name">Famiglia Calderone</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Cosa Nostra">
-        <span class="famiglia-name">Nueva Cosa Nostra</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Galeano">
-        <span class="famiglia-name">Famiglia Galeano</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Victorella">
-        <span class="famiglia-name">Famiglia Victorella</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Marsellesa">
-        <span class="famiglia-name">Famiglia Marsellesa</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Carminati">
-        <span class="famiglia-name">Famiglia Carminati</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Strada">
-        <span class="famiglia-name">Famiglia Strada</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Rosellini">
-        <span class="famiglia-name">Famiglia Rosellini</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Milifiore">
-        <span class="famiglia-name">Famiglia Milifiore</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Giordano">
-        <span class="famiglia-name">Famiglia Giordano</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Valacchi">
-        <span class="famiglia-name">Famiglia Valacchi</span>
-        <span class="famiglia-count multiple">2</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Varone">
-        <span class="famiglia-name">Famiglia Varone</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Rizzo">
-        <span class="famiglia-name">Famiglia Rizzo</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Savianno">
-        <span class="famiglia-name">Famiglia Savianno</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Carpenter">
-        <span class="famiglia-name">Famiglia Carpenter</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Berucci">
-        <span class="famiglia-name">Famiglia Berucci</span>
-        <span class="famiglia-count multiple">4</span>
-        <div class="famiglia-bar" style="width:100%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Lorenzini">
-        <span class="famiglia-name">Famiglia Lorenzini</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Stalino">
-        <span class="famiglia-name">Famiglia Stalino</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Vitelli">
-        <span class="famiglia-name">Famiglia Vitelli</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Militelli">
-        <span class="famiglia-name">Famiglia Militelli</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Gianetti">
-        <span class="famiglia-name">Famiglia Gianetti</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Blazetti">
-        <span class="famiglia-name">Famiglia Blazetti</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Mitelli">
-        <span class="famiglia-name">Famiglia Mitelli</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-      <div class="famiglia-card" data-name="Migliore">
-        <span class="famiglia-name">Famiglia Migliore</span>
-        <span class="famiglia-count">1</span>
-        <div class="famiglia-bar" style="width:25%"></div>
-      </div>
-
     </div>
-
     <div class="no-results" id="noResults">
       Ninguna famiglia encontrada con ese nombre.
     </div>
-
   </div>
 </section>
-
 
 <!-- ── RANKING TOP ── -->
 <section class="ranking-section">
   <div class="container">
-
     <div class="section-header reveal">
       <span class="section-label">Más Golpeadas</span>
       <h2 class="section-title">Ranking de Pettadas</h2>
       <div class="section-rule"></div>
     </div>
-
     <div class="ranking-list">
-
+      {% for f in familias|slice:":8" %}
       <div class="ranking-item">
-        <div class="ranking-pos top">1</div>
-        <div class="ranking-name">Famiglia Berucci</div>
+        <div class="ranking-pos {% if forloop.counter <= 3 %}top{% endif %}">{{ forloop.counter }}</div>
+        <div class="ranking-name">Famiglia {{ f.organizacion }}</div>
         <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:100%"></div>
+          <div class="ranking-bar-fill" style="width:{% widthratio f.total max_total 100 %}%"></div>
         </div>
-        <div class="ranking-num">4</div>
+        <div class="ranking-num">{{ f.total }}</div>
       </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Salvatore</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Ravinlli's</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Bonachesse</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Bonetto</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Corleone Old House</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Valacchi</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
-      <div class="ranking-item">
-        <div class="ranking-pos top">2</div>
-        <div class="ranking-name">Famiglia Vitelli</div>
-        <div class="ranking-bar-wrap">
-          <div class="ranking-bar-fill" style="width:50%"></div>
-        </div>
-        <div class="ranking-num">2</div>
-      </div>
-
+      {% endfor %}
     </div>
   </div>
 </section>
 
-
 <!-- ── CIERRE ── -->
 <div class="contador-cierre reveal">
   <span class="cierre-glyph">💀</span>
-  <h2 class="cierre-title">55 Pettadas. 14 Años. Un Solo Nombre.</h2>
+  <h2 class="cierre-title">{{ total_pettadas }} Pettadas. 14 Años. Un Solo Nombre.</h2>
   <p class="cierre-text">
-    Ninguna famiglia que se haya cruzado con AlCapone ha salido ilesa. 
+    Ninguna famiglia que se haya cruzado con AlCapone ha salido ilesa.
     El contador sigue abierto.
   </p>
   <a href="/historia-belico/" class="btn-gold">Volver al Historial</a>
 </div>
-
 
 <!-- ── FOOTER ── -->
 <footer>
@@ -858,14 +198,11 @@
   </div>
 </footer>
 
-
 <script>
-  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
-  // ── Reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -882,7 +219,6 @@
     observer.observe(el);
   });
 
-  // ── Búsqueda ──
   const searchInput = document.getElementById('searchInput');
   const cards = document.querySelectorAll('.famiglia-card');
   const noResults = document.getElementById('noResults');
@@ -890,7 +226,6 @@
   searchInput.addEventListener('input', () => {
     const val = searchInput.value.toLowerCase().trim();
     let visible = 0;
-
     cards.forEach(card => {
       const name = card.dataset.name.toLowerCase();
       if (name.includes(val)) {
@@ -900,7 +235,6 @@
         card.style.display = 'none';
       }
     });
-
     noResults.style.display = visible === 0 ? 'block' : 'none';
   });
 </script>

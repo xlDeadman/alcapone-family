@@ -9,415 +9,120 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  .panel-wrap {
-    display: flex;
-    min-height: 100vh;
-    background: #0a0804;
-    font-family: 'Cinzel', serif;
-  }
-
-  /* ── SIDEBAR ── */
-  .sidebar {
-    width: 260px;
-    min-height: 100vh;
-    background: rgba(12,10,5,0.98);
-    border-right: 1px solid rgba(201,168,76,0.12);
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 100;
-  }
-
-  .sidebar-logo {
-    padding: 2rem 1.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-    text-align: center;
-  }
-
-  .sidebar-logo-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.3rem;
-    color: #c9a84c;
-    display: block;
-  }
-
-  .sidebar-logo-sub {
-    font-size: 0.5rem;
-    letter-spacing: 0.4em;
-    color: rgba(201,168,76,0.35);
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-    display: block;
-  }
-
-  .sidebar-rule {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-    margin: 0.8rem auto 0;
-  }
-
-  .sidebar-section {
-    padding: 1.5rem 1rem 0.5rem;
-  }
-
-  .sidebar-section-label {
-    font-size: 0.5rem;
-    letter-spacing: 0.4em;
-    color: rgba(201,168,76,0.3);
-    text-transform: uppercase;
-    padding: 0 0.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.7rem 0.8rem;
-    color: rgba(245,234,208,0.4);
-    text-decoration: none;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: all 0.3s;
-    border-left: 2px solid transparent;
-    cursor: pointer;
-    background: none;
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    width: 100%;
-    text-align: left;
-  }
-
-  .sidebar-item:hover, .sidebar-item.active {
-    color: #c9a84c;
-    border-left-color: #c9a84c;
-    background: rgba(201,168,76,0.04);
-  }
-
+  .panel-wrap { display: flex; min-height: 100vh; background: #0a0804; font-family: 'Cinzel', serif; }
+  .sidebar { width: 260px; min-height: 100vh; background: rgba(12,10,5,0.98); border-right: 1px solid rgba(201,168,76,0.12); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; overflow-y: auto; }
+  .sidebar-logo { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.1); text-align: center; }
+  .sidebar-logo-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: #c9a84c; display: block; }
+  .sidebar-logo-sub { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.35); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .sidebar-rule { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 0.8rem auto 0; }
+  .sidebar-section { padding: 1.5rem 1rem 0.5rem; }
+  .sidebar-section-label { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.3); text-transform: uppercase; padding: 0 0.5rem; margin-bottom: 0.5rem; display: block; }
+  .sidebar-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 0.8rem; color: rgba(245,234,208,0.4); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; border-left: 2px solid transparent; cursor: pointer; background: none; border-right: none; border-top: none; border-bottom: none; width: 100%; text-align: left; }
+  .sidebar-item:hover, .sidebar-item.active { color: #c9a84c; border-left-color: #c9a84c; background: rgba(201,168,76,0.04); }
   .sidebar-item-icon { font-size: 1rem; width: 20px; text-align: center; }
-
-  .sidebar-bottom {
-    margin-top: auto;
-    padding: 1.5rem;
-    border-top: 1px solid rgba(201,168,76,0.08);
-  }
-
-  .sidebar-user {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: rgba(201,168,76,0.5);
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .sidebar-logout {
-    display: block;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(245,234,208,0.25);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
+  .sidebar-item-arrow { margin-left: auto; font-size: 0.6rem; transition: transform 0.3s; }
+  .sidebar-item.open .sidebar-item-arrow { transform: rotate(90deg); }
+  .sidebar-submenu { display: none; padding-left: 1rem; border-left: 1px solid rgba(201,168,76,0.08); margin-left: 1.8rem; }
+  .sidebar-submenu.open { display: block; }
+  .sidebar-subitem { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.8rem; color: rgba(245,234,208,0.3); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; background: none; border: none; width: 100%; text-align: left; transition: all 0.3s; border-left: 2px solid transparent; }
+  .sidebar-subitem:hover, .sidebar-subitem.active { color: #c9a84c; border-left-color: rgba(201,168,76,0.4); }
+  .sidebar-bottom { margin-top: auto; padding: 1.5rem; border-top: 1px solid rgba(201,168,76,0.08); }
+  .sidebar-user { font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.5); margin-bottom: 1rem; display: block; }
+  .sidebar-logout { display: block; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(245,234,208,0.25); text-decoration: none; transition: color 0.3s; }
   .sidebar-logout:hover { color: #c9a84c; }
-
-  /* ── MAIN ── */
-  .main {
-    margin-left: 260px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* topbar */
-  .topbar {
-    background: rgba(12,10,5,0.95);
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-  }
-
-  .topbar-breadcrumb {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: rgba(245,234,208,0.3);
-    text-transform: uppercase;
-  }
-
+  .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; }
+  .topbar { background: rgba(12,10,5,0.95); border-bottom: 1px solid rgba(201,168,76,0.1); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .topbar-breadcrumb { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); text-transform: uppercase; }
   .topbar-breadcrumb span { color: #c9a84c; }
-
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .topbar-user {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: rgba(201,168,76,0.6);
-  }
-
-  .topbar-home {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: rgba(245,234,208,0.25);
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: color 0.3s;
-  }
-
+  .topbar-right { display: flex; align-items: center; gap: 1.5rem; }
+  .topbar-user { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(201,168,76,0.6); }
+  .topbar-home { font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(245,234,208,0.25); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
   .topbar-home:hover { color: #c9a84c; }
-
-  /* content */
-  .content {
-    padding: 2rem;
-    flex: 1;
-  }
-
-  .content-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .content-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.5rem;
-    color: #c9a84c;
-  }
-
-  .content-sub {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 0.85rem;
-    color: rgba(245,234,208,0.3);
-    margin-top: 0.3rem;
-  }
-
-  /* stats strip */
-  .stats-strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    margin-bottom: 2rem;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.08);
-  }
-
-  .stat-box {
-    background: rgba(12,10,5,0.9);
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.8rem;
-    color: #c9a84c;
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    color: rgba(245,234,208,0.25);
-    text-transform: uppercase;
-    margin-top: 0.3rem;
-    display: block;
-  }
-
-  /* table */
-  .table-box {
-    background: rgba(12,10,5,0.9);
-    border: 1px solid rgba(201,168,76,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .table-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-  }
-
-  .table-toolbar {
-    padding: 1.2rem 1.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .table-toolbar-title {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: rgba(201,168,76,0.7);
-    text-transform: uppercase;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  thead tr {
-    background: rgba(201,168,76,0.04);
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-  }
-
-  th {
-    padding: 1rem 1.5rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.35em;
-    color: rgba(201,168,76,0.5);
-    text-transform: uppercase;
-    text-align: left;
-    font-weight: 400;
-  }
-
-  td {
-    padding: 1rem 1.5rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: rgba(245,234,208,0.6);
-    border-bottom: 1px solid rgba(201,168,76,0.05);
-    vertical-align: middle;
-  }
-
-  tbody tr:hover td {
-    background: rgba(201,168,76,0.03);
-    color: rgba(245,234,208,0.85);
-  }
-
+  .content { padding: 2rem; flex: 1; }
+  .content-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.08); display: flex; align-items: center; justify-content: space-between; }
+  .content-title { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: #c9a84c; }
+  .content-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.3); margin-top: 0.3rem; }
+  .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 2rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08); }
+  .stat-box { background: rgba(12,10,5,0.9); padding: 1.5rem; text-align: center; }
+  .stat-num { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #c9a84c; display: block; }
+  .stat-label { font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.25); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .table-box { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; margin-bottom: 2rem; }
+  .table-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .table-toolbar { padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.08); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .table-toolbar-title { font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.7); text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: rgba(201,168,76,0.04); border-bottom: 1px solid rgba(201,168,76,0.1); }
+  th { padding: 1rem 1.5rem; font-size: 0.55rem; letter-spacing: 0.35em; color: rgba(201,168,76,0.5); text-transform: uppercase; text-align: left; font-weight: 400; }
+  td { padding: 1rem 1.5rem; font-size: 0.72rem; letter-spacing: 0.08em; color: rgba(245,234,208,0.6); border-bottom: 1px solid rgba(201,168,76,0.05); vertical-align: middle; }
+  tbody tr:hover td { background: rgba(201,168,76,0.03); color: rgba(245,234,208,0.85); }
   tbody tr:last-child td { border-bottom: none; }
-
-  .era-badge {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.2rem;
-    color: rgba(201,168,76,0.15);
-    display: inline-block;
-    min-width: 30px;
-  }
-
-  .era-nombre {
-    color: rgba(245,234,208,0.8);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-  }
-
-  .count-pill {
-    display: inline-block;
-    padding: 0.2rem 0.7rem;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.15);
-    font-size: 0.65rem;
-    color: rgba(201,168,76,0.6);
-    letter-spacing: 0.1em;
-  }
-
-  .actions {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .btn-ver {
-    padding: 0.4rem 0.9rem;
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.2);
-    color: rgba(201,168,76,0.7);
-    text-decoration: none;
-    transition: all 0.3s;
-    cursor: pointer;
-  }
-
-  .btn-ver:hover {
-    background: rgba(201,168,76,0.15);
-    color: #c9a84c;
-    border-color: #c9a84c;
-  }
-
-  .btn-editar {
-    padding: 0.4rem 0.9rem;
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: rgba(201,168,76,0.12);
-    border: 1px solid rgba(201,168,76,0.3);
-    color: #c9a84c;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-
-  .btn-editar:hover {
-    background: #c9a84c;
-    color: #0a0804;
-  }
-
-  /* panel de sección */
-  .section-panel {
-    display: none;
-  }
-
-  .section-panel.active {
-    display: block;
-  }
+  .era-badge { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: rgba(201,168,76,0.15); display: inline-block; min-width: 30px; }
+  .era-nombre { color: rgba(245,234,208,0.8); font-size: 0.75rem; letter-spacing: 0.1em; }
+  .count-pill { display: inline-block; padding: 0.2rem 0.7rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.15); font-size: 0.65rem; color: rgba(201,168,76,0.6); letter-spacing: 0.1em; }
+  .actions { display: flex; gap: 0.5rem; align-items: center; }
+  .btn-ver { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); color: rgba(201,168,76,0.7); text-decoration: none; transition: all 0.3s; cursor: pointer; }
+  .btn-ver:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .btn-editar { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; text-decoration: none; transition: all 0.3s; }
+  .btn-editar:hover { background: #c9a84c; color: #0a0804; }
+  .btn-danger { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.3); color: rgba(192,57,43,0.7); text-decoration: none; transition: all 0.3s; cursor: pointer; }
+  .btn-danger:hover { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .metodo-badge { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid; white-space: nowrap; }
+  .m-persuasion { color: #c9a84c; border-color: rgba(201,168,76,0.35); }
+  .m-infiltracion { color: #c0392b; border-color: rgba(192,57,43,0.35); }
+  .m-engano { color: #8e44ad; border-color: rgba(142,68,173,0.35); }
+  .m-trampa { color: #2980b9; border-color: rgba(41,128,185,0.35); }
+  .m-monetaria { color: #27ae60; border-color: rgba(39,174,96,0.35); }
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+  .proximamente { text-align:center; padding:4rem 2rem; color:rgba(245,234,208,0.2); font-family:'IM Fell English',serif; font-style:italic; font-size:1.1rem; }
+  .contador-info { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2rem; margin-bottom: 2rem; }
+  .contador-info::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .contador-nota { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.4); line-height: 1.8; margin-bottom: 1.5rem; }
+  .contador-ranking { margin-top: 1.5rem; }
+  .ranking-row { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .ranking-row:last-child { border-bottom: none; }
+  .ranking-pos { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: rgba(201,168,76,0.3); min-width: 2rem; text-align: right; }
+  .ranking-pos.top { color: #c9a84c; }
+  .ranking-name { flex: 1; font-size: 0.72rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.6); }
+  .ranking-num { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: #c9a84c; }
 </style>
 </head>
 <body>
 <div class="panel-wrap">
 
-  <!-- ── SIDEBAR ── -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <span class="sidebar-logo-title">AlCapone</span>
       <span class="sidebar-logo-sub">Panel de Control</span>
       <div class="sidebar-rule"></div>
     </div>
-
     <div class="sidebar-section">
       <span class="sidebar-section-label">Gestión</span>
-      <button class="sidebar-item active" onclick="showSection('historia')">
+      <button class="sidebar-item active" onclick="showSection('historia', this)">
         <span class="sidebar-item-icon">📜</span> Historia
       </button>
-      <button class="sidebar-item" onclick="showSection('belico')" style="opacity:0.4;cursor:not-allowed">
+      <button class="sidebar-item" id="belico-toggle" onclick="toggleBelico(this)">
         <span class="sidebar-item-icon">⚔️</span> Historial Bélico
+        <span class="sidebar-item-arrow">▶</span>
       </button>
-      <button class="sidebar-item" onclick="showSection('school')" style="opacity:0.4;cursor:not-allowed">
+      <div class="sidebar-submenu" id="belico-submenu">
+        <button class="sidebar-subitem" onclick="showSection('contador', this)">
+          ✦ Contador Pettadas
+        </button>
+        <button class="sidebar-subitem" onclick="showSection('multimedia-belico', this)">
+          ✦ Multimedia Pettadas
+        </button>
+      </div>
+      <button class="sidebar-item" onclick="showSection('chicago', this)">
         <span class="sidebar-item-icon">🎓</span> Chicago School
       </button>
-      <button class="sidebar-item" onclick="showSection('codigos')" style="opacity:0.4;cursor:not-allowed">
+      <button class="sidebar-item" style="opacity:0.4;cursor:not-allowed">
         <span class="sidebar-item-icon">📋</span> Códigos
       </button>
-      <button class="sidebar-item" onclick="showSection('multimedia')" style="opacity:0.4;cursor:not-allowed">
+      <button class="sidebar-item" style="opacity:0.4;cursor:not-allowed">
         <span class="sidebar-item-icon">🖼️</span> Multimedia
       </button>
     </div>
-
     <div class="sidebar-bottom">
       <span class="sidebar-user">✦ {{ request.user.username }}</span>
       <a href="/" class="sidebar-logout" style="margin-bottom:0.5rem;display:block;">← Inicio</a>
@@ -425,70 +130,39 @@
     </div>
   </aside>
 
-  <!-- ── MAIN ── -->
   <div class="main">
-
-    <!-- Topbar -->
     <div class="topbar">
-      <div class="topbar-breadcrumb">
-        Panel <span>/ Historia</span>
-      </div>
+      <div class="topbar-breadcrumb">Panel <span id="breadcrumb-sub">/ Historia</span></div>
       <div class="topbar-right">
         <span class="topbar-user">{{ request.user.username }}</span>
         <a href="/" class="topbar-home">← Ver Web</a>
       </div>
     </div>
 
-    <!-- Content -->
     <div class="content">
 
-      <!-- Historia Section -->
+      <!-- ── HISTORIA ── -->
       <div id="section-historia" class="section-panel active">
-
         <div class="content-header">
           <div>
             <div class="content-title">Historia</div>
             <div class="content-sub">Gestiona las eras de la Famiglia</div>
           </div>
         </div>
-
-        <!-- Stats -->
         <div class="stats-strip">
-          <div class="stat-box">
-            <span class="stat-num">{{ eras.count }}</span>
-            <span class="stat-label">Eras</span>
-          </div>
-          <div class="stat-box">
-  <span class="stat-num">{{ total_lideres }}</span>
-  <span class="stat-label">Líderes</span>
-</div>
-<div class="stat-box">
-  <span class="stat-num">{{ total_victorias }}</span>
-  <span class="stat-label">Victorias</span>
-</div>
-          <div class="stat-box">
-            <span class="stat-num">2008</span>
-            <span class="stat-label">Desde</span>
-          </div>
+          <div class="stat-box"><span class="stat-num">{{ eras.count }}</span><span class="stat-label">Eras</span></div>
+          <div class="stat-box"><span class="stat-num">{{ total_lideres }}</span><span class="stat-label">Líderes</span></div>
+          <div class="stat-box"><span class="stat-num">{{ total_victorias }}</span><span class="stat-label">Victorias</span></div>
+          <div class="stat-box"><span class="stat-num">2008</span><span class="stat-label">Desde</span></div>
         </div>
-
-        <!-- Table -->
         <div class="table-box">
           <div class="table-toolbar">
             <span class="table-toolbar-title">✦ Eras de la Famiglia</span>
-<a href="/panel/era/nueva/" class="btn-editar">+ Nueva Era</a>
+            <a href="/panel/era/nueva/" class="btn-editar">+ Nueva Era</a>
           </div>
           <table>
             <thead>
-              <tr>
-                <th>Era</th>
-                <th>Título</th>
-                <th>Periodo</th>
-                <th>Líderes</th>
-                <th>Victorias</th>
-                <th>Tags</th>
-                <th>Acciones</th>
-              </tr>
+              <tr><th>Era</th><th>Título</th><th>Periodo</th><th>Líderes</th><th>Victorias</th><th>Tags</th><th>Acciones</th></tr>
             </thead>
             <tbody>
               {% for era in eras %}
@@ -510,11 +184,266 @@
             </tbody>
           </table>
         </div>
-
       </div>
-      <!-- Próximamente -->
-      <div id="section-belico" class="section-panel">
-        <div class="content-header"><div><div class="content-title">Próximamente</div><div class="content-sub">Esta sección estará disponible pronto</div></div></div>
+
+      <!-- ── CONQUISTAS ── -->
+      <div id="section-conquistas" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Conquistas</div>
+            <div class="content-sub">Gestiona el libro de conquistas</div>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ total_conquistas }}</span><span class="stat-label">Conquistas</span></div>
+          <div class="stat-box"><span class="stat-num">{{ conquistas_persuasion }}</span><span class="stat-label">Persuasión</span></div>
+          <div class="stat-box"><span class="stat-num">{{ conquistas_infiltracion }}</span><span class="stat-label">Infiltración</span></div>
+          <div class="stat-box"><span class="stat-num">{{ conquistas_otros }}</span><span class="stat-label">Otros métodos</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">⚔ Libro de Conquistas</span>
+            <a href="/panel/conquista/nueva/" class="btn-editar">+ Nueva Conquista</a>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Año</th><th>Organización</th><th>Guerreros</th><th>Método</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+              {% for c in conquistas %}
+              <tr>
+                <td style="color:#c9a84c;">{{ c.anio }}</td>
+                <td><span class="era-nombre">{{ c.organizacion }}</span></td>
+                <td style="color:rgba(245,234,208,0.5);font-style:italic;">{{ c.guerreros }}</td>
+                <td>
+                  {% if c.metodo == 'Persuasión' %}<span class="metodo-badge m-persuasion">{{ c.metodo }}</span>
+                  {% elif c.metodo == 'Infiltración' %}<span class="metodo-badge m-infiltracion">{{ c.metodo }}</span>
+                  {% elif c.metodo == 'Engaño' %}<span class="metodo-badge m-engano">{{ c.metodo }}</span>
+                  {% elif c.metodo == 'Trampa' %}<span class="metodo-badge m-trampa">{{ c.metodo }}</span>
+                  {% else %}<span class="metodo-badge m-monetaria">{{ c.metodo }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div class="actions">
+                    <a href="{% url 'panel_conquista_editar' c.id %}" class="btn-editar">Editar</a>
+                    <a href="{% url 'panel_conquista_eliminar' c.id %}" class="btn-danger">Eliminar</a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── CONTADOR PETTADAS ── -->
+      <div id="section-contador" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Contador Pettadas</div>
+            <div class="content-sub">Resumen automático basado en las conquistas</div>
+          </div>
+          <a href="/contador-petadas/" class="btn-ver" target="_blank">Ver página pública</a>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ total_conquistas }}</span><span class="stat-label">Total Pettadas</span></div>
+          <div class="stat-box"><span class="stat-num">{{ conquistas_familias }}</span><span class="stat-label">Familias caídas</span></div>
+          <div class="stat-box"><span class="stat-num">{{ conquistas_multiple }}</span><span class="stat-label">Con 2+ pettadas</span></div>
+          <div class="stat-box"><span class="stat-num">14</span><span class="stat-label">Años de dominio</span></div>
+        </div>
+        <div class="contador-info">
+          <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-left:3px solid #c9a84c;padding:1.2rem 1.5rem;margin-bottom:1.5rem;">
+            <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(201,168,76,0.8);text-transform:uppercase;margin-bottom:0.5rem;">ℹ️ Información importante</p>
+            <p class="contador-nota" style="margin-bottom:0.8rem;">Este contador se actualiza automáticamente. No necesita gestión manual.</p>
+            <p style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;color:rgba(245,234,208,0.35);">
+              Para <strong style="color:#c9a84c;">agregar</strong>, <strong style="color:#c9a84c;">editar</strong> o <strong style="color:#c0392b;">eliminar</strong> pettadas → ve a la sección
+              <button onclick="showSection('conquistas', null); document.getElementById('breadcrumb-sub').textContent='/ Historial Bélico / Conquistas';"
+              style="background:none;border:none;color:#c9a84c;font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;cursor:pointer;text-decoration:underline;">
+              ⚔ Conquistas
+              </button>
+            </p>
+          </div>
+          <div class="table-toolbar" style="padding:0 0 1rem 0; border-bottom: 1px solid rgba(201,168,76,0.08);">
+            <span class="table-toolbar-title">💀 Top Familias más golpeadas</span>
+          </div>
+          <div class="contador-ranking">
+            {% for f in top_familias %}
+            <div class="ranking-row">
+              <div class="ranking-pos {% if forloop.counter <= 3 %}top{% endif %}">{{ forloop.counter }}</div>
+              <div class="ranking-name">Famiglia {{ f.organizacion }}</div>
+              <div class="ranking-num">{{ f.total }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MULTIMEDIA BÉLICO ── -->
+      <div id="section-multimedia-belico" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Multimedia Pettadas</div>
+            <div class="content-sub">Gestiona videos y fotos de pettadas</div>
+          </div>
+          <a href="/historia-belico/multimedia/" class="btn-ver" target="_blank">Ver página pública</a>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ videos.count }}</span><span class="stat-label">Videos</span></div>
+          <div class="stat-box"><span class="stat-num">{{ fotos.count }}</span><span class="stat-label">Fotos</span></div>
+          <div class="stat-box"><span class="stat-num">{{ videos.count|add:fotos.count }}</span><span class="stat-label">Total</span></div>
+          <div class="stat-box"><span class="stat-num">🎬</span><span class="stat-label">Archivo Visual</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">🎬 Videos de YouTube</span>
+          </div>
+          <div style="padding:1.5rem;">
+            <form method="POST" action="{% url 'panel_video_agregar' %}" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:1.5rem;">
+              {% csrf_token %}
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
+                <input type="text" name="titulo" placeholder="Ej: Pettada a Salvatore" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">ID de YouTube</label>
+                <input type="text" name="youtube_id" placeholder="Ej: dQw4w9WgXcQ" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Año</label>
+                <input type="number" name="anio" placeholder="2024" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Descripción</label>
+                <input type="text" name="descripcion" placeholder="Opcional" style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Agregar</button>
+            </form>
+            <table>
+              <thead>
+                <tr><th>Título</th><th>YouTube ID</th><th>Año</th><th>Acciones</th></tr>
+              </thead>
+              <tbody>
+                {% for v in videos %}
+                <tr>
+                  <td><span class="era-nombre">{{ v.titulo }}</span></td>
+                  <td style="color:rgba(201,168,76,0.6);">{{ v.youtube_id }}</td>
+                  <td>{{ v.anio }}</td>
+                  <td>
+                    <div class="actions">
+                      <a href="https://youtube.com/watch?v={{ v.youtube_id }}" class="btn-ver" target="_blank">Ver</a>
+                      <a href="{% url 'panel_video_eliminar' v.id %}" class="btn-danger">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin videos aún</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">🖼️ Galería de Fotos</span>
+          </div>
+          <div style="padding:1.5rem;">
+            <form method="POST" action="{% url 'panel_foto_agregar' %}" enctype="multipart/form-data" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:1.5rem;">
+              {% csrf_token %}
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
+                <input type="text" name="titulo" placeholder="Ej: Pettada 2024" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Año</label>
+                <input type="number" name="anio" placeholder="2024" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Imagen</label>
+                <input type="file" name="imagen" accept="image/*" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.7rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Subir</button>
+            </form>
+            <table>
+              <thead>
+                <tr><th>Vista previa</th><th>Título</th><th>Año</th><th>Acciones</th></tr>
+              </thead>
+              <tbody>
+                {% for f in fotos %}
+                <tr>
+                  <td><img src="{{ f.imagen.url }}" style="width:60px;height:40px;object-fit:cover;border:1px solid rgba(201,168,76,0.2);"></td>
+                  <td><span class="era-nombre">{{ f.titulo }}</span></td>
+                  <td>{{ f.anio }}</td>
+                  <td>
+                    <div class="actions">
+                      <a href="{% url 'panel_foto_eliminar' f.id %}" class="btn-danger">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin fotos aún</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CHICAGO SCHOOL ── -->
+      <div id="section-chicago" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Chicago School</div>
+            <div class="content-sub">Gestiona las lecciones de la academia</div>
+          </div>
+          <a href="/chicago-school/" class="btn-ver" target="_blank">Ver página pública</a>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ lecciones.count }}</span><span class="stat-label">Lecciones</span></div>
+          <div class="stat-box"><span class="stat-num">🎓</span><span class="stat-label">Academia</span></div>
+          <div class="stat-box"><span class="stat-num">2008</span><span class="stat-label">Desde</span></div>
+          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">🎓 Lecciones</span>
+          </div>
+          <div style="padding:1.5rem;">
+            <form method="POST" action="{% url 'panel_leccion_agregar' %}" style="display:grid;grid-template-columns:1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:1.5rem;">
+              {% csrf_token %}
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
+                <input type="text" name="titulo" placeholder="Ej: Historia de AlCapone" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">ID de YouTube</label>
+                <input type="text" name="youtube_id" placeholder="Ej: D2W3CjuAjDw" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Agregar</button>
+            </form>
+            <table>
+              <thead>
+                <tr><th>#</th><th>Título</th><th>YouTube ID</th><th>Acciones</th></tr>
+              </thead>
+              <tbody>
+                {% for l in lecciones %}
+                <tr>
+                  <td><span class="era-badge">{{ l.numero }}</span></td>
+                  <td><span class="era-nombre">{{ l.titulo }}</span></td>
+                  <td style="color:rgba(201,168,76,0.6);">{{ l.youtube_id }}</td>
+                  <td>
+                    <div class="actions">
+                      <a href="https://youtube.com/watch?v={{ l.youtube_id }}" class="btn-ver" target="_blank">Ver</a>
+                      <a href="{% url 'panel_leccion_eliminar' l.id %}" class="btn-danger">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin lecciones aún</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -522,11 +451,28 @@
 </div>
 
 <script>
-  function showSection(name) {
+  const breadcrumbs = {
+    historia: '/ Historia',
+    conquistas: '/ Historial Bélico / Conquistas',
+    contador: '/ Historial Bélico / Contador Pettadas',
+    'multimedia-belico': '/ Historial Bélico / Multimedia',
+    chicago: '/ Chicago School',
+  };
+
+  function showSection(name, el) {
     document.querySelectorAll('.section-panel').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar-subitem').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
-    document.getElementById('section-' + name)?.classList.add('active');
-    event.currentTarget.classList.add('active');
+    document.getElementById('section-' + name).classList.add('active');
+    if (el) el.classList.add('active');
+    document.getElementById('breadcrumb-sub').textContent = breadcrumbs[name] || '';
+  }
+
+  function toggleBelico(el) {
+    const submenu = document.getElementById('belico-submenu');
+    submenu.classList.toggle('open');
+    el.classList.toggle('open');
+    showSection('conquistas', null);
   }
 </script>
 </body>

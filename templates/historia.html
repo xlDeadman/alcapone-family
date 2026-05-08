@@ -476,506 +476,78 @@
 <!-- ══════════════════════════════════════════ -->
 <div class="historia-page">
 
+{% for era in eras %}
 <div class="era reveal">
   <div class="era-inner">
     <div class="era-header">
-      <div class="era-number">I</div>
+      <div class="era-number">{{ era.numero }}</div>
       <div class="era-header-text">
-        <span class="era-period">2008 — 2011</span>
-        <h2 class="era-title">Era <span>Antigua</span></h2>
-        <p class="era-tagline">El origen de una promesa que se volvería leyenda</p>
+        <span class="era-period">{{ era.periodo }}</span>
+        <h2 class="era-title">{{ era.titulo }}</h2>
+        <p class="era-tagline">{{ era.tagline }}</p>
       </div>
     </div>
 
     <div class="era-body">
       <div class="era-text">
-        <p>
-          Fundada en el año 2008 por <strong style="color:var(--gold)">XxRubio-tqxX (AlfonsoCaponne)</strong>, 
-          la famiglia nació como una promesa dentro de la comunidad, creciendo bajo múltiples nombres 
-          que con el tiempo se volverían símbolo de respeto: AlCapone Gangsters House, Chicago Mafia, 
-          AlCapone Old House y AlCapone Hawks, junto a franquicias como Chicago Outfit, Capone Syndicate 
-          y Capone Family.
-        </p>
-        <p>
-          Desde sus primeros pasos, la organización destacó por su disciplina, constancia y capacidad 
-          de formar generaciones leales. No era una familia común; era una escuela de mafiosos honorables.
-        </p>
-        <p>
-          Durante el año 2009, bajo el liderazgo del fundador y con 
-          <strong style="color:var(--gold)">Roman.</strong> como hombre de guerra, la famiglia 
-          protagonizó una etapa gloriosa, derrotando rápidamente a múltiples organizaciones enemigas.
-        </p>
-        <p>
-          En 2010 llegó un periodo de silencio estratégico. Y en 2011, Alfonso cedió el mando a 
-          <strong style="color:var(--gold)">Miguel</strong>, quien mantuvo la llama viva en medio 
-          de una crisis que pondría a prueba el verdadero espíritu de la casa.
-        </p>
-
-        <!-- 👇 FOTO ERA I -->
-        <img src="{% static 'img/historia1.jpg' %}" alt="Era Antigua" 
-             style="width:100%; margin-top:1.5rem; border:1px solid rgba(201,168,76,0.2);">
+        {% for parrafo in era.texto.splitlines %}
+          {% if parrafo %}
+            <p>{{ parrafo }}</p>
+          {% endif %}
+        {% endfor %}
       </div>
 
-      
-
       <div>
+        {% if era.lideres.all %}
         <div class="lideres-box">
           <div class="lideres-title">Líderes de la Era</div>
+          {% for lider in era.lideres.all %}
           <div class="lider-item">
-            <div class="lider-avatar">AC</div>
+            <div class="lider-avatar">{{ lider.avatar }}</div>
             <div class="lider-info">
-              <span class="lider-name">XxRubio-tqxX · AlfonsoCaponne</span>
-              <div class="lider-role">Fundador & Don Supremo</div>
+              <span class="lider-name">{{ lider.nombre }}</span>
+              <div class="lider-role">{{ lider.rol }}</div>
             </div>
           </div>
-          <div class="lider-item">
-            <div class="lider-avatar">R.</div>
-            <div class="lider-info">
-              <span class="lider-name">Roman.</span>
-              <div class="lider-role">Hombre de Guerra · 2009</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">MG</div>
-            <div class="lider-info">
-              <span class="lider-name">Miguel</span>
-              <div class="lider-role">Don · 2011</div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
+        {% endif %}
 
+        {% if era.victorias.all %}
         <div class="victorias-box" style="margin-top:2px;">
-          <div class="victorias-title">Organizaciones derrotadas · 2009</div>
+          <div class="victorias-title">Organizaciones derrotadas</div>
           <ul class="victorias-list">
-            <li>Salvatore</li>
-            <li>Berdasco</li>
-            <li>Cassano</li>
-            <li>Moretti</li>
-            <li>Leggio</li>
+            {% for victoria in era.victorias.all %}
+            <li>{{ victoria.nombre }}</li>
+            {% endfor %}
           </ul>
         </div>
+        {% endif %}
 
+        {% if era.tags.all %}
         <div class="tags-row" style="margin-top:1.5rem;">
-          <span class="tag">AlCapone Gangsters House</span>
-          <span class="tag">Chicago Mafia</span>
-          <span class="tag">AlCapone Old House</span>
-          <span class="tag">AlCapone Hawks</span>
-          <span class="tag">Chicago Outfit</span>
-          <span class="tag">Capone Syndicate</span>
+          {% for tag in era.tags.all %}
+          <span class="tag">{{ tag.nombre }}</span>
+          {% endfor %}
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ERA II: DE ORO -->
-<!-- ══════════════════════════════════════════ -->
-<div class="era reveal">
-  <div class="era-inner">
-    <div class="era-header">
-      <div class="era-number">II</div>
-      <div class="era-header-text">
-        <span class="era-period">2012</span>
-        <h2 class="era-title">Era <span>de Oro</span></h2>
-        <p class="era-tagline">La revolución que desafió al mundillo entero — y lo conquistó</p>
+        {% endif %}
       </div>
     </div>
 
-    <div class="era-body">
-      <div class="era-text">
-        <p>
-          Cuando parecía que el apellido AlCapone debía reinventarse, el destino colocó el legado 
-          en manos de dos nombres que marcarían la historia para siempre.
-        </p>
-
-        <div class="era-quote">
-          Uno, guerrero de corazón noble subestimado por la comunidad; el otro, estratega 
-          curtido en batallas desde los años de la extinta famiglia Cassetti. Juntos levantaron 
-          la Nueva AlCapone.
-        </div>
-
-        <p>
-          Bajo su mando nació el <strong style="color:var(--gold)">A.R.M</strong> — 
-          AlCapone Revolutionary Movement — una revolución que desafió al mundillo entero. 
-          Contra toda expectativa, la famiglia declaró guerra global prometiendo derrotar 
-          a todas las organizaciones existentes.
-        </p>
-        <p>
-          <strong style="color:var(--gold);font-family:'Cinzel',serif;letter-spacing:0.1em;">
-            Y lo logró.
-          </strong>
-        </p>
-        <p>
-          En apenas semanas, AlCapone arrasó con doce organizaciones en una hazaña histórica 
-          que consolidó a la famiglia como una de las fuerzas más dominantes jamás vistas.
-        </p>
-
-        
-      </div>
-
-      <div>
-        <div class="lideres-box">
-          <div class="lideres-title">Los Arquitectos del A.R.M</div>
-          <div class="lider-item">
-            <div class="lider-avatar">JP</div>
-            <div class="lider-info">
-              <span class="lider-name">.peligr0 · JosephCapone.</span>
-              <div class="lider-role">Joseph.Pascale — Guerrero & Co-Fundador</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">FC</div>
-            <div class="lider-info">
-              <span class="lider-name">george982 · F.Cassetti</span>
-              <div class="lider-role">Don.Rimelio — Estratega & Co-Fundador</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="victorias-box" style="margin-top:2px;">
-          <div class="victorias-title">⚔ Campaña Global A.R.M · 2012</div>
-          <ul class="victorias-list">
-            <li>Salvatore</li>
-            <li>Ravinlli</li>
-            <li>Capriotti</li>
-            <li>Colombo</li>
-            <li>Casteglia</li>
-            <li>Leone</li>
-            <li>Mancini</li>
-            <li>Bonachesse</li>
-            <li>Pentangeli</li>
-            <li>Gambetta</li>
-            <li>Gianetti</li>
-            <li>Bonetto</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
+    {% if era.estadisticas.all %}
     <div class="era-stats reveal">
+      {% for stat in era.estadisticas.all %}
       <div class="era-stat">
-        <span class="era-stat-num">12</span>
-        <span class="era-stat-label">Organizaciones caídas</span>
+        <span class="era-stat-num">{{ stat.numero }}</span>
+        <span class="era-stat-label">{{ stat.label }}</span>
       </div>
-      <div class="era-stat">
-        <span class="era-stat-num">1</span>
-        <span class="era-stat-label">Año, un solo año</span>
-      </div>
-      <div class="era-stat">
-        <span class="era-stat-num">A.R.M</span>
-        <span class="era-stat-label">El movimiento</span>
-      </div>
-      <div class="era-stat">
-        <span class="era-stat-num">∞</span>
-        <span class="era-stat-label">Legado</span>
-      </div>
+      {% endfor %}
     </div>
+    {% endif %}
+
   </div>
 </div>
-
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ERA III: RESISTENCIA -->
-<!-- ══════════════════════════════════════════ -->
-<div class="era reveal">
-  <div class="era-inner">
-    <div class="era-header">
-      <div class="era-number">III</div>
-      <div class="era-header-text">
-        <span class="era-period">2013 — 2015</span>
-        <h2 class="era-title">La Resistencia del <span>A.R.M</span></h2>
-        <p class="era-tagline">La gloria trae enemigos… y AlCapone aprendió a resistir</p>
-      </div>
-    </div>
-
-    <div class="era-body">
-      <div class="era-text">
-        <p>
-          Tras la guerra global, comenzaron las conspiraciones, las difamaciones y el abandono 
-          de algunos miembros. Pero lejos de caer, surgió una nueva generación forjada 
-          en la adversidad.
-        </p>
-        <p>
-          En 2013 se reorganizaron ofensivas estratégicas contra Foresta, Ravinlli y Musso, 
-          dirigidas por <strong style="color:var(--gold)">Sir.Nostra</strong> y 
-          <strong style="color:var(--gold)">Sr.BradC</strong>.
-        </p>
-        <p>
-          Para 2014, la famiglia se convirtió en una organización de inteligencia y guerra pura. 
-          Fue entonces cuando <strong style="color:var(--gold)">F.Cassetti</strong> junto a 
-          <strong style="color:var(--gold)">Sr-Aldair</strong> ejecutaron una histórica 
-          <em>pettada</em> contra Corleone — una famiglia considerada intocable desde los 
-          tiempos de PanchoCorleone.
-        </p>
-
-        <div class="era-quote">
-          El 2015 marcó una pausa necesaria. La organización exploró una nueva etapa orientada 
-          a estrategias económicas, culminando el año con una segunda caída de Bonetto.
-        </div>
-        <!-- VIDEO -->
-        <div style="position:relative; padding-bottom:56.25%; height:0; margin-top:1.5rem; border:1px solid rgba(201,168,76,0.2);">
-          <iframe 
-            src="https://www.youtube.com/embed/TU_ID_VIDEO" 
-            style="position:absolute; top:0; left:0; width:100%; height:100%;"
-            frameborder="0" 
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <div>
-        <div class="lideres-box">
-          <div class="lideres-title">Comandantes de la Resistencia</div>
-          <div class="lider-item">
-            <div class="lider-avatar">FC</div>
-            <div class="lider-info">
-              <span class="lider-name">F.Cassetti</span>
-              <div class="lider-role">Don — Estratega Principal</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">SN</div>
-            <div class="lider-info">
-              <span class="lider-name">Sir.Nostra</span>
-              <div class="lider-role">Comandante de Guerra · 2013</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">BC</div>
-            <div class="lider-info">
-              <span class="lider-name">Sr.BradC</span>
-              <div class="lider-role">Comandante de Guerra · 2013</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">AL</div>
-            <div class="lider-info">
-              <span class="lider-name">Sr-Aldair</span>
-              <div class="lider-role">Operativo Élite · 2014</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">IC</div>
-            <div class="lider-info">
-              <span class="lider-name">ICaponne</span>
-              <div class="lider-role">Liderazgo estratégico · 2015</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="victorias-box" style="margin-top:2px;">
-          <div class="victorias-title">Operaciones 2013–2015</div>
-          <ul class="victorias-list">
-            <li>Foresta — 2013</li>
-            <li>Ravinlli (2ª caída) — 2013</li>
-            <li>Musso — 2013</li>
-            <li>Corleone (pettada histórica) — 2014</li>
-            <li>Saglieri — 2015</li>
-            <li>Rosatto — 2015</li>
-            <li>Bonetto (2ª caída) — 2015</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ERA IV: NUEVA ERA -->
-<!-- ══════════════════════════════════════════ -->
-<div class="era reveal">
-  <div class="era-inner">
-    <div class="era-header">
-      <div class="era-number">IV</div>
-      <div class="era-header-text">
-        <span class="era-period">2016 — 2020</span>
-        <h2 class="era-title">La <span>Nueva Era</span></h2>
-        <p class="era-tagline">Formar sangre nueva — de guerreros a maestros</p>
-      </div>
-    </div>
-
-    <div class="era-body">
-      <div class="era-text">
-        <p>
-          El <strong style="color:var(--gold)">10 de octubre de 2016</strong>, AlCapone 
-          regresó con una visión distinta: formar sangre nueva. Bajo la dirección de sus 
-          líderes históricos, la famiglia dejó atrás la guerra constante para convertirse 
-          en una escuela de generaciones.
-        </p>
-        <p>
-          Durante 2017 y 2018, la organización alcanzó su mayor nivel de estructura y 
-          formación interna. Los veteranos comenzaron a apadrinar a miembros desde cero, 
-          creando líderes que crecerían hasta convertirse en verdaderos Dones.
-        </p>
-
-        <div class="era-quote">
-          La famiglia fue reconocida en múltiples ocasiones como una de las más organizadas 
-          y respetadas del mundillo, consolidando su legado no solo en batalla, sino en formación.
-        </div>
-
-        <p>
-          Nacieron departamentos que darían forma a la estructura moderna de la famiglia, 
-          sentando las bases para la generación que vendría.
-        </p>
-         <!-- 👇 FOTO -->
-        <img src="{% static 'img/lanuevaera.png' %}" alt="La Nueva Era" 
-             style="width:100%; margin-top:1.5rem; border:1px solid rgba(201,168,76,0.2);">
-
-        <!-- 👇 VIDEO YOUTUBE -->
-        <div style="position:relative; padding-bottom:56.25%; height:0; margin-top:1.5rem; border:1px solid rgba(201,168,76,0.2);">
-          <iframe 
-            src="https://www.youtube.com/embed/_yg2WOFSrVc" 
-            style="position:absolute; top:0; left:0; width:100%; height:100%;"
-            frameborder="0" 
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <div>
-        <div class="victorias-box">
-          <div class="victorias-title">Departamentos fundados</div>
-          <ul class="victorias-list">
-            <li>Lifeblood Hoodlums</li>
-            <li>Charter Roughnecks</li>
-          </ul>
-        </div>
-
-        <div class="lideres-box" style="margin-top:2px;">
-          <div class="lideres-title">Visión de la era</div>
-          <div class="lider-item">
-            <div class="lider-avatar" style="font-size:1.2rem;">🏫</div>
-            <div class="lider-info">
-              <span class="lider-name">Chicago School</span>
-              <div class="lider-role">Academia interna de formación</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar" style="font-size:1.2rem;">🤝</div>
-            <div class="lider-info">
-              <span class="lider-name">Sistema de Padrinos</span>
-              <div class="lider-role">Veteranos formando nuevos líderes</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar" style="font-size:1.2rem;">⚖️</div>
-            <div class="lider-info">
-              <span class="lider-name">Estrategia Económica</span>
-              <div class="lider-role">Nueva dimensión organizacional</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ERA V: RENACIMIENTO -->
-<!-- ══════════════════════════════════════════ -->
-<div class="era reveal">
-  <div class="era-inner">
-    <div class="era-header">
-      <div class="era-number">V</div>
-      <div class="era-header-text">
-        <span class="era-period">2021 — 2023</span>
-        <h2 class="era-title"><span>Renacimiento</span></h2>
-        <p class="era-tagline">Los tiempos difíciles forjan líderes inolvidables</p>
-      </div>
-    </div>
-
-    <div class="era-body">
-      <div class="era-text">
-        <p>
-          En mayo de 2021 surgió una nueva generación encabezada por la primera 
-          <strong style="color:var(--gold)">Donna en la Comisión General</strong>: 
-          <strong style="color:var(--gold)">-Lovegood- (HelenaCapone)</strong>, junto a 
-          <strong style="color:var(--gold)">JulianCapone</strong> y 
-          <strong style="color:var(--gold)">Tope@francisco@ (FranciscoCapone)</strong>.
-        </p>
-        <p>
-          A ellos se unieron veteranos como 
-          <strong style="color:var(--gold)">lCordova.</strong>, 
-          <strong style="color:var(--gold)">Alex.Capone</strong> y el mítico 
-          <strong style="color:var(--gold)">Pressidente (Rogen!!)</strong>.
-        </p>
-
-        <div class="era-quote">
-          Aunque el mundillo dudaba y antiguos enemigos se burlaban, la famiglia 
-          respondió con hechos. Siempre con hechos.
-        </div>
-
-        <p>
-          El primer gran golpe cayó sobre <strong style="color:var(--gold)">Galeano</strong>, 
-          orquestado por Alex.Capone, -Lovegood- y Tope@francisco@. Poco después, junto a 
-          <strong style="color:var(--gold)">Vivacamilo10</strong>, ejecutaron una ofensiva 
-          histórica contra <strong style="color:var(--gold)">Corleone Old House</strong>. 
-          Finalmente, JulianCapone y Yamii! lideraron la caída definitiva de 
-          <strong style="color:var(--gold)">Vitelli</strong>, sellando una nueva era de poder.
-        </p>
-        <!-- 👇 PEGA AQUÍ LA FOTO -->
-        <img src="{% static 'img/renacimiento.jpg' %}" alt="Renacimiento" 
-             style="width:100%; margin-top:1.5rem; border:1px solid rgba(201,168,76,0.2);">
-      </div>
-
-      <div>
-        <div class="lideres-box">
-          <div class="lideres-title">La Generación del Renacimiento</div>
-          <div class="lider-item">
-            <div class="lider-avatar">HC</div>
-            <div class="lider-info">
-              <span class="lider-name">-Lovegood- · HelenaCapone</span>
-              <div class="lider-role">Primera Donna — Comisión General</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">JC</div>
-            <div class="lider-info">
-              <span class="lider-name">JulianCapone</span>
-              <div class="lider-role">Liderazgo ofensivo</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">FC</div>
-            <div class="lider-info">
-              <span class="lider-name">Tope@francisco@ · FranciscoCapone</span>
-              <div class="lider-role">Comisión General</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">AC</div>
-            <div class="lider-info">
-              <span class="lider-name">Alex.Capone</span>
-              <div class="lider-role">Veterano — Operaciones</div>
-            </div>
-          </div>
-          <div class="lider-item">
-            <div class="lider-avatar">PR</div>
-            <div class="lider-info">
-              <span class="lider-name">Pressidente · Rogen!!</span>
-              <div class="lider-role">Veterano Mítico</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="victorias-box" style="margin-top:2px;">
-          <div class="victorias-title">Operaciones 2021–2023</div>
-          <ul class="victorias-list">
-            <li>Galeano — Alex.Capone, -Lovegood-, FranciscoCapone</li>
-            <li>Corleone Old House — con Vivacamilo10</li>
-            <li>Vitelli — JulianCapone & Yamii!</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% endfor %}
 
 </div><!-- end .historia-page -->
 

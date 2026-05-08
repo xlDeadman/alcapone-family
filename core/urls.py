@@ -26,4 +26,19 @@ urlpatterns = [
     path('panel/tag/<int:tag_id>/eliminar/', views.panel_tag_eliminar, name='panel_tag_eliminar'),
     path('panel/era/<int:era_id>/stat/agregar/', views.panel_stat_agregar, name='panel_stat_agregar'),
     path('panel/stat/<int:stat_id>/eliminar/', views.panel_stat_eliminar, name='panel_stat_eliminar'),
+
+    # ── CONQUISTAS ──
+    path('panel/conquista/nueva/', views.panel_conquista_nueva, name='panel_conquista_nueva'),
+    path('panel/conquista/<int:conquista_id>/editar/', views.panel_conquista_editar, name='panel_conquista_editar'),
+    path('panel/conquista/<int:conquista_id>/eliminar/', views.panel_conquista_eliminar, name='panel_conquista_eliminar'),
+
+    # ── MULTIMEDIA ──
+    path('panel/video/agregar/', views.panel_video_agregar, name='panel_video_agregar'),
+    path('panel/video/<int:video_id>/eliminar/', views.panel_video_eliminar, name='panel_video_eliminar'),
+    path('panel/foto/agregar/', views.panel_foto_agregar, name='panel_foto_agregar'),
+    path('panel/foto/<int:foto_id>/eliminar/', views.panel_foto_eliminar, name='panel_foto_eliminar'),
+
+    # ── LECCIONES ──
+    path('panel/leccion/agregar/', views.panel_leccion_agregar, name='panel_leccion_agregar'),
+    path('panel/leccion/<int:leccion_id>/eliminar/', views.panel_leccion_eliminar, name='panel_leccion_eliminar'),
 ]
