@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueva Era | Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  .edit-page { min-height:100vh; background:var(--dark); padding:100px 2rem 4rem; }
+  .edit-inner { max-width:900px; margin:0 auto; }
+  .edit-nav { display:flex; justify-content:space-between; margin-bottom:2rem; }
+  .edit-nav a { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; color:rgba(245,234,208,0.3); text-decoration:none; text-transform:uppercase; transition:color 0.3s; }
+  .edit-nav a:hover { color:var(--gold); }
+  .edit-title { font-family:'Cinzel Decorative',serif; font-size:2rem; color:var(--gold); margin-bottom:0.5rem; }
+  .edit-sub { font-family:'IM Fell English',serif; font-style:italic; color:rgba(245,234,208,0.3); margin-bottom:2.5rem; }
+  .section-box { background:rgba(18,14,8,0.95); border:1px solid rgba(201,168,76,0.12); padding:2rem; position:relative; }
+  .section-box::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  .section-title { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.4em; color:var(--gold); text-transform:uppercase; margin-bottom:1.5rem; opacity:0.8; }
+  .form-group { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1.2rem; }
+  .form-label { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; color:rgba(201,168,76,0.6); text-transform:uppercase; }
+  .form-input, .form-textarea { background:rgba(10,8,4,0.8); border:1px solid rgba(201,168,76,0.15); color:var(--cream); font-family:'Cinzel',serif; font-size:0.8rem; padding:0.8rem 1rem; outline:none; width:100%; transition:border-color 0.3s; }
+  .form-textarea { font-family:'IM Fell English',serif; font-size:0.95rem; min-height:180px; resize:vertical; line-height:1.8; }
+  .form-input:focus, .form-textarea:focus { border-color:rgba(201,168,76,0.4); }
+  .add-form-row { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+  .btn-save { font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; padding:0.9rem 2.5rem; background:transparent; border:1px solid var(--gold); color:var(--gold); cursor:pointer; transition:all 0.3s; position:relative; overflow:hidden; }
+  .btn-save::before { content:''; position:absolute; inset:0; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; z-index:-1; }
+  .btn-save:hover { color:var(--dark); }
+  .btn-save:hover::before { transform:scaleX(1); }
+</style>
+</head>
+<body>
+<div class="edit-page">
+  <div class="edit-inner">
+
+    <div class="edit-nav">
+      <a href="/panel/">← Volver al Panel</a>
+    </div>
+
+    <div class="edit-title">Nueva Era</div>
+    <div class="edit-sub">Agrega una nueva era a la historia de la Famiglia</div>
+
+    <div class="section-box">
+      <div class="section-title">✦ Información General</div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="add-form-row">
+          <div class="form-group">
+            <label class="form-label">Periodo</label>
+            <input type="text" name="periodo" class="form-input" placeholder="Ej: 2024 — 2025" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Título dorado</label>
+            <input type="text" name="titulo_dorado" class="form-input" placeholder="Ej: Moderna" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Título completo</label>
+          <input type="text" name="titulo" class="form-input" placeholder="Ej: La Era Moderna" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tagline</label>
+          <input type="text" name="tagline" class="form-input" placeholder="Ej: Una nueva generación toma el mando" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Texto principal</label>
+          <textarea name="texto" class="form-textarea" placeholder="Escribe la historia de esta era..." required></textarea>
+        </div>
+        <button type="submit" class="btn-save">✦ Crear Era</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -978,3 +978,22 @@
 }
 
 .has-dropdown:hover .dropdown { display: block; }
+
+.btn-login {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  text-decoration: none;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.btn-login:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+

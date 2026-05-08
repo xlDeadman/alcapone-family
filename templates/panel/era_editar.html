@@ -1,0 +1,395 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Era {{ era.numero }} | Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  .edit-page {
+    min-height: 100vh;
+    background: var(--dark);
+    padding: 100px 2rem 4rem;
+  }
+  .edit-inner { max-width: 900px; margin: 0 auto; }
+
+  .edit-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .edit-nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(245,234,208,0.3);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .edit-nav a:hover { color: var(--gold); }
+
+  .edit-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .edit-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: rgba(245,234,208,0.3);
+    margin-bottom: 2.5rem;
+  }
+
+  .section-box {
+    background: rgba(18,14,8,0.95);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .section-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+  }
+
+  .form-input, .form-textarea {
+    background: rgba(10,8,4,0.8);
+    border: 1px solid rgba(201,168,76,0.15);
+    color: var(--cream);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s;
+  }
+
+  .form-textarea {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.95rem;
+    min-height: 180px;
+    resize: vertical;
+    line-height: 1.8;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: rgba(201,168,76,0.4);
+  }
+
+  .btn-save {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-save::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+
+  .btn-save:hover { color: var(--dark); }
+  .btn-save:hover::before { transform: scaleX(1); }
+
+  .btn-danger {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(192,57,43,0.4);
+    color: rgba(192,57,43,0.7);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-danger:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+  }
+
+  .btn-add {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.7);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-add:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.06);
+    gap: 1rem;
+  }
+
+  .item-row:last-child { border-bottom: none; }
+
+  .item-info {
+    flex: 1;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: rgba(245,234,208,0.6);
+  }
+
+  .item-sub {
+    font-size: 0.65rem;
+    color: rgba(245,234,208,0.3);
+    font-style: italic;
+    font-family: 'IM Fell English', serif;
+    margin-top: 0.2rem;
+  }
+
+  .add-form {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .add-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .toast-ok {
+    background: rgba(39,174,96,0.1);
+    border: 1px solid rgba(39,174,96,0.3);
+    border-left: 3px solid #27ae60;
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #27ae60;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+
+  .toast-ok.show { display: block; }
+
+  .avatar-input { max-width: 80px; }
+</style>
+</head>
+<body>
+<div class="edit-page">
+  <div class="edit-inner">
+
+    <div class="edit-nav">
+      <a href="/panel/">← Volver al Panel</a>
+      <a href="/historia/">Ver Historia</a>
+    </div>
+
+    <div class="edit-title">Era {{ era.numero }} — {{ era.titulo }}</div>
+    <div class="edit-sub">Edita todos los elementos de esta era</div>
+
+    {% if messages %}
+    <div class="toast-ok show">✦ Cambios guardados correctamente</div>
+    {% endif %}
+
+    <!-- ── INFORMACIÓN GENERAL ── -->
+    <div class="section-box">
+      <div class="section-title">✦ Información General</div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="add-form-row">
+          <div class="form-group">
+            <label class="form-label">Periodo</label>
+            <input type="text" name="periodo" class="form-input" value="{{ era.periodo }}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Título dorado</label>
+            <input type="text" name="titulo_dorado" class="form-input" value="{{ era.titulo_dorado }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Título completo</label>
+          <input type="text" name="titulo" class="form-input" value="{{ era.titulo }}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tagline</label>
+          <input type="text" name="tagline" class="form-input" value="{{ era.tagline }}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Texto principal (separa párrafos con línea en blanco)</label>
+          <textarea name="texto" class="form-textarea">{{ era.texto }}</textarea>
+        </div>
+        <button type="submit" class="btn-save">Guardar Cambios</button>
+      </form>
+    </div>
+
+    <!-- ── LÍDERES ── -->
+    <div class="section-box">
+      <div class="section-title">👥 Líderes</div>
+      {% for lider in era.lideres.all %}
+      <div class="item-row">
+        <div class="item-info">
+          <strong style="color:var(--gold)">{{ lider.avatar }}</strong> — {{ lider.nombre }}
+          <div class="item-sub">{{ lider.rol }}</div>
+        </div>
+        <a href="{% url 'panel_lider_eliminar' lider.id %}" class="btn-danger">Eliminar</a>
+      </div>
+      {% empty %}
+      <p style="color:rgba(245,234,208,0.2);font-family:'Cinzel',serif;font-size:0.7rem;">Sin líderes</p>
+      {% endfor %}
+
+      <form method="POST" action="{% url 'panel_lider_agregar' era.id %}" class="add-form">
+        {% csrf_token %}
+        <div class="add-form-row">
+          <div class="form-group">
+            <label class="form-label">Avatar (2-3 letras)</label>
+            <input type="text" name="avatar" class="form-input avatar-input" maxlength="5" placeholder="AC">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-input" placeholder="Nombre del líder">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rol</label>
+          <input type="text" name="rol" class="form-input" placeholder="Don · 2024">
+        </div>
+        <button type="submit" class="btn-add">+ Agregar Líder</button>
+      </form>
+    </div>
+
+    <!-- ── VICTORIAS ── -->
+    <div class="section-box">
+      <div class="section-title">⚔ Victorias</div>
+      {% for v in era.victorias.all %}
+      <div class="item-row">
+        <div class="item-info">✦ {{ v.nombre }}</div>
+        <a href="{% url 'panel_victoria_eliminar' v.id %}" class="btn-danger">Eliminar</a>
+      </div>
+      {% empty %}
+      <p style="color:rgba(245,234,208,0.2);font-family:'Cinzel',serif;font-size:0.7rem;">Sin victorias</p>
+      {% endfor %}
+
+      <form method="POST" action="{% url 'panel_victoria_agregar' era.id %}" class="add-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label">Nombre de la organización</label>
+          <input type="text" name="nombre" class="form-input" placeholder="Ej: Salvatore — 2024">
+        </div>
+        <button type="submit" class="btn-add">+ Agregar Victoria</button>
+      </form>
+    </div>
+
+    <!-- ── TAGS ── -->
+    <div class="section-box">
+      <div class="section-title">🏷 Tags / Nombres</div>
+      {% for tag in era.tags.all %}
+      <div class="item-row">
+        <div class="item-info">{{ tag.nombre }}</div>
+        <a href="{% url 'panel_tag_eliminar' tag.id %}" class="btn-danger">Eliminar</a>
+      </div>
+      {% empty %}
+      <p style="color:rgba(245,234,208,0.2);font-family:'Cinzel',serif;font-size:0.7rem;">Sin tags</p>
+      {% endfor %}
+
+      <form method="POST" action="{% url 'panel_tag_agregar' era.id %}" class="add-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label">Nombre del tag</label>
+          <input type="text" name="nombre" class="form-input" placeholder="Ej: Chicago Outfit">
+        </div>
+        <button type="submit" class="btn-add">+ Agregar Tag</button>
+      </form>
+    </div>
+
+    <!-- ── ESTADÍSTICAS ── -->
+    <div class="section-box">
+      <div class="section-title">📊 Estadísticas</div>
+      {% for stat in era.estadisticas.all %}
+      <div class="item-row">
+        <div class="item-info">
+          <strong style="color:var(--gold)">{{ stat.numero }}</strong> — {{ stat.label }}
+        </div>
+        <a href="{% url 'panel_stat_eliminar' stat.id %}" class="btn-danger">Eliminar</a>
+      </div>
+      {% empty %}
+      <p style="color:rgba(245,234,208,0.2);font-family:'Cinzel',serif;font-size:0.7rem;">Sin estadísticas</p>
+      {% endfor %}
+
+      <form method="POST" action="{% url 'panel_stat_agregar' era.id %}" class="add-form">
+        {% csrf_token %}
+        <div class="add-form-row">
+          <div class="form-group">
+            <label class="form-label">Número / Valor</label>
+            <input type="text" name="numero" class="form-input" placeholder="Ej: 12">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Etiqueta</label>
+            <input type="text" name="label" class="form-input" placeholder="Ej: Organizaciones caídas">
+          </div>
+        </div>
+        <button type="submit" class="btn-add">+ Agregar Estadística</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

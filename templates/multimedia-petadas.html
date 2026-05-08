@@ -14,7 +14,7 @@
 <nav>
   <a href="#inicio" class="nav-logo">AlCapone</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/">Inicio</a></li>
+    <li><a href="#inicio">Inicio</a></li>
     <li><a href="/historia/">Historia</a></li>
 
     <!-- HISTORIAL BÉLICO CON SUBMENÚ -->
@@ -26,31 +26,15 @@
       </ul>
     </li>
 
-    <li><a href="/chicago-school/">Chicago School</a></li>
-    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="#school">Chicago School</a></li>
+    <li><a href="#codigos">Códigos</a></li>
     <li><a href="#multimedia">Multimedia</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-    <div style="display:flex;align-items:center;gap:1.5rem;">
-
-    <!-- QUITA ESTO: -->
-    <!-- <div class="nav-social">
+    <div class="nav-social">
       <a href="#" title="Twitter/X">✕</a>
       <a href="#" title="YouTube">▶</a>
-    </div> -->
-
-    <!-- PON ESTO: -->
-    {% if user.is_authenticated %}
-  <a href="/panel/" class="btn-login" style="background:rgba(201,168,76,0.1);">⚙ Panel</a>
-  <a href="/logout/" class="btn-login">Cerrar Sesión</a>
-{% else %}
-  <a href="/login/" class="btn-login">Iniciar Sesión</a>
-{% endif %}
-
-    <button class="hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-</div>
+    </div>
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -181,68 +165,4 @@
   }
 </script>
 </body>
-<!-- ── TOAST BIENVENIDA ── -->
-{% if messages %}
-{% for message in messages %}
-<div class="toast" id="toast">
-  <span class="toast-icon">🎩</span>
-  <div class="toast-text">
-    <strong>Benvenuto, {{ message }}</strong>
-    <span>Acceso concedido</span>
-  </div>
-</div>
-{% endfor %}
-{% endif %}
-
-<style>
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: rgba(18,14,8,0.97);
-  border: 1px solid rgba(201,168,76,0.3);
-  border-left: 3px solid var(--gold);
-  padding: 1.2rem 1.8rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  z-index: 9999;
-  animation: toastIn 0.5s ease both, toastOut 0.5s ease 3.5s both;
-  min-width: 280px;
-}
-.toast-icon { font-size: 1.8rem; }
-.toast-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.toast-text strong {
-  font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-.toast-text span {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 0.8rem;
-  color: rgba(245,234,208,0.4);
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(100px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes toastOut {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(100px); }
-}
-</style>
-
-<script>
-  setTimeout(() => {
-    const toast = document.getElementById('toast');
-    if (toast) toast.remove();
-  }, 4000);
-</script>
 </html>

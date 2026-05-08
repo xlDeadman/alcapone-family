@@ -1,0 +1,855 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Códigos | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+  .page-hero {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,105,20,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 20%, rgba(139,26,26,0.07) 0%, transparent 60%),
+      var(--dark2);
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--dark));
+  }
+
+  .page-hero-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.6em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+  }
+
+  .page-hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.2rem, 6vw, 5.5rem);
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(201,168,76,0.25);
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s 0.15s ease both;
+  }
+
+  .page-hero-sub {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(245,234,208,0.4);
+    margin-top: 1.2rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .page-hero-rule {
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.8rem auto 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── INTRO ── */
+  .intro-section {
+    background: var(--dark);
+    padding: 5rem 2rem;
+  }
+
+  .intro-box {
+    max-width: 860px;
+    margin: 0 auto;
+    border-left: 2px solid rgba(201,168,76,0.3);
+    padding: 2rem 2.5rem;
+    background: rgba(201,168,76,0.03);
+  }
+
+  .intro-box p {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem;
+    line-height: 2;
+    color: rgba(245,234,208,0.6);
+    margin-bottom: 1.2rem;
+  }
+
+  .intro-box p:last-child { margin-bottom: 0; }
+
+  /* ── NAV TABS ── */
+  .tabs-nav {
+    background: var(--dark2);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: sticky;
+    top: 72px;
+    z-index: 100;
+  }
+
+  .tab-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,234,208,0.35);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── CODIGO SECTION ── */
+  .codigo-section {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .codigo-section:nth-child(odd) { background: var(--dark); }
+  .codigo-section:nth-child(even) { background: var(--dark2); }
+
+  .codigo-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+  }
+
+  .codigo-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* section header */
+  .codigo-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .codigo-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .codigo-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    color: var(--gold);
+    line-height: 1.1;
+  }
+
+  .codigo-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 0;
+  }
+
+  .codigo-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(245,234,208,0.45);
+    text-align: center;
+    max-width: 650px;
+    margin: 1.5rem auto 0;
+    line-height: 1.8;
+  }
+
+  /* artículos */
+  .articulo {
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .articulo.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .articulo-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .articulo-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.8rem;
+    color: rgba(201,168,76,0.2);
+    min-width: fit-content;
+    line-height: 1;
+  }
+
+  .articulo-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .pena-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.8rem;
+    border: 1px solid rgba(192,57,43,0.4);
+    color: #c0392b;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .articulo-body {
+    font-size: 0.98rem;
+    line-height: 1.95;
+    color: rgba(245,234,208,0.6);
+  }
+
+  .articulo-body p { margin-bottom: 1rem; }
+  .articulo-body p:last-child { margin-bottom: 0; }
+
+  /* sub items */
+  .sub-list {
+    list-style: none;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sub-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    color: rgba(245,234,208,0.55);
+    line-height: 1.7;
+  }
+
+  .sub-list li::before {
+    content: '—';
+    color: rgba(201,168,76,0.3);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* comportamiento cards */
+  .comportamiento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .comportamiento-card {
+    padding: 2.5rem;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .comportamiento-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .card-permitido {
+    background: rgba(39,174,96,0.04);
+    border-color: rgba(39,174,96,0.12);
+  }
+  .card-permitido::before { background: linear-gradient(90deg, transparent, rgba(39,174,96,0.5), transparent); }
+
+  .card-agresivo {
+    background: rgba(192,57,43,0.04);
+    border-color: rgba(192,57,43,0.12);
+  }
+  .card-agresivo::before { background: linear-gradient(90deg, transparent, rgba(192,57,43,0.5), transparent); }
+
+  .card-pasivo-agresivo {
+    background: rgba(142,68,173,0.04);
+    border-color: rgba(142,68,173,0.12);
+  }
+  .card-pasivo-agresivo::before { background: linear-gradient(90deg, transparent, rgba(142,68,173,0.5), transparent); }
+
+  .card-pasivo {
+    background: rgba(41,128,185,0.04);
+    border-color: rgba(41,128,185,0.12);
+  }
+  .card-pasivo::before { background: linear-gradient(90deg, transparent, rgba(41,128,185,0.5), transparent); }
+
+  .comportamiento-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-permitido { color: #27ae60; border-color: rgba(39,174,96,0.4); }
+  .badge-penalizado { color: #c0392b; border-color: rgba(192,57,43,0.4); }
+
+  .comportamiento-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .comportamiento-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .comportamiento-list li {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(245,234,208,0.5);
+    padding-left: 1rem;
+    border-left: 1px solid rgba(201,168,76,0.1);
+  }
+
+  /* atención box */
+  .atencion-box {
+    background: rgba(139,26,26,0.08);
+    border: 1px solid rgba(139,26,26,0.2);
+    border-left: 3px solid #c0392b;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(245,234,208,0.6);
+  }
+
+  .atencion-box strong {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: #c0392b;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── CIERRE ── */
+  .codigos-cierre {
+    background: var(--dark2);
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .cierre-glyph {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3rem;
+    color: rgba(201,168,76,0.08);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .cierre-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .cierre-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(245,234,208,0.4);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.9;
+  }
+
+  @media (max-width: 700px) {
+    .comportamiento-grid { grid-template-columns: 1fr; }
+    .tabs-nav { gap: 0; overflow-x: auto; }
+    .tab-btn { padding: 1rem 1.2rem; font-size: 0.55rem; white-space: nowrap; }
+    .articulo-header { flex-wrap: wrap; }
+    .pena-badge { font-size: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador de Pettadas</a></li>
+        <li><a href="/multimedia-petadas/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+    <li><a href="/chicago-school/">Chicago School</a></li>
+    <li><a href="/codigos/" class="nav-active">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div class="nav-social">
+      <a href="#" title="Twitter/X">✕</a>
+      <a href="#" title="YouTube">▶</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <span class="page-hero-label">AlCapone Family · Reglamento Oficial</span>
+  <h1 class="page-hero-title">Códigos de<br>la Famiglia</h1>
+  <p class="page-hero-sub">Familiar · Conductual · Comunicación</p>
+  <div class="page-hero-rule"></div>
+</div>
+
+<!-- ── INTRO ── -->
+<div class="intro-section">
+  <div class="intro-box reveal">
+    <p>El presente reglamento reúne los principios y normas que rigen la convivencia, la identidad y el funcionamiento interno de la Famiglia AlCapone. A través del Código Familiar, el Código Conductual y el Código de Comunicación, se establecen las bases que permiten mantener un ambiente organizado, respetuoso y alineado con los valores de la organización.</p>
+    <p>El <strong style="color:var(--gold)">Código Familiar</strong> define la esencia de pertenencia, la lealtad hacia la famiglia y el respeto por su estructura jerárquica, promoviendo la responsabilidad individual y el compromiso colectivo.</p>
+    <p>El <strong style="color:var(--gold)">Código Conductual</strong> establece estándares claros sobre la forma de actuar dentro y fuera de las instalaciones, reforzando principios como la tolerancia, la formalidad, la madurez y el respeto entre todos los miembros.</p>
+    <p>El <strong style="color:var(--gold)">Código de Comunicación</strong> orienta la manera en que los integrantes deben interactuar, fomentando una comunicación asertiva, directa y respetuosa, evitando conductas agresivas, pasivo-agresivas o perjudiciales para la armonía del grupo.</p>
+  </div>
+</div>
+
+<!-- ── TABS NAV ── -->
+<div class="tabs-nav">
+  <a href="#familiar" class="tab-btn active">Código Familiar</a>
+  <a href="#conductual" class="tab-btn">Código Conductual</a>
+  <a href="#comunicacion" class="tab-btn">Código de Comunicación</a>
+</div>
+
+
+<!-- ══════════════════════════════ -->
+<!-- CÓDIGO FAMILIAR -->
+<!-- ══════════════════════════════ -->
+<section class="codigo-section" id="familiar">
+  <div class="codigo-inner">
+
+    <div class="codigo-header reveal">
+      <span class="codigo-label">Reglamento · I</span>
+      <h2 class="codigo-title">Código Familiar</h2>
+      <div class="codigo-rule"></div>
+      <p class="codigo-desc">Si pertenece a la familia AlCapone, lea atentamente estos códigos, vitales para que la familia se mantenga en paz, en orden y trabaje mejor.</p>
+    </div>
+
+    <div class="atencion-box reveal">
+      <strong>⚠ Atención</strong>
+      Este código fue creado para dar orden y prosperidad a sus iguales. El mismo fue elaborado minuciosamente acorde a experiencias desagradables que afectaron la convivencia, el orden y la paz familiar. Cuando no sepa qué hacer, puede concurrir a este código y hallar la respuesta.
+    </div>
+
+    <!-- ART I -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">I</div>
+        <div class="articulo-title">Código del Gángster</div>
+      </div>
+      <div class="articulo-body">
+        <p>La esencia es parte de nuestra cultura y pertenencia a la comunidad de familias. Una vez dentro de ella, la misión, la estética de gángster, la vestimenta y la placa, se llevan en todo Habbo, como muestra de respeto por la familia y la comunidad de familias, sin importar los comentarios de ignorancia del ajeno a la comunidad.</p>
+        <ul class="sub-list">
+          <li>No quitarse misión, estética gángster, ni placa mientras se reside en Habbo. No reemplazarlas por otras ajenas a las asignadas.</li>
+          <li>No se permite portar placas de recompensa. Solo se permite llevar 1 preferentemente ganada en fansites de Habbo.</li>
+          <li>No se permite vestir sin atuendos de estética gángster. La vestimenta debe ser formal y adecuada al atuendo clásico de la mafia.</li>
+          <li>Madurez: No usar frases u onomatopeyas infantiles, "xd's" exagerados, ni bromas sobre otros miembros.</li>
+          <li>La sabiduría es clave. El conocimiento de cada apartado de la web es importante para aprender cómo funciona la organización.</li>
+          <li>Corazón caliente en unión con la familia, corazón frío con los ajenos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ART II -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">II</div>
+        <div class="articulo-title">Código de Pertenencia a la Familia</div>
+      </div>
+      <div class="articulo-body">
+        <ul class="sub-list">
+          <li>Si te vas deshonestamente de la familia, no podrás regresar jamás.</li>
+          <li>Mientras AlCapone está abierta, unirse a otra familia es considerado traición y la pena es el destierro de la organización.</li>
+          <li>No se permite estar unido y ejerciendo funciones en otro lugar a la vez (imperio, club, ejército, FBI, banco, da2, altra famiglia, etc).</li>
+          <li>Si vienes de otra familia activa en el mundillo, puedes integrarte pero con la condición de ingresar desde 0.</li>
+          <li>Tomarse un tiempo y abandonar la pertenencia es permitido si hay razones justificadas, sin unirse a ningún lugar social durante ese período.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ART III -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">III</div>
+        <div class="articulo-title">Código de Conducta Personal y/o Terceros</div>
+      </div>
+      <div class="articulo-body">
+        <ul class="sub-list">
+          <li>No ignorar los pedidos ni las misiones; realizarlas ayudará al desarrollo personal y del equipo.</li>
+          <li>No faltar el respeto: No hacer insultos, bromas o burlas a costa de otro miembro, humillaciones o críticas de ningún tipo.</li>
+          <li>Se prohíbe la justicia por mano propia. Se deben tomar capturas o pruebas del hecho y avisar a uno de los Dones.</li>
+          <li>Si se desea hacer una denuncia, se saca captura de pantalla y se comunica el hecho solo al Don, presentando evidencia.</li>
+          <li>Quedan prohibidas la seducción y los acercamientos obvios de fines de relación de pareja dentro de la organización.</li>
+          <li>No timar a ningún miembro de la familia o asociado a él.</li>
+          <li>Si te peleas con alguien de otra familia, defiéndete como un caballero sin insultar, usando la inteligencia y los hechos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ART IV -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">IV</div>
+        <div class="articulo-title">Código del Made Man (Miembro Oficial)</div>
+      </div>
+      <div class="articulo-body">
+        <ul class="sub-list">
+          <li><strong style="color:var(--gold)">Cadena de mando:</strong> Si alguien de rango superior le da una orden, usted solo escucha y obedece. Espere su turno de ascender.</li>
+          <li><strong style="color:var(--gold)">Liderazgo:</strong> El líder está con su gente, no por encima de ellos. Tómelos en cuenta, escúchelos y apóyelos.</li>
+          <li><strong style="color:var(--gold)">Boca hermética:</strong> Un hombre leal no debe traicionar a la familia bajo ninguna circunstancia ni revelar asuntos confidenciales.</li>
+          <li><strong style="color:var(--gold)">En épocas de tormenta:</strong> No se escape cuando la familia más lo necesita. Ahí es cuando se ve la verdadera lealtad.</li>
+          <li><strong style="color:var(--gold)">Ayuda desinteresada:</strong> Respalde sus palabras con hechos. La lealtad se prueba con acciones y será recompensada.</li>
+          <li>Los miembros hechos damos fe de nuestra lealtad y pertenencia a una sola familia, la nuestra. Huir cuando la familia necesita ayuda se considera un quiebre a la lealtad.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ -->
+<!-- CÓDIGO CONDUCTUAL -->
+<!-- ══════════════════════════════ -->
+<section class="codigo-section" id="conductual">
+  <div class="codigo-inner">
+
+    <div class="codigo-header reveal">
+      <span class="codigo-label">Reglamento · II</span>
+      <h2 class="codigo-title">Código Conductual</h2>
+      <div class="codigo-rule"></div>
+      <p class="codigo-desc">Normas aprobadas por la dirección de la Famiglia AlCapone para que todos los miembros conserven la esencia, paz, armonía y organización que siempre ha caracterizado a esta casa.</p>
+    </div>
+
+    <div class="atencion-box reveal">
+      <strong>⚠ Aviso Importante</strong>
+      El no haber leído estas normas no es excusa a la hora de afrontar las consecuencias de no haberlas cumplido. El Departamento Lifeblood Hoodlums es el principal encargado de velar por el cumplimiento de estas normas.
+    </div>
+
+    <!-- TOLERANCIA -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">1</div>
+        <div class="articulo-title">Tolerancia</div>
+        <span class="pena-badge">Pena: Expulsión</span>
+      </div>
+      <div class="articulo-body">
+        <p>No faltar el respeto a ningún miembro de la familia, sea inferior o mayor en rango. Todos son iguales en dignidad. Se prohíben los excesos de confianza hacia los jefes de la organización.</p>
+        <p>Al relacionarse, deben tenerse respeto entre todos: subalternos y jefes, jefes y subalternos, subalternos y subalternos, y jefes con jefes. No hablen negativamente del otro estando presentes ni ausentes.</p>
+        <p>Se penará con expulsión: el trato soberbio, ignorar y dejar de lado a otros, hacer bromas y poner apodos, la formación de "grupitos" o "bandos" enfrentados, comentarios irónicos, sarcásticos o sutiles de crítica hacia un individuo.</p>
+        <p>Siempre estar valorando a la persona por su esencia, sin importar su cultura, color, país, sexo, religión o creencias ideológicas.</p>
+      </div>
+    </div>
+
+    <!-- MADUREZ -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">2</div>
+        <div class="articulo-title">Madurez</div>
+        <span class="pena-badge">Pena: Rehabilitación</span>
+      </div>
+      <div class="articulo-body">
+        <p>En la Famiglia AlCapone queremos dar el ejemplo de lo que somos: personas adultas. No queremos ver ningún tipo de frase u onomatopeya infantil, "xd's" exagerados, bromas sobre otro miembro ni payasadas.</p>
+        <p>No queremos ver palabras tipo "disp" u otras que intenten simular un enfrentamiento virtual. El trato con los demás debe ser paciente. La confianza se gana, no se trata al otro de amigo al día de conocerle.</p>
+        <p>No se permite montar cualquier tipo de escándalo en sala ni en las demás instalaciones. No se permite escribir ASÍ TODO EL TIEMPO continuamente o con faltas de ortografía obscenas.</p>
+      </div>
+    </div>
+
+    <!-- FORMALIDAD -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">3</div>
+        <div class="articulo-title">Formalidad</div>
+        <span class="pena-badge">Pena: Rehabilitación</span>
+      </div>
+      <div class="articulo-body">
+        <p>La formalidad, la estética del personaje, las placas y misiones concedidas por la familia, deben ir acordes a la cultura de nuestra comunidad, ya que es un componente de nuestra esencia que se expande dentro y fuera de ella.</p>
+        <p>No está permitido que ningún miembro de AlCapone permanezca en nuestras instalaciones o fuera de ellas con aspecto o actitud que se aleje de la madurez, normalidad y/o formalidad, salvo evento organizado y comunicado a los demás miembros.</p>
+      </div>
+    </div>
+
+    <!-- COMUNICACIÓN ASERTIVA -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">4</div>
+        <div class="articulo-title">Comunicación Asertiva</div>
+        <span class="pena-badge">Pena: Degradación</span>
+      </div>
+      <div class="articulo-body">
+        <p>El saber comunicar los propios deseos de una forma que no hieran a los demás es muy importante para que la familia tenga buen trato. Se exige la lectura de ejemplos de comunicación y su aplicación en todo momento.</p>
+      </div>
+    </div>
+
+    <!-- RESPETO A LOS JEFES -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">5</div>
+        <div class="articulo-title">Respeto a los Jefes</div>
+        <span class="pena-badge">Pena: Expulsión</span>
+      </div>
+      <div class="articulo-body">
+        <p>Un jefe es alguien que se ubica un escalafón por encima de ti en la jerarquía. Se permite el buen trato, pero conservando siempre las exigencias de respeto.</p>
+        <ul class="sub-list">
+          <li>No realizar comentarios que señalen inferioridades, debilidades o cosas negativas sobre los jefes. No hacer humor en base a ellos.</li>
+          <li>Se puede no estar de acuerdo, pero siempre mostrar respeto en todo lo que digan.</li>
+          <li>No marcarles errores directa ni indirectamente en público.</li>
+          <li>No hablar mal de un jefe por detrás junto a otros miembros.</li>
+          <li>No alabar ni adular a los jefes al comunicarse con ellos.</li>
+          <li>No llamar a los jefes por "amigo, genio, crack, master, rey, tío, wey, hombre" ni ningún trato informal.</li>
+          <li>Los jefes podrán tutearles, pero ustedes deberán esperar para tutear a los jefes, se les tratará con "usted".</li>
+          <li>El trato hacia los Dones es <strong style="color:var(--gold)">"Don"</strong>.</li>
+          <li>El trato hacia los jefes es <strong style="color:var(--gold)">"Señor [nombre]"</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TRATO CON JEFES -->
+    <div class="articulo">
+      <div class="articulo-header">
+        <div class="articulo-num">6</div>
+        <div class="articulo-title">Trato con los Jefes</div>
+        <span class="pena-badge">Pena: Degradación</span>
+      </div>
+      <div class="articulo-body">
+        <p>Si necesitas un favor con un jefe, comunícate por medio de susurro. Si se encuentra ausente, hazlo con el superior más próximo a ti, siempre preguntando con sumo respeto.</p>
+        <p>El favor se debe pedir de manera que el jefe tenga la libre opción de poder decir sí o no. Dando vía libre al sí o al no por parte del jefe.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ -->
+<!-- CÓDIGO DE COMUNICACIÓN -->
+<!-- ══════════════════════════════ -->
+<section class="codigo-section" id="comunicacion">
+  <div class="codigo-inner">
+
+    <div class="codigo-header reveal">
+      <span class="codigo-label">Reglamento · III</span>
+      <h2 class="codigo-title">Código de Comunicación</h2>
+      <div class="codigo-rule"></div>
+      <p class="codigo-desc">En el siguiente código se darán a conocer los comportamientos permitidos y penalizados dentro de la Famiglia AlCapone.</p>
+    </div>
+
+    <div class="comportamiento-grid reveal">
+
+      <!-- PERMITIDO -->
+      <div class="comportamiento-card card-permitido">
+        <span class="comportamiento-badge badge-permitido">✓ Permitido</span>
+        <div class="comportamiento-title">Comportamiento Asertivo</div>
+        <ul class="comportamiento-list">
+          <li>Expresa su opinión abiertamente respetando cuando los demás están hablando.</li>
+          <li>Comunica las cosas que no le gusta que le hagan sin agredir, insultar ni rebajar.</li>
+          <li>No trata de imponer su control ni se aísla; participa activamente en las dinámicas del grupo.</li>
+          <li>Tiene en cuenta sus objetivos, pero también los objetivos de los demás.</li>
+          <li>Se valora igual que los demás.</li>
+          <li>Alcanza metas sin perjudicar a otros.</li>
+        </ul>
+      </div>
+
+      <!-- AGRESIVO -->
+      <div class="comportamiento-card card-agresivo">
+        <span class="comportamiento-badge badge-penalizado">✕ Penalizado</span>
+        <div class="comportamiento-title">Comportamiento Agresivo</div>
+        <ul class="comportamiento-list">
+          <li>Interrumpe y expresa su opinión por encima de los demás.</li>
+          <li>Marca con excesiva fijación los errores de los demás, desvalorizándolos.</li>
+          <li>Da órdenes demasiado directas, secas e impositivas sin mostrar humanidad.</li>
+          <li>Trata de controlar a los grupos de forma autoritaria sin tomar en cuenta sus sentimientos.</li>
+          <li>Solo considera los propios pensamientos como correctos.</li>
+          <li>Se valora más que los demás. Lastima a otros para evitar ser lastimado.</li>
+        </ul>
+      </div>
+
+      <!-- PASIVO-AGRESIVO -->
+      <div class="comportamiento-card card-pasivo-agresivo">
+        <span class="comportamiento-badge badge-penalizado">✕ Penalizado</span>
+        <div class="comportamiento-title">Comportamiento Pasivo-Agresivo</div>
+        <ul class="comportamiento-list">
+          <li>Expresa sus opiniones por detrás, crea grupos o bandos en contra de otros miembros.</li>
+          <li>No expresa directamente su descontento, sino de forma indirecta con críticas generales.</li>
+          <li>Habla mal de otros a las espaldas y sin pruebas. Crea bandos contra otros miembros.</li>
+          <li>El "vocero" del grupo que dice "muchas personas no están de acuerdo" pero nunca nombra a nadie.</li>
+          <li>Lastima a otros mediante otras personas, manipulando sutilmente mediante miedos y alarmismos.</li>
+          <li>Alcanza metas manipulando a otros y criticando personas.</li>
+        </ul>
+      </div>
+
+      <!-- PASIVO -->
+      <div class="comportamiento-card card-pasivo">
+        <span class="comportamiento-badge badge-penalizado">✕ Penalizado</span>
+        <div class="comportamiento-title">Comportamiento Pasivo</div>
+        <ul class="comportamiento-list">
+          <li>Tiene miedo de expresar su opinión.</li>
+          <li>Se aísla de los grupos.</li>
+          <li>Está de acuerdo con los demás a pesar de sus prioridades o sentimientos.</li>
+          <li>Se valora menos que los demás.</li>
+          <li>Se perjudica a sí mismo para evitar perjudicar a los demás.</li>
+          <li>No alcanza las metas y puede que no se las haya planteado siquiera.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── CIERRE ── -->
+<div class="codigos-cierre reveal">
+  <span class="cierre-glyph">⚖</span>
+  <h2 class="cierre-title">La Ley de la Famiglia</h2>
+  <p class="cierre-text">
+    Estos códigos no son sugerencias. Son la ley que mantiene en pie 
+    a la AlCapone Family desde 2008. Respétalos y serás respetado.
+  </p>
+  <a href="/" class="btn-gold">Volver al Inicio</a>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
+
+
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // ── Reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06 });
+
+  document.querySelectorAll('.reveal, .articulo').forEach(el => observer.observe(el));
+
+  // ── Tabs activos en scroll ──
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const secciones = document.querySelectorAll('.codigo-section');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    secciones.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 200) current = sec.id;
+    });
+    tabBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('href') === `#${current}`);
+    });
+  });
+
+  // ── Smooth scroll tabs ──
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(btn.getAttribute('href'));
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 130, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
