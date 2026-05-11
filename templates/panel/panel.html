@@ -167,15 +167,15 @@
       <button class="sidebar-item" onclick="showSection('usuarios', this)">
         <span class="sidebar-item-icon">👥</span> Usuarios
       </button>
+      <button class="sidebar-item" onclick="showSection('multimedia', this)">
+        <span class="sidebar-item-icon">🖼️</span> Multimedia
+      </button>
       <button class="sidebar-item {% if mantenimiento_activo %}danger-item{% endif %}" onclick="showSection('mantenimiento', this)">
         <span class="sidebar-item-icon">🔧</span> Mantenimiento
         {% if mantenimiento_activo %}<span style="font-size:0.5rem;color:#c0392b;margin-left:auto;">● ON</span>{% endif %}
       </button>
       <button class="sidebar-item" style="opacity:0.4;cursor:not-allowed">
         <span class="sidebar-item-icon">📋</span> Códigos
-      </button>
-      <button class="sidebar-item" style="opacity:0.4;cursor:not-allowed">
-        <span class="sidebar-item-icon">🖼️</span> Multimedia
       </button>
     </div>
     <div class="sidebar-bottom">
@@ -397,7 +397,7 @@
         </div>
         <div class="table-box">
           <div class="table-toolbar">
-            <span class="table-toolbar-title">🖼️ Galería de Fotos</span>
+            <span class="table-toolbar-title">🖼️ Fotos de Pettadas</span>
           </div>
           <div style="padding:1.5rem;">
             <form method="POST" action="{% url 'panel_foto_agregar' %}" enctype="multipart/form-data" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:1.5rem;">
@@ -618,6 +618,60 @@
         </div>
       </div>
 
+      <!-- ── MULTIMEDIA GALERÍA ── -->
+      <div id="section-multimedia" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Multimedia</div>
+            <div class="content-sub">Gestiona la galería de fotos de la Famiglia</div>
+          </div>
+          <a href="/multimedia/" class="btn-ver" target="_blank">Ver página pública</a>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ fotos_galeria.count }}</span><span class="stat-label">Fotos</span></div>
+          <div class="stat-box"><span class="stat-num">🖼️</span><span class="stat-label">Galería</span></div>
+          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
+          <div class="stat-box"><span class="stat-num">2008</span><span class="stat-label">Desde</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">🖼️ Fotos de la Galería</span>
+          </div>
+          <div style="padding:1.5rem;">
+            <form method="POST" action="{% url 'panel_galeria_agregar' %}" enctype="multipart/form-data" style="display:grid;grid-template-columns:1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:1.5rem;">
+              {% csrf_token %}
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
+                <input type="text" name="titulo" placeholder="Ej: Reunión 2024" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Imagen</label>
+                <input type="file" name="imagen" accept="image/*" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.7rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Subir</button>
+            </form>
+            <table>
+              <thead><tr><th>Vista previa</th><th>Título</th><th>Acciones</th></tr></thead>
+              <tbody>
+                {% for f in fotos_galeria %}
+                <tr>
+                  <td><img src="{{ f.imagen.url }}" style="width:60px;height:40px;object-fit:cover;border:1px solid rgba(201,168,76,0.2);"></td>
+                  <td><span class="era-nombre">{{ f.titulo }}</span></td>
+                  <td>
+                    <div class="actions">
+                      <a href="{% url 'panel_galeria_eliminar' f.id %}" class="btn-danger">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin fotos aún</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- ── MANTENIMIENTO ── -->
       <div id="section-mantenimiento" class="section-panel">
         <div class="content-header">
@@ -648,7 +702,7 @@
             </div>
           </div>
           <p class="mant-info">
-            Cuando el modo mantenimiento está <strong>activado</strong>, cualquier persona que no sea staff verá una página de mantenimiento en lugar del sitio. <strong>Tú seguirás viendo el sitio con normalidad</strong> porque eres staff. Usa esto cuando necesites hacer cambios importantes sin que los visitantes los vean en proceso.
+            Cuando el modo mantenimiento está <strong>activado</strong>, cualquier persona que no sea staff verá una página de mantenimiento en lugar del sitio. <strong>Tú seguirás viendo el sitio con normalidad</strong> porque eres staff.
           </p>
           <a href="{% url 'panel_mantenimiento_toggle' %}" class="{% if mantenimiento_activo %}btn-success{% else %}btn-danger{% endif %}" style="display:inline-block;padding:0.8rem 2rem;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;text-decoration:none;">
             {% if mantenimiento_activo %}✓ Desactivar Mantenimiento{% else %}⚠ Activar Mantenimiento{% endif %}
@@ -714,6 +768,7 @@
     chicago: '/ Chicago School',
     noticias: '/ Noticias',
     usuarios: '/ Usuarios',
+    multimedia: '/ Multimedia',
     mantenimiento: '/ Mantenimiento',
   };
 

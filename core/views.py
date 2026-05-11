@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Count, Case, When, IntegerField
-from core.models import Era, Lider, Victoria, Tag, Estadistica, Conquista, VideoMultimedia, FotoMultimedia, Leccion, Noticia, Perfil
+from core.models import Era, Lider, Victoria, Tag, Estadistica, Conquista, VideoMultimedia, FotoMultimedia, Leccion, Noticia, Perfil, FotoGaleria
 import os
 
 # ── MANTENIMIENTO ──
@@ -70,6 +70,12 @@ def multimedia_petadas(request):
         'fotos': fotos,
     })
 
+def multimedia(request):
+    m = check_mantenimiento(request)
+    if m: return m
+    fotos = FotoGaleria.objects.all()
+    return render(request, 'multimedia.html', {'fotos': fotos})
+
 def chicago_school(request):
     m = check_mantenimiento(request)
     if m: return m
@@ -132,7 +138,6 @@ def registro(request):
 @login_required
 def perfil(request):
     perfil_obj, _ = Perfil.objects.get_or_create(user=request.user)
-
     if request.method == 'POST':
         request.user.email = request.POST.get('email', '')
         request.user.save()
@@ -140,10 +145,7 @@ def perfil(request):
         perfil_obj.save()
         messages.success(request, 'perfil_guardado')
         return redirect('perfil')
-
-    return render(request, 'perfil.html', {
-        'perfil': perfil_obj,
-    })
+    return render(request, 'perfil.html', {'perfil': perfil_obj})
 
 # ── CAMBIAR CONTRASEÑA ──
 @login_required
@@ -185,6 +187,7 @@ def panel(request):
     top_familias = conquistas.values('organizacion').annotate(total=Count('id')).order_by('-total')[:8]
     videos = VideoMultimedia.objects.all()
     fotos = FotoMultimedia.objects.all()
+    fotos_galeria = FotoGaleria.objects.all()
     lecciones = Leccion.objects.all()
     noticias = Noticia.objects.all()
     usuarios = User.objects.all().order_by(
@@ -205,6 +208,7 @@ def panel(request):
         'top_familias': top_familias,
         'videos': videos,
         'fotos': fotos,
+        'fotos_galeria': fotos_galeria,
         'lecciones': lecciones,
         'noticias': noticias,
         'usuarios': usuarios,
@@ -402,7 +406,7 @@ def panel_video_eliminar(request, video_id):
     video.delete()
     return redirect('panel')
 
-# ── FOTOS ──
+# ── FOTOS PETTADAS ──
 @login_required
 def panel_foto_agregar(request):
     if not request.user.is_staff:
@@ -422,6 +426,30 @@ def panel_foto_eliminar(request, foto_id):
     if not request.user.is_staff:
         return redirect('inicio')
     foto = get_object_or_404(FotoMultimedia, id=foto_id)
+    foto.imagen.delete()
+    foto.delete()
+    return redirect('panel')
+
+# ── GALERÍA MULTIMEDIA ──
+@login_required
+def panel_galeria_agregar(request):
+    if not request.user.is_staff:
+        return redirect('inicio')
+    if request.method == 'POST':
+        FotoGaleria.objects.create(
+            titulo=request.POST.get('titulo'),
+            imagen=request.FILES.get('imagen'),
+            descripcion=request.POST.get('descripcion', ''),
+            orden=FotoGaleria.objects.count() + 1
+        )
+        return redirect('panel')
+    return redirect('panel')
+
+@login_required
+def panel_galeria_eliminar(request, foto_id):
+    if not request.user.is_staff:
+        return redirect('inicio')
+    foto = get_object_or_404(FotoGaleria, id=foto_id)
     foto.imagen.delete()
     foto.delete()
     return redirect('panel')

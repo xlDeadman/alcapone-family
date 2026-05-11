@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multimedia | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  body { min-height: 100vh; display: flex; flex-direction: column; background: var(--dark); }
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
+
+  /* ── PAGE HERO ── */
+  .page-hero { min-height: 35vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+  .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.12) 0%, transparent 70%), var(--dark2); }
+  .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to bottom, transparent, var(--dark)); }
+  .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.5em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1rem; position: relative; z-index: 2; }
+  .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.8rem, 5vw, 3.5rem); color: var(--gold); line-height: 1.1; position: relative; z-index: 2; }
+  .page-hero-rule { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.2rem auto 0; position: relative; z-index: 2; }
+
+  /* ── SLIDER ── */
+  .galeria-section { padding: 4rem 2rem 6rem; flex: 1; }
+  .galeria-wrap { max-width: 1200px; margin: 0 auto; }
+
+  .slider-container { position: relative; overflow: hidden; background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); }
+  .slider-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); z-index: 2; }
+
+  .slider-track { display: flex; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+  .slider-slide { min-width: 25%; padding: 0.5rem; flex-shrink: 0; }
+  .slider-slide img { width: 100%; height: 220px; object-fit: cover; display: block; filter: brightness(0.75) sepia(0.2); transition: filter 0.3s; cursor: pointer; }
+  .slider-slide img:hover { filter: brightness(1) sepia(0); }
+
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,8,4,0.85); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; font-family: 'Cinzel', serif; font-size: 1.2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 10; }
+  .slider-btn:hover { background: rgba(201,168,76,0.15); border-color: #c9a84c; }
+  .slider-btn.prev { left: 1rem; }
+  .slider-btn.next { right: 1rem; }
+
+  .slider-counter { text-align: center; padding: 1rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.4); text-transform: uppercase; border-top: 1px solid rgba(201,168,76,0.08); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox-img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 1px solid rgba(201,168,76,0.2); }
+  .lightbox-titulo { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.7); text-transform: uppercase; white-space: nowrap; }
+  .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); font-size: 1.2rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+  .lightbox-close:hover { border-color: #c9a84c; color: #c9a84c; }
+  .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; font-size: 1.2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+  .lightbox-nav:hover { background: rgba(201,168,76,0.15); border-color: #c9a84c; }
+  .lightbox-nav.prev { left: 1.5rem; }
+  .lightbox-nav.next { right: 1.5rem; }
+
+  .galeria-empty { text-align: center; padding: 6rem 2rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.2); font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+    <li><a href="/chicago-school/">Chicago School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/multimedia/">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    {% if user.is_authenticated %}
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
+    </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <span class="page-hero-label">AlCapone Family · Archivo</span>
+  <h1 class="page-hero-title">Galería de Multimedia</h1>
+  <div class="page-hero-rule"></div>
+</div>
+
+<!-- ── GALERÍA ── -->
+<section class="galeria-section">
+  <div class="galeria-wrap">
+    {% if fotos %}
+    <div class="slider-container">
+      <button class="slider-btn prev" onclick="moverSlider(-1)">←</button>
+      <button class="slider-btn next" onclick="moverSlider(1)">→</button>
+      <div class="slider-track" id="sliderTrack">
+        {% for foto in fotos %}
+        <div class="slider-slide">
+          <img src="{{ foto.imagen.url }}" alt="{{ foto.titulo }}" onclick="abrirLightbox({{ forloop.counter0 }})" title="{{ foto.titulo }}">
+        </div>
+        {% endfor %}
+      </div>
+      <div class="slider-counter" id="sliderCounter">1 — 4 de {{ fotos.count }} fotos</div>
+    </div>
+    {% else %}
+    <div class="galeria-empty">Aún no hay fotos en la galería.</div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="cerrarLightbox()">✕</button>
+  <button class="lightbox-nav prev" onclick="lightboxNav(-1)">←</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav next" onclick="lightboxNav(1)">→</button>
+  <span class="lightbox-titulo" id="lightboxTitulo"></span>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+  });
+
+  // ── SLIDER ──
+  const fotos = [
+    {% for foto in fotos %}
+    { src: "{{ foto.imagen.url }}", titulo: "{{ foto.titulo }}" },
+    {% endfor %}
+  ];
+
+  const visibles = 4;
+  let posicion = 0;
+  const track = document.getElementById('sliderTrack');
+  const counter = document.getElementById('sliderCounter');
+
+  function actualizarCounter() {
+    const desde = posicion + 1;
+    const hasta = Math.min(posicion + visibles, fotos.length);
+    if (counter) counter.textContent = `${desde} — ${hasta} de ${fotos.length} fotos`;
+  }
+
+  function moverSlider(dir) {
+    const maxPos = Math.max(0, fotos.length - visibles);
+    posicion = Math.max(0, Math.min(posicion + dir, maxPos));
+    if (track) track.style.transform = `translateX(-${posicion * (100 / visibles)}%)`;
+    actualizarCounter();
+  }
+
+  // ── LIGHTBOX ──
+  let lightboxIndex = 0;
+
+  function abrirLightbox(index) {
+    lightboxIndex = index;
+    actualizarLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lightboxNav(dir) {
+    lightboxIndex = (lightboxIndex + dir + fotos.length) % fotos.length;
+    actualizarLightbox();
+  }
+
+  function actualizarLightbox() {
+    document.getElementById('lightboxImg').src = fotos[lightboxIndex].src;
+    document.getElementById('lightboxTitulo').textContent = fotos[lightboxIndex].titulo;
+  }
+
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('lightbox')) cerrarLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') cerrarLightbox();
+    if (e.key === 'ArrowLeft') lightboxNav(-1);
+    if (e.key === 'ArrowRight') lightboxNav(1);
+  });
+</script>
+</body>
+</html>

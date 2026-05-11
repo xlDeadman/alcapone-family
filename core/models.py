@@ -112,6 +112,20 @@ class FotoMultimedia(models.Model):
         return f"{self.titulo} ({self.anio})"
 
 
+# ── GALERÍA MULTIMEDIA ──
+class FotoGaleria(models.Model):
+    titulo = models.CharField(max_length=200)
+    imagen = models.ImageField(upload_to='galeria/')
+    descripcion = models.CharField(max_length=300, blank=True)
+    orden = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['orden']
+
+    def __str__(self):
+        return self.titulo
+
+
 class Leccion(models.Model):
     numero = models.IntegerField()
     titulo = models.CharField(max_length=200)

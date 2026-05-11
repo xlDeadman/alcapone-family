@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contador-petadas/', views.contador_petadas, name='contador_petadas'),
     path('historia-belico/multimedia/', views.multimedia_petadas, name='multimedia_petadas'),
+    path('multimedia/', views.multimedia, name='multimedia'),
     path('chicago-school/', views.chicago_school, name='chicago_school'),
     path('codigos/', views.codigos, name='codigos'),
     path('login/', views.login, name='login'),
@@ -40,11 +41,15 @@ urlpatterns = [
     path('panel/conquista/<int:conquista_id>/editar/', views.panel_conquista_editar, name='panel_conquista_editar'),
     path('panel/conquista/<int:conquista_id>/eliminar/', views.panel_conquista_eliminar, name='panel_conquista_eliminar'),
 
-    # ── MULTIMEDIA ──
+    # ── MULTIMEDIA PETTADAS ──
     path('panel/video/agregar/', views.panel_video_agregar, name='panel_video_agregar'),
     path('panel/video/<int:video_id>/eliminar/', views.panel_video_eliminar, name='panel_video_eliminar'),
     path('panel/foto/agregar/', views.panel_foto_agregar, name='panel_foto_agregar'),
     path('panel/foto/<int:foto_id>/eliminar/', views.panel_foto_eliminar, name='panel_foto_eliminar'),
+
+    # ── GALERÍA MULTIMEDIA ──
+    path('panel/galeria/agregar/', views.panel_galeria_agregar, name='panel_galeria_agregar'),
+    path('panel/galeria/<int:foto_id>/eliminar/', views.panel_galeria_eliminar, name='panel_galeria_eliminar'),
 
     # ── LECCIONES ──
     path('panel/leccion/agregar/', views.panel_leccion_agregar, name='panel_leccion_agregar'),

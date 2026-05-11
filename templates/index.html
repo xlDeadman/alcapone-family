@@ -8,93 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
-  /* ── TOPBAR HORARIOS ── */
-  .topbar-horarios {
-    background: rgba(6,5,2,0.98);
-    border-bottom: 1px solid rgba(201,168,76,0.12);
-    padding: 0.5rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    position: relative;
-    z-index: 200;
-  }
-
-  .topbar-horarios-left {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .topbar-horarios-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.3em;
-    color: rgba(201,168,76,0.7);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-  }
-
-  .topbar-horarios-label span.icon { font-size: 0.8rem; }
-
-  .topbar-horarios-list {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    flex-wrap: wrap;
-  }
-
-  .horario-item {
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    color: rgba(245,234,208,0.5);
-    white-space: nowrap;
-    padding: 0 0.8rem;
-    border-right: 1px solid rgba(201,168,76,0.15);
-  }
-
-  .horario-item:last-child { border-right: none; }
-
-  .horario-item .pais {
-    color: rgba(201,168,76,0.6);
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-right: 0.3rem;
-  }
-
-  .topbar-horarios-right {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  .btn-social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border: 1px solid rgba(201,168,76,0.2);
-    background: rgba(201,168,76,0.05);
-    color: rgba(245,234,208,0.5);
-    text-decoration: none;
-    transition: all 0.3s;
-    font-size: 0.75rem;
-  }
-
-  .btn-social:hover {
-    background: rgba(201,168,76,0.12);
-    border-color: rgba(201,168,76,0.5);
-    color: #c9a84c;
-  }
-
   /* ── NOTICIAS ── */
   .noticias-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
   .noticias-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
@@ -135,26 +48,6 @@
 </head>
 <body>
 
-<!-- ── BARRA HORARIOS ── -->
-<div class="topbar-horarios">
-  <div class="topbar-horarios-left">
-    <div class="topbar-horarios-label">
-      <span class="icon">🕐</span>
-      Horarios de la Famiglia
-    </div>
-    <div class="topbar-horarios-list">
-      <div class="horario-item"><span class="pais">CL Chile:</span> 10:20</div>
-      <div class="horario-item"><span class="pais">MX México:</span> 08:20</div>
-      <div class="horario-item"><span class="pais">CO Colombia:</span> 09:20</div>
-      <div class="horario-item"><span class="pais">ES España:</span> 16:20</div>
-    </div>
-  </div>
-  <div class="topbar-horarios-right">
-    <a href="#" class="btn-social" title="Twitter / X" target="_blank">𝕏</a>
-    <a href="#" class="btn-social" title="YouTube" target="_blank">▶</a>
-  </div>
-</div>
-
 <!-- ── NAV ── -->
 <nav>
   <a href="#inicio" class="nav-logo">AlCapone</a>
@@ -170,7 +63,7 @@
     </li>
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/multimedia/">Multimedia</a></li>
     <li><a href="#noticias">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
@@ -212,6 +105,21 @@
     <a href="/historia/" class="btn-gold">Nuestra Historia</a>
     <a href="/chicago-school/" class="btn-outline">Chicago School</a>
   </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:0.8rem;margin-top:1.5rem;position:relative;z-index:2;">
+    <div style="display:flex;align-items:center;gap:0.8rem;">
+      <a href="https://x.com/TheAlCaFamily" target="_blank" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.06);color:rgba(245,234,208,0.6);text-decoration:none;font-size:0.85rem;transition:all 0.3s;">𝕏</a>
+      <a href="https://www.youtube.com/@alcaponefamily" target="_blank" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.06);color:rgba(245,234,208,0.6);text-decoration:none;font-size:0.85rem;transition:all 0.3s;">▶</a>
+    </div>
+    <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:rgba(201,168,76,0.7);text-transform:uppercase;">🕐 Horarios de la Famiglia</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;color:rgba(245,234,208,0.5);">
+      <span style="padding:0 0.8rem;border-right:1px solid rgba(201,168,76,0.15);"><span style="color:rgba(201,168,76,0.6);margin-right:0.3rem;">CL Chile:</span>15:50</span>
+      <span style="padding:0 0.8rem;border-right:1px solid rgba(201,168,76,0.15);"><span style="color:rgba(201,168,76,0.6);margin-right:0.3rem;">MX México:</span>13:50</span>
+      <span style="padding:0 0.8rem;border-right:1px solid rgba(201,168,76,0.15);"><span style="color:rgba(201,168,76,0.6);margin-right:0.3rem;">CO Colombia:</span>14:50</span>
+      <span style="padding:0 0.8rem;"><span style="color:rgba(201,168,76,0.6);margin-right:0.3rem;">ES España:</span>21:50</span>
+    </div>
+  </div>
+
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
