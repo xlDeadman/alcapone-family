@@ -20,7 +20,6 @@
     background: var(--dark);
   }
 
-  /* fondo */
   .login-bg {
     position: absolute;
     inset: 0;
@@ -30,7 +29,6 @@
       var(--dark);
   }
 
-  /* grain */
   .login-bg::after {
     content: '';
     position: absolute;
@@ -40,7 +38,6 @@
     pointer-events: none;
   }
 
-  /* card */
   .login-card {
     position: relative;
     z-index: 2;
@@ -60,7 +57,6 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
 
-  /* logo */
   .login-logo {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -91,7 +87,6 @@
     margin: 1.2rem auto;
   }
 
-  /* titulo */
   .login-title {
     font-family: 'Cinzel', serif;
     font-size: 0.7rem;
@@ -102,7 +97,6 @@
     margin-bottom: 2.5rem;
   }
 
-  /* form */
   .login-form { display: flex; flex-direction: column; gap: 1.2rem; }
 
   .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -138,10 +132,7 @@
     box-shadow: 0 0 15px rgba(201,168,76,0.08);
   }
 
-  /* mostrar contraseña */
-  .input-wrap {
-    position: relative;
-  }
+  .input-wrap { position: relative; }
 
   .toggle-pass {
     position: absolute;
@@ -161,7 +152,6 @@
 
   .toggle-pass:hover { color: var(--gold); }
 
-  /* btn submit */
   .btn-submit {
     font-family: 'Cinzel', serif;
     font-size: 0.7rem;
@@ -193,10 +183,38 @@
   .btn-submit:hover { color: var(--dark); }
   .btn-submit:hover::before { transform: scaleX(1); }
 
-  /* olvidaste contraseña */
+  /* ── REGISTRO LINK ── */
+  .registro-wrap {
+    text-align: center;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(201,168,76,0.06);
+  }
+
+  .registro-wrap span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,234,208,0.2);
+    text-transform: uppercase;
+  }
+
+  .registro-wrap a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-left: 0.5rem;
+  }
+
+  .registro-wrap a:hover { color: var(--gold); }
+
   .forgot-wrap {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 
   .forgot-link {
@@ -215,7 +233,6 @@
 
   .forgot-link:hover { color: rgba(201,168,76,0.5); }
 
-  /* modal olvidé contraseña */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -257,11 +274,7 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
 
-  .modal-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: block;
-  }
+  .modal-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
 
   .modal-title {
     font-family: 'Cinzel Decorative', serif;
@@ -279,11 +292,7 @@
     margin-bottom: 2rem;
   }
 
-  .modal-text a {
-    color: var(--gold);
-    text-decoration: none;
-  }
-
+  .modal-text a { color: var(--gold); text-decoration: none; }
   .modal-text a:hover { text-decoration: underline; }
 
   .modal-close {
@@ -299,12 +308,8 @@
     transition: all 0.3s;
   }
 
-  .modal-close:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* error message */
   .form-error {
     background: rgba(139,26,26,0.15);
     border: 1px solid rgba(192,57,43,0.3);
@@ -319,10 +324,9 @@
 
   .form-error.show { display: block; }
 
-  /* volver */
   .login-back {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   .login-back a {
@@ -340,17 +344,31 @@
   @media (max-width: 480px) {
     .login-card { padding: 2.5rem 1.8rem; }
   }
+
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
 </style>
 </head>
 <body>
 
-<!-- ── LOGIN PAGE ── -->
 <div class="login-page">
   <div class="login-bg"></div>
 
   <div class="login-card">
 
-    <!-- Logo -->
     <div class="login-logo">
       <span class="login-logo-title">AlCapone</span>
       <span class="login-logo-sub">Family · Est. 2008 · Omertà</span>
@@ -359,25 +377,23 @@
 
     <div class="login-title">Acceso a la Famiglia</div>
 
-    <!-- Mensajes de error Django -->
     {% if error %}
     <div class="form-error show">
       Usuario o contraseña incorrectos. Verifica tus credenciales.
     </div>
     {% endif %}
 
-    <!-- Form -->
     <form method="POST" action="{% url 'login' %}" class="login-form">
       {% csrf_token %}
 
       <div class="form-group">
-        <label class="form-label" for="username">Usuario</label>
+        <label class="form-label" for="username">Usuario de Habbo</label>
         <input
           type="text"
           id="username"
           name="username"
           class="form-input"
-          placeholder="Tu nombre de usuario"
+          placeholder="Tu nombre de Habbo"
           autocomplete="username"
           required>
       </div>
@@ -398,8 +414,13 @@
       </div>
 
       <button type="submit" class="btn-submit">Entrar a la Famiglia</button>
-
     </form>
+
+    <!-- Registro -->
+    <div class="registro-wrap">
+      <span>¿No tienes cuenta?</span>
+      <a href="/registro/">Regístrate →</a>
+    </div>
 
     <!-- Olvidé contraseña -->
     <div class="forgot-wrap">
@@ -414,27 +435,24 @@
   </div>
 </div>
 
-
 <!-- ── MODAL OLVIDÉ CONTRASEÑA ── -->
 <div class="modal-overlay" id="forgotModal">
   <div class="modal-box">
     <span class="modal-icon">🔐</span>
     <div class="modal-title">¿Olvidaste tu contraseña?</div>
     <p class="modal-text">
-      Para recuperar el acceso a tu cuenta, debes contactar directamente 
+      Para recuperar el acceso a tu cuenta, debes contactar directamente
       con un administrador de la Famiglia.<br><br>
-      Comunícate a través de nuestras redes oficiales o habla con un 
-      <strong style="color:var(--gold)">Don</strong> o miembro de la 
-      <strong style="color:var(--gold)">Comisión General</strong> 
+      Comunícate a través de nuestras redes oficiales o habla con un
+      <strong style="color:var(--gold)">Don</strong> o miembro de la
+      <strong style="color:var(--gold)">Comisión General</strong>
       dentro de Habbo.
     </p>
     <button class="modal-close" id="modalClose">Entendido</button>
   </div>
 </div>
 
-
 <script>
-  // ── Mostrar/ocultar contraseña ──
   const togglePass = document.getElementById('togglePass');
   const passInput = document.getElementById('password');
 
@@ -444,23 +462,22 @@
     togglePass.textContent = isPass ? 'Ocultar' : 'Ver';
   });
 
-  // ── Modal olvidé contraseña ──
   const forgotBtn = document.getElementById('forgotBtn');
   const forgotModal = document.getElementById('forgotModal');
   const modalClose = document.getElementById('modalClose');
 
-  forgotBtn.addEventListener('click', () => {
-    forgotModal.classList.add('open');
-  });
-
-  modalClose.addEventListener('click', () => {
-    forgotModal.classList.remove('open');
-  });
-
+  forgotBtn.addEventListener('click', () => forgotModal.classList.add('open'));
+  modalClose.addEventListener('click', () => forgotModal.classList.remove('open'));
   forgotModal.addEventListener('click', (e) => {
-    if (e.target === forgotModal) {
-      forgotModal.classList.remove('open');
-    }
+    if (e.target === forgotModal) forgotModal.classList.remove('open');
+  });
+
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
   });
 </script>
 </body>

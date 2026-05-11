@@ -7,6 +7,7 @@
 <title>Panel de Control | AlCapone Family</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   .panel-wrap { display: flex; min-height: 100vh; background: #0a0804; font-family: 'Cinzel', serif; }
@@ -19,6 +20,7 @@
   .sidebar-section-label { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.3); text-transform: uppercase; padding: 0 0.5rem; margin-bottom: 0.5rem; display: block; }
   .sidebar-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 0.8rem; color: rgba(245,234,208,0.4); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; border-left: 2px solid transparent; cursor: pointer; background: none; border-right: none; border-top: none; border-bottom: none; width: 100%; text-align: left; }
   .sidebar-item:hover, .sidebar-item.active { color: #c9a84c; border-left-color: #c9a84c; background: rgba(201,168,76,0.04); }
+  .sidebar-item.danger-item:hover, .sidebar-item.danger-item.active { color: #c0392b; border-left-color: #c0392b; background: rgba(192,57,43,0.04); }
   .sidebar-item-icon { font-size: 1rem; width: 20px; text-align: center; }
   .sidebar-item-arrow { margin-left: auto; font-size: 0.6rem; transition: transform 0.3s; }
   .sidebar-item.open .sidebar-item-arrow { transform: rotate(90deg); }
@@ -66,6 +68,10 @@
   .btn-editar:hover { background: #c9a84c; color: #0a0804; }
   .btn-danger { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.3); color: rgba(192,57,43,0.7); text-decoration: none; transition: all 0.3s; cursor: pointer; }
   .btn-danger:hover { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .btn-warning { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(241,196,15,0.08); border: 1px solid rgba(241,196,15,0.3); color: rgba(241,196,15,0.8); text-decoration: none; transition: all 0.3s; cursor: pointer; }
+  .btn-warning:hover { background: #f1c40f; color: #0a0804; border-color: #f1c40f; }
+  .btn-success { padding: 0.4rem 0.9rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.3); color: rgba(39,174,96,0.8); text-decoration: none; transition: all 0.3s; cursor: pointer; }
+  .btn-success:hover { background: #27ae60; color: #fff; border-color: #27ae60; }
   .metodo-badge { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid; white-space: nowrap; }
   .m-persuasion { color: #c9a84c; border-color: rgba(201,168,76,0.35); }
   .m-infiltracion { color: #c0392b; border-color: rgba(192,57,43,0.35); }
@@ -74,7 +80,6 @@
   .m-monetaria { color: #27ae60; border-color: rgba(39,174,96,0.35); }
   .section-panel { display: none; }
   .section-panel.active { display: block; }
-  .proximamente { text-align:center; padding:4rem 2rem; color:rgba(245,234,208,0.2); font-family:'IM Fell English',serif; font-style:italic; font-size:1.1rem; }
   .contador-info { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2rem; margin-bottom: 2rem; }
   .contador-info::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
   .contador-nota { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.4); line-height: 1.8; margin-bottom: 1.5rem; }
@@ -85,6 +90,50 @@
   .ranking-pos.top { color: #c9a84c; }
   .ranking-name { flex: 1; font-size: 0.72rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.6); }
   .ranking-num { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: #c9a84c; }
+  .user-active { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(39,174,96,0.4); color: #27ae60; }
+  .user-inactive { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(192,57,43,0.4); color: #c0392b; }
+  .user-staff { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(201,168,76,0.4); color: #c9a84c; }
+  .user-nostaff { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(245,234,208,0.1); color: rgba(245,234,208,0.2); }
+  .mant-card { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2.5rem; margin-bottom: 2rem; }
+  .mant-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .mant-card.active-mant { border-color: rgba(192,57,43,0.3); }
+  .mant-card.active-mant::before { background: linear-gradient(90deg, transparent, #c0392b, transparent); }
+  .mant-status { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(201,168,76,0.08); }
+  .mant-status-indicator { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .mant-status-indicator.on { background: #c0392b; box-shadow: 0 0 10px rgba(192,57,43,0.5); animation: pulse-red 1.5s infinite; }
+  .mant-status-indicator.off { background: #27ae60; box-shadow: 0 0 10px rgba(39,174,96,0.3); }
+  @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .mant-status-text { flex: 1; }
+  .mant-status-title { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.7); display: block; margin-bottom: 0.3rem; }
+  .mant-status-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.35); }
+  .mant-info { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.4); line-height: 1.9; margin-bottom: 2rem; }
+  .mant-info strong { color: #c9a84c; font-style: normal; }
+  .ql-toolbar { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15) !important; border-bottom: none !important; }
+  .ql-toolbar .ql-stroke { stroke: rgba(201,168,76,0.6); }
+  .ql-toolbar .ql-fill { fill: rgba(201,168,76,0.6); }
+  .ql-toolbar .ql-picker { color: rgba(201,168,76,0.6); }
+  .ql-toolbar .ql-picker-options { background: #0a0804; border: 1px solid rgba(201,168,76,0.2); }
+  .ql-toolbar button:hover .ql-stroke { stroke: #c9a84c; }
+  .ql-toolbar button:hover .ql-fill { fill: #c9a84c; }
+  .ql-container { background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.15) !important; min-height: 180px; }
+  .ql-editor { color: #f5ead0; font-family: 'IM Fell English', serif; font-size: 0.95rem; line-height: 1.8; min-height: 180px; }
+  .ql-editor.ql-blank::before { color: rgba(245,234,208,0.3); font-style: italic; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-box { background: rgba(18,14,8,0.98); border: 1px solid rgba(201,168,76,0.2); max-width: 420px; width: 100%; padding: 2.5rem; text-align: center; position: relative; transform: translateY(20px); transition: transform 0.3s; }
+  .modal-overlay.open .modal-box { transform: translateY(0); }
+  .modal-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .modal-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .modal-title { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: #c9a84c; margin-bottom: 0.8rem; }
+  .modal-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.5); line-height: 1.8; margin-bottom: 2rem; }
+  .modal-text strong { color: #c9a84c; font-style: normal; }
+  .modal-btns { display: flex; gap: 1rem; justify-content: center; }
+  .modal-btn-cancel { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.7rem 1.5rem; background: transparent; border: 1px solid rgba(201,168,76,0.2); color: rgba(245,234,208,0.4); cursor: pointer; transition: all 0.3s; }
+  .modal-btn-cancel:hover { border-color: rgba(201,168,76,0.5); color: rgba(245,234,208,0.7); }
+  .modal-btn-confirm { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.7rem 1.5rem; background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.4); color: #c0392b; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+  .modal-btn-confirm:hover { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .modal-btn-confirm.warning { background: rgba(241,196,15,0.1); border-color: rgba(241,196,15,0.4); color: #f1c40f; }
+  .modal-btn-confirm.warning:hover { background: #f1c40f; color: #0a0804; border-color: #f1c40f; }
 </style>
 </head>
 <body>
@@ -106,15 +155,21 @@
         <span class="sidebar-item-arrow">▶</span>
       </button>
       <div class="sidebar-submenu" id="belico-submenu">
-        <button class="sidebar-subitem" onclick="showSection('contador', this)">
-          ✦ Contador Pettadas
-        </button>
-        <button class="sidebar-subitem" onclick="showSection('multimedia-belico', this)">
-          ✦ Multimedia Pettadas
-        </button>
+        <button class="sidebar-subitem" onclick="showSection('contador', this)">✦ Contador Pettadas</button>
+        <button class="sidebar-subitem" onclick="showSection('multimedia-belico', this)">✦ Multimedia Pettadas</button>
       </div>
       <button class="sidebar-item" onclick="showSection('chicago', this)">
         <span class="sidebar-item-icon">🎓</span> Chicago School
+      </button>
+      <button class="sidebar-item" onclick="showSection('noticias', this)">
+        <span class="sidebar-item-icon">📰</span> Noticias
+      </button>
+      <button class="sidebar-item" onclick="showSection('usuarios', this)">
+        <span class="sidebar-item-icon">👥</span> Usuarios
+      </button>
+      <button class="sidebar-item {% if mantenimiento_activo %}danger-item{% endif %}" onclick="showSection('mantenimiento', this)">
+        <span class="sidebar-item-icon">🔧</span> Mantenimiento
+        {% if mantenimiento_activo %}<span style="font-size:0.5rem;color:#c0392b;margin-left:auto;">● ON</span>{% endif %}
       </button>
       <button class="sidebar-item" style="opacity:0.4;cursor:not-allowed">
         <span class="sidebar-item-icon">📋</span> Códigos
@@ -319,9 +374,7 @@
               <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Agregar</button>
             </form>
             <table>
-              <thead>
-                <tr><th>Título</th><th>YouTube ID</th><th>Año</th><th>Acciones</th></tr>
-              </thead>
+              <thead><tr><th>Título</th><th>YouTube ID</th><th>Año</th><th>Acciones</th></tr></thead>
               <tbody>
                 {% for v in videos %}
                 <tr>
@@ -364,9 +417,7 @@
               <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Subir</button>
             </form>
             <table>
-              <thead>
-                <tr><th>Vista previa</th><th>Título</th><th>Año</th><th>Acciones</th></tr>
-              </thead>
+              <thead><tr><th>Vista previa</th><th>Título</th><th>Año</th><th>Acciones</th></tr></thead>
               <tbody>
                 {% for f in fotos %}
                 <tr>
@@ -421,9 +472,7 @@
               <button type="submit" class="btn-editar" style="white-space:nowrap;">+ Agregar</button>
             </form>
             <table>
-              <thead>
-                <tr><th>#</th><th>Título</th><th>YouTube ID</th><th>Acciones</th></tr>
-              </thead>
+              <thead><tr><th>#</th><th>Título</th><th>YouTube ID</th><th>Acciones</th></tr></thead>
               <tbody>
                 {% for l in lecciones %}
                 <tr>
@@ -446,17 +495,226 @@
         </div>
       </div>
 
+      <!-- ── NOTICIAS ── -->
+      <div id="section-noticias" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Noticias</div>
+            <div class="content-sub">Publica noticias en la página de inicio</div>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ noticias.count }}</span><span class="stat-label">Noticias</span></div>
+          <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">Máx. en inicio</span></div>
+          <div class="stat-box"><span class="stat-num">📰</span><span class="stat-label">Publicadas</span></div>
+          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">📰 Publicar Noticia</span>
+          </div>
+          <div style="padding:1.5rem;">
+            <form id="form-noticia" method="POST" action="{% url 'panel_noticia_agregar' %}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:1.5rem;">
+              {% csrf_token %}
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
+                <input type="text" name="titulo" placeholder="Título de la noticia" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Contenido</label>
+                <div id="quill-editor"></div>
+                <input type="hidden" name="contenido" id="contenido-input">
+              </div>
+              <div>
+                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Imagen (opcional)</label>
+                <input type="file" name="imagen" accept="image/*" style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.7rem;padding:0.7rem 1rem;outline:none;width:100%;">
+              </div>
+              <button type="submit" class="btn-editar" style="align-self:flex-start;">+ Publicar Noticia</button>
+            </form>
+            <table>
+              <thead><tr><th>Título</th><th>Fecha</th><th>Acciones</th></tr></thead>
+              <tbody>
+                {% for n in noticias %}
+                <tr>
+                  <td><span class="era-nombre">{{ n.titulo }}</span></td>
+                  <td style="color:rgba(245,234,208,0.4);">{{ n.fecha|date:"d/m/Y H:i" }}</td>
+                  <td>
+                    <div class="actions">
+                      <a href="{% url 'panel_noticia_editar' n.id %}" class="btn-editar">Editar</a>
+                      <a href="{% url 'panel_noticia_eliminar' n.id %}" class="btn-danger">Eliminar</a>
+                    </div>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin noticias aún</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── USUARIOS ── -->
+      <div id="section-usuarios" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Usuarios</div>
+            <div class="content-sub">Gestiona los miembros registrados</div>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box"><span class="stat-num">{{ usuarios.count }}</span><span class="stat-label">Total</span></div>
+          <div class="stat-box"><span class="stat-num">{{ usuarios|length }}</span><span class="stat-label">Registrados</span></div>
+          <div class="stat-box"><span class="stat-num">👥</span><span class="stat-label">Miembros</span></div>
+          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
+        </div>
+        <div class="table-box">
+          <div class="table-toolbar">
+            <span class="table-toolbar-title">👥 Miembros Registrados</span>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Usuario</th><th>Fecha de Registro</th><th>Estado</th><th>Panel</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+              {% for u in usuarios %}
+              <tr>
+                <td>
+                  <span class="era-nombre">{{ u.username }}</span>
+                  {% if u.is_superuser %}<span style="font-size:0.5rem;letter-spacing:0.2em;color:#c9a84c;margin-left:0.5rem;">★ ADMIN</span>{% endif %}
+                </td>
+                <td style="color:rgba(245,234,208,0.4);">{{ u.date_joined|date:"d/m/Y" }}</td>
+                <td>
+                  {% if u.is_active %}<span class="user-active">Activo</span>
+                  {% else %}<span class="user-inactive">Inactivo</span>{% endif %}
+                </td>
+                <td>
+                  {% if u.is_staff %}<span class="user-staff">Con acceso</span>
+                  {% else %}<span class="user-nostaff">Sin acceso</span>{% endif %}
+                </td>
+                <td>
+                  <div class="actions">
+                    {% if u != request.user %}
+                    <a href="{% url 'panel_usuario_permiso' u.id %}" class="btn-ver">
+                      {% if u.is_staff %}Quitar Panel{% else %}Dar Panel{% endif %}
+                    </a>
+                    <button class="btn-warning" onclick="abrirModalDesactivar('{% url 'panel_usuario_desactivar' u.id %}', '{{ u.username }}', {{ u.is_active|yesno:'true,false' }})">
+                      {% if u.is_active %}Desactivar{% else %}Activar{% endif %}
+                    </button>
+                    <button class="btn-danger" onclick="abrirModalEliminar('{% url 'panel_usuario_eliminar' u.id %}', '{{ u.username }}')">
+                      Eliminar
+                    </button>
+                    {% else %}
+                    <span style="font-size:0.6rem;color:rgba(245,234,208,0.2);letter-spacing:0.1em;">Tu cuenta</span>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr><td colspan="5" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin usuarios</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── MANTENIMIENTO ── -->
+      <div id="section-mantenimiento" class="section-panel">
+        <div class="content-header">
+          <div>
+            <div class="content-title">Mantenimiento</div>
+            <div class="content-sub">Controla el acceso público al sitio</div>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div class="stat-box">
+            <span class="stat-num">{% if mantenimiento_activo %}🔴{% else %}🟢{% endif %}</span>
+            <span class="stat-label">{% if mantenimiento_activo %}En mantenimiento{% else %}Sitio activo{% endif %}</span>
+          </div>
+          <div class="stat-box"><span class="stat-num">🔧</span><span class="stat-label">Control de acceso</span></div>
+          <div class="stat-box"><span class="stat-num">👮</span><span class="stat-label">Solo staff ve el sitio</span></div>
+          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
+        </div>
+        <div class="mant-card {% if mantenimiento_activo %}active-mant{% endif %}">
+          <div class="mant-status">
+            <div class="mant-status-indicator {% if mantenimiento_activo %}on{% else %}off{% endif %}"></div>
+            <div class="mant-status-text">
+              <span class="mant-status-title">
+                {% if mantenimiento_activo %}Modo mantenimiento ACTIVADO{% else %}Sitio funcionando con normalidad{% endif %}
+              </span>
+              <span class="mant-status-sub">
+                {% if mantenimiento_activo %}Los visitantes ven la página de mantenimiento. Solo tú puedes navegar el sitio.{% else %}Todos los visitantes pueden acceder al sitio normalmente.{% endif %}
+              </span>
+            </div>
+          </div>
+          <p class="mant-info">
+            Cuando el modo mantenimiento está <strong>activado</strong>, cualquier persona que no sea staff verá una página de mantenimiento en lugar del sitio. <strong>Tú seguirás viendo el sitio con normalidad</strong> porque eres staff. Usa esto cuando necesites hacer cambios importantes sin que los visitantes los vean en proceso.
+          </p>
+          <a href="{% url 'panel_mantenimiento_toggle' %}" class="{% if mantenimiento_activo %}btn-success{% else %}btn-danger{% endif %}" style="display:inline-block;padding:0.8rem 2rem;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;text-decoration:none;">
+            {% if mantenimiento_activo %}✓ Desactivar Mantenimiento{% else %}⚠ Activar Mantenimiento{% endif %}
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
+<!-- ── MODAL DESACTIVAR ── -->
+<div class="modal-overlay" id="modalDesactivar">
+  <div class="modal-box">
+    <span class="modal-icon" id="modalDesactivarIcon">⚠️</span>
+    <div class="modal-title" id="modalDesactivarTitle">Desactivar Cuenta</div>
+    <p class="modal-text" id="modalDesactivarText"></p>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="cerrarModal('modalDesactivar')">Cancelar</button>
+      <a id="modalDesactivarBtn" href="#" class="modal-btn-confirm warning">Confirmar</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL ELIMINAR ── -->
+<div class="modal-overlay" id="modalEliminar">
+  <div class="modal-box">
+    <span class="modal-icon">💀</span>
+    <div class="modal-title">Eliminar Cuenta</div>
+    <p class="modal-text" id="modalEliminarText"></p>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="cerrarModal('modalEliminar')">Cancelar</button>
+      <a id="modalEliminarBtn" href="#" class="modal-btn-confirm">Eliminar</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
+  const quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    placeholder: 'Escribe el contenido de la noticia...',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'color': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link', 'image'],
+        ['clean']
+      ]
+    }
+  });
+
+  document.getElementById('form-noticia').addEventListener('submit', function() {
+    document.getElementById('contenido-input').value = quill.root.innerHTML;
+  });
+
   const breadcrumbs = {
     historia: '/ Historia',
     conquistas: '/ Historial Bélico / Conquistas',
     contador: '/ Historial Bélico / Contador Pettadas',
     'multimedia-belico': '/ Historial Bélico / Multimedia',
     chicago: '/ Chicago School',
+    noticias: '/ Noticias',
+    usuarios: '/ Usuarios',
+    mantenimiento: '/ Mantenimiento',
   };
 
   function showSection(name, el) {
@@ -474,6 +732,33 @@
     el.classList.toggle('open');
     showSection('conquistas', null);
   }
+
+  function abrirModalDesactivar(url, username, isActive) {
+    const accion = isActive ? 'Desactivar' : 'Activar';
+    const icono = isActive ? '⚠️' : '✅';
+    document.getElementById('modalDesactivarIcon').textContent = icono;
+    document.getElementById('modalDesactivarTitle').textContent = accion + ' Cuenta';
+    document.getElementById('modalDesactivarText').innerHTML = `¿Deseas <strong>${accion.toLowerCase()}</strong> la cuenta de <strong>${username}</strong>?`;
+    document.getElementById('modalDesactivarBtn').href = url;
+    document.getElementById('modalDesactivarBtn').textContent = accion;
+    document.getElementById('modalDesactivar').classList.add('open');
+  }
+
+  function abrirModalEliminar(url, username) {
+    document.getElementById('modalEliminarText').innerHTML = `¿Eliminar la cuenta de <strong>${username}</strong>? Esta acción no se puede deshacer y borrará todos sus datos.`;
+    document.getElementById('modalEliminarBtn').href = url;
+    document.getElementById('modalEliminar').classList.add('open');
+  }
+
+  function cerrarModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', (e) => {
+      if (e.target === m) m.classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>

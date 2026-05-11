@@ -1,0 +1,362 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    padding: 2rem;
+  }
+
+  .registro-wrap {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .registro-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    text-align: center;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    text-shadow: 0 0 40px rgba(201,168,76,0.2);
+  }
+
+  .registro-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: rgba(201,168,76,0.35);
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    margin-bottom: 2.5rem;
+  }
+
+  .registro-box {
+    background: rgba(12,10,5,0.95);
+    border: 1px solid rgba(201,168,76,0.12);
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem;
+  }
+
+  .registro-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+  }
+
+  .registro-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    text-align: center;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .registro-desc {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(245,234,208,0.3);
+    text-align: center;
+    display: block;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .form-group { margin-bottom: 1.2rem; }
+
+  .form-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-hint {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: rgba(245,234,208,0.2);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(10,8,4,0.8);
+    border: 1px solid rgba(201,168,76,0.15);
+    color: #f5ead0;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.05em;
+  }
+
+  .form-input:focus { border-color: rgba(201,168,76,0.5); }
+
+  .form-input::placeholder {
+    color: rgba(245,234,208,0.15);
+    letter-spacing: 0.1em;
+  }
+
+  .alert-error {
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.2rem;
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.25);
+    border-left: 3px solid #c0392b;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: #c0392b;
+    text-transform: uppercase;
+  }
+
+  .btn-registro {
+    width: 100%;
+    padding: 0.9rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: #c9a84c;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-registro:hover {
+    background: #c9a84c;
+    color: #0a0804;
+  }
+
+  .registro-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(201,168,76,0.06);
+    text-align: center;
+  }
+
+  .registro-footer span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,234,208,0.2);
+    text-transform: uppercase;
+  }
+
+  .registro-footer a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-left: 0.5rem;
+  }
+
+  .registro-footer a:hover { color: var(--gold); }
+
+  /* Preview Habbo */
+  .habbo-preview {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.1);
+    margin-top: 0.8rem;
+  }
+
+  .habbo-preview.visible { display: flex; }
+
+  .habbo-preview img {
+    width: 45px;
+    height: 65px;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+
+  .habbo-preview-info { flex: 1; }
+
+  .habbo-preview-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .habbo-preview-motto {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: rgba(245,234,208,0.4);
+  }
+
+  .habbo-preview-error {
+    display: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: rgba(192,57,43,0.6);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  .habbo-preview-error.visible { display: block; }
+
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
+</style>
+</head>
+<body>
+
+<div class="registro-wrap">
+  <a href="/" class="registro-logo">AlCapone</a>
+  <span class="registro-sub">Family · Est. 2008 · Omertà</span>
+
+  <div class="registro-box">
+    <span class="registro-title">Únete a la Famiglia</span>
+    <span class="registro-desc">Ingresa tu nombre de usuario de Habbo para registrarte en la web oficial de AlCapone Family.</span>
+
+    {% if error %}
+    <div class="alert-error">✕ {{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label class="form-label">Nombre de usuario de Habbo</label>
+        <span class="form-hint">Escribe tu nick exactamente como aparece en Habbo.es</span>
+        <input
+          type="text"
+          name="username"
+          id="habbo-input"
+          placeholder="Ej: xlDeadman"
+          required
+          autocomplete="off"
+          class="form-input"
+          value="{{ request.POST.username|default:'' }}"
+        >
+        <!-- Preview en tiempo real -->
+        <div class="habbo-preview" id="habbo-preview">
+          <img id="preview-avatar" src="" alt="Avatar">
+          <div class="habbo-preview-info">
+            <span class="habbo-preview-name" id="preview-name">—</span>
+            <span class="habbo-preview-motto" id="preview-motto">—</span>
+          </div>
+        </div>
+        <div class="habbo-preview-error" id="preview-error">Usuario no encontrado en Habbo.es</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="password" name="password" placeholder="Mínimo 6 caracteres" required class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirmar Contraseña</label>
+        <input type="password" name="confirmar" placeholder="Repite tu contraseña" required class="form-input">
+      </div>
+
+      <button type="submit" class="btn-registro">✦ Registrarse</button>
+    </form>
+
+    <div class="registro-footer">
+      <span>¿Ya tienes cuenta?</span>
+      <a href="/login/">Iniciar Sesión →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById('habbo-input');
+  const preview = document.getElementById('habbo-preview');
+  const previewError = document.getElementById('preview-error');
+  const previewAvatar = document.getElementById('preview-avatar');
+  const previewName = document.getElementById('preview-name');
+  const previewMotto = document.getElementById('preview-motto');
+
+  let timer = null;
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    const val = input.value.trim();
+
+    preview.classList.remove('visible');
+    previewError.classList.remove('visible');
+
+    if (val.length < 3) return;
+
+    timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`https://www.habbo.es/api/public/users?name=${val}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+
+        const figura = data.figureString || '';
+        previewAvatar.src = `https://www.habbo.es/habbo-imaging/avatarimage?figure=${figura}&action=std&direction=2&head_direction=2&gesture=sml&size=m`;
+        previewName.textContent = data.name || val;
+        previewMotto.textContent = data.motto || 'Sin misión';
+
+        preview.classList.add('visible');
+        previewError.classList.remove('visible');
+      } catch (e) {
+        preview.classList.remove('visible');
+        previewError.classList.add('visible');
+      }
+    }, 600);
+  });
+
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+  });
+</script>
+</body>
+</html>

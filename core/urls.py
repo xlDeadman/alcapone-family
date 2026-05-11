@@ -13,6 +13,14 @@ urlpatterns = [
     path('codigos/', views.codigos, name='codigos'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    path('registro/', views.registro, name='registro'),
+
+    # ── PERFIL ──
+    path('perfil/', views.perfil, name='perfil'),
+    path('cambiar-contrasena/', views.cambiar_contrasena, name='cambiar_contrasena'),
+
+    # ── NOTICIAS ──
+    path('noticias/<int:noticia_id>/', views.noticia_detalle, name='noticia_detalle'),
 
     # ── PANEL ──
     path('panel/', views.panel, name='panel'),
@@ -41,4 +49,17 @@ urlpatterns = [
     # ── LECCIONES ──
     path('panel/leccion/agregar/', views.panel_leccion_agregar, name='panel_leccion_agregar'),
     path('panel/leccion/<int:leccion_id>/eliminar/', views.panel_leccion_eliminar, name='panel_leccion_eliminar'),
+
+    # ── PANEL NOTICIAS ──
+    path('panel/noticia/agregar/', views.panel_noticia_agregar, name='panel_noticia_agregar'),
+    path('panel/noticia/<int:noticia_id>/editar/', views.panel_noticia_editar, name='panel_noticia_editar'),
+    path('panel/noticia/<int:noticia_id>/eliminar/', views.panel_noticia_eliminar, name='panel_noticia_eliminar'),
+
+    # ── USUARIOS ──
+    path('panel/usuario/<int:user_id>/desactivar/', views.panel_usuario_desactivar, name='panel_usuario_desactivar'),
+    path('panel/usuario/<int:user_id>/eliminar/', views.panel_usuario_eliminar, name='panel_usuario_eliminar'),
+    path('panel/usuario/<int:user_id>/permiso/', views.panel_usuario_permiso, name='panel_usuario_permiso'),
+
+    # ── MANTENIMIENTO ──
+    path('panel/mantenimiento/', views.panel_mantenimiento_toggle, name='panel_mantenimiento_toggle'),
 ]

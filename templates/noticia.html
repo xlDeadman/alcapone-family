@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ noticia.titulo }} | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+  /* ── HERO ── */
+  .noticia-hero {
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .noticia-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.12) 0%, transparent 70%),
+      var(--dark2);
+  }
+
+  .noticia-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--dark));
+  }
+
+  .noticia-hero-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .noticia-hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.8rem, 5vw, 4rem);
+    color: var(--gold);
+    line-height: 1.1;
+    text-shadow: 0 0 60px rgba(201,168,76,0.2);
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .noticia-hero-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── CONTENIDO ── */
+  .noticia-content-section {
+    background: var(--dark);
+    padding: 3rem 2rem 5rem;
+  }
+
+  .noticia-content-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* ── META ── */
+  .noticia-meta {
+    margin-bottom: 2.5rem;
+  }
+
+  .noticia-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .noticia-meta-fecha {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: rgba(201,168,76,0.6);
+    text-transform: uppercase;
+  }
+
+  .noticia-meta-punto {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    color: rgba(201,168,76,0.25);
+  }
+
+  .noticia-meta-autor {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: rgba(201,168,76,0.4);
+    text-transform: uppercase;
+  }
+
+  .noticia-meta-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+  }
+
+  /* ── IMAGEN ── */
+  .noticia-imagen-full {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    border: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 2.5rem;
+    filter: brightness(0.9);
+    transition: filter 0.3s;
+  }
+
+  .noticia-imagen-full:hover {
+    filter: brightness(1);
+  }
+
+  /* ── TEXTO ── */
+  .noticia-texto {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem;
+    line-height: 2;
+    color: rgba(245,234,208,0.7);
+  }
+
+  .noticia-texto p { margin-bottom: 1rem; }
+  .noticia-texto strong { color: rgba(245,234,208,0.9); }
+  .noticia-texto em { font-style: italic; }
+  .noticia-texto a { color: var(--gold); text-decoration: underline; }
+  .noticia-texto a:hover { color: rgba(201,168,76,0.8); }
+  .noticia-texto ul, .noticia-texto ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  .noticia-texto li { margin-bottom: 0.4rem; }
+  .noticia-texto img { max-width: 100%; margin: 1rem 0; border: 1px solid rgba(201,168,76,0.15); }
+
+  /* ── VOLVER ── */
+  .noticia-volver {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .btn-volver {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.7);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-volver:hover {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+    <li><a href="/chicago-school/">Chicago School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    {% if user.is_authenticated %}
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
+    </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="noticia-hero">
+  <div class="noticia-hero-bg"></div>
+  <span class="noticia-hero-label">AlCapone Family · Noticias</span>
+  <h1 class="noticia-hero-title">{{ noticia.titulo }}</h1>
+  <div class="noticia-hero-rule"></div>
+</div>
+
+<!-- ── CONTENIDO ── -->
+<section class="noticia-content-section">
+  <div class="noticia-content-wrap">
+    <div class="noticia-meta">
+      <div class="noticia-meta-top">
+        <span class="noticia-meta-fecha">{{ noticia.fecha|date:"d \d\e F \d\e Y" }}</span>
+        <span class="noticia-meta-punto">·</span>
+        <span class="noticia-meta-autor">AlCapone Family</span>
+      </div>
+      <div class="noticia-meta-line"></div>
+    </div>
+    {% if noticia.imagen %}
+    <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-imagen-full">
+    {% endif %}
+    <div class="noticia-texto">{{ noticia.contenido|safe }}</div>
+    <div class="noticia-volver">
+      <a href="/#noticias" class="btn-volver">← Volver al Inicio</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+</script>
+</body>
+</html>

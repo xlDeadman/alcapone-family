@@ -8,12 +8,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
+
+  /* ── PAGE HERO ── */
   .page-hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 5rem; position: relative; overflow: hidden; text-align: center; }
   .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%), var(--dark2); }
   .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--dark)); }
   .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.6em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1.5rem; position: relative; z-index: 2; animation: fadeUp 1s ease both; }
   .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.25); position: relative; z-index: 2; animation: fadeUp 1s 0.15s ease both; }
   .page-hero-rule { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.8rem auto 0; position: relative; z-index: 2; }
+
+  /* ── TOTAL BANNER ── */
   .total-banner { background: var(--dark); padding: 5rem 2rem 3rem; text-align: center; }
   .total-numero { font-family: 'Cinzel Decorative', serif; font-size: clamp(5rem, 15vw, 12rem); color: var(--gold); line-height: 0.9; text-shadow: 0 0 80px rgba(201,168,76,0.3), 0 0 160px rgba(201,168,76,0.1); display: block; animation: fadeUp 1s 0.3s ease both; }
   .total-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.6em; color: rgba(245,234,208,0.35); text-transform: uppercase; margin-top: 1rem; display: block; animation: fadeUp 1s 0.5s ease both; }
@@ -22,6 +41,8 @@
   .stat-pill { text-align: center; }
   .stat-pill-num { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: var(--gold); display: block; opacity: 0.8; }
   .stat-pill-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+
+  /* ── GRID FAMILIAS ── */
   .grid-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
   .grid-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
   .section-header { text-align: center; margin-bottom: 4rem; }
@@ -43,6 +64,8 @@
   .famiglia-count.multiple { color: #c0392b; text-shadow: 0 0 15px rgba(192,57,43,0.2); }
   .famiglia-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); transition: width 0.6s ease; }
   .no-results { text-align: center; padding: 3rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.3); font-size: 1rem; display: none; }
+
+  /* ── RANKING ── */
   .ranking-section { background: var(--dark); padding: 6rem 2rem; position: relative; }
   .ranking-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent); }
   .ranking-list { max-width: 700px; margin: 0 auto; }
@@ -54,11 +77,20 @@
   .ranking-bar-wrap { flex: 1; height: 3px; background: rgba(201,168,76,0.08); position: relative; max-width: 200px; }
   .ranking-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); transition: width 1s ease; }
   .ranking-num { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: var(--gold); min-width: 2rem; text-align: right; }
+
+  /* ── CIERRE ── */
   .contador-cierre { background: var(--dark2); border-top: 1px solid rgba(201,168,76,0.12); padding: 5rem 2rem; text-align: center; }
   .cierre-glyph { font-family: 'Cinzel Decorative', serif; font-size: 3rem; color: rgba(201,168,76,0.08); margin-bottom: 1rem; display: block; }
   .cierre-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--gold); margin-bottom: 1rem; }
   .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.4); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
-  @media (max-width: 600px) { .stats-row { gap: 2rem; } .familias-grid { grid-template-columns: 1fr; } .ranking-bar-wrap { display: none; } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .stats-row { gap: 2rem; }
+    .familias-grid { grid-template-columns: 1fr; }
+    .ranking-bar-wrap { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -79,12 +111,25 @@
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-    <div class="nav-social">
-      <a href="#" title="Twitter/X">✕</a>
-      <a href="#" title="YouTube">▶</a>
+    {% if user.is_authenticated %}
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
     </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -120,7 +165,7 @@
   </div>
 </div>
 
-<!-- ── GRID DE FAMILIAS ── -->
+<!-- ── GRID FAMILIAS ── -->
 <section class="grid-section">
   <div class="container">
     <div class="section-header reveal">
@@ -146,7 +191,7 @@
   </div>
 </section>
 
-<!-- ── RANKING TOP ── -->
+<!-- ── RANKING ── -->
 <section class="ranking-section">
   <div class="container">
     <div class="section-header reveal">
@@ -190,7 +235,7 @@
     <li><a href="/historia-belico/">Bélico</a></li>
     <li><a href="/chicago-school/">School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
   </ul>
   <div class="footer-copy">
     &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
@@ -199,10 +244,21 @@
 </footer>
 
 <script>
+  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
+  // ── User Menu ──
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+  });
+
+  // ── Reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -219,6 +275,7 @@
     observer.observe(el);
   });
 
+  // ── Búsqueda ──
   const searchInput = document.getElementById('searchInput');
   const cards = document.querySelectorAll('.famiglia-card');
   const noResults = document.getElementById('noResults');

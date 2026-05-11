@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Perfil | AlCapone Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+
+  body { min-height: 100vh; display: flex; flex-direction: column; background: var(--dark); }
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
+
+  /* ── PAGE HERO ── */
+  .page-hero { min-height: 35vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 4rem; position: relative; overflow: hidden; text-align: center; }
+  .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.12) 0%, transparent 70%), var(--dark2); }
+  .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to bottom, transparent, var(--dark)); }
+  .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.5em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1rem; position: relative; z-index: 2; }
+  .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.8rem, 5vw, 3.5rem); color: var(--gold); line-height: 1.1; position: relative; z-index: 2; }
+  .page-hero-rule { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.2rem auto 0; position: relative; z-index: 2; }
+
+  .perfil-section { padding: 3rem 2rem 6rem; flex: 1; }
+  .perfil-wrap { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+
+  /* ── HABBO CARD ── */
+  .habbo-card { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2rem; }
+  .habbo-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .habbo-card-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; color: rgba(201,168,76,0.6); text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+  .habbo-avatar-wrap { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.08); }
+  .habbo-avatar { width: 80px; height: 110px; object-fit: contain; image-rendering: pixelated; border: 1px solid rgba(201,168,76,0.15); background: rgba(10,8,4,0.5); flex-shrink: 0; }
+  .habbo-info { flex: 1; }
+  .habbo-nombre { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+  .habbo-mision { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; color: rgba(245,234,208,0.5); line-height: 1.6; }
+  .habbo-stats { display: flex; flex-direction: column; gap: 0.6rem; }
+  .habbo-stat-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .habbo-stat-row:last-child { border-bottom: none; }
+  .habbo-stat-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.5); text-transform: uppercase; }
+  .habbo-stat-value { font-family: 'Cinzel', serif; font-size: 0.72rem; color: rgba(245,234,208,0.7); letter-spacing: 0.1em; }
+  .habbo-loading { text-align: center; padding: 2rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.3); font-size: 0.9rem; }
+  .habbo-error { text-align: center; padding: 1rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(192,57,43,0.7); text-transform: uppercase; border: 1px solid rgba(192,57,43,0.2); background: rgba(192,57,43,0.05); }
+
+  /* ── FORM CARD ── */
+  .form-card { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2rem; }
+  .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .form-card-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; color: rgba(201,168,76,0.6); text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.5); text-transform: uppercase; display: block; margin-bottom: 0.4rem; }
+  .form-input { width: 100%; background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.15); color: #f5ead0; font-family: 'Cinzel', serif; font-size: 0.78rem; padding: 0.7rem 1rem; outline: none; transition: border-color 0.3s; }
+  .form-input:focus { border-color: rgba(201,168,76,0.4); }
+  .form-input:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-guardar { width: 100%; padding: 0.8rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; }
+  .btn-guardar:hover { background: #c9a84c; color: #0a0804; }
+  .alert-success { padding: 0.8rem 1rem; margin-bottom: 1rem; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.3); border-left: 3px solid #27ae60; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; color: #27ae60; text-transform: uppercase; }
+  .form-back { display: block; text-align: center; margin-top: 1rem; font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,234,208,0.25); text-decoration: none; transition: color 0.3s; }
+  .form-back:hover { color: var(--gold); }
+
+  @media (max-width: 700px) { .perfil-wrap { grid-template-columns: 1fr; } }
+
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">AlCapone</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li class="has-dropdown">
+      <a href="/historia-belico/">Historial Bélico ▾</a>
+      <ul class="dropdown">
+        <li><a href="/contador-petadas/">Contador Pettadas</a></li>
+        <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
+      </ul>
+    </li>
+    <li><a href="/chicago-school/">Chicago School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    {% if user.is_authenticated %}
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
+    </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <span class="page-hero-label">AlCapone Family · Cuenta</span>
+  <h1 class="page-hero-title">Mi Perfil</h1>
+  <div class="page-hero-rule"></div>
+</div>
+
+<!-- ── PERFIL ── -->
+<section class="perfil-section">
+  <div class="perfil-wrap">
+
+    <!-- HABBO CARD -->
+    <div class="habbo-card">
+      <span class="habbo-card-title">✦ Perfil de Habbo</span>
+      <div id="habbo-loading" class="habbo-loading">Cargando perfil de Habbo...</div>
+      <div id="habbo-data" style="display:none;">
+        <div class="habbo-avatar-wrap">
+          <img id="habbo-avatar-img" class="habbo-avatar" src="" alt="Avatar">
+          <div class="habbo-info">
+            <span class="habbo-nombre" id="habbo-nombre">—</span>
+            <span class="habbo-mision" id="habbo-mision">—</span>
+          </div>
+        </div>
+        <div class="habbo-stats">
+          <div class="habbo-stat-row">
+            <span class="habbo-stat-label">Usuario</span>
+            <span class="habbo-stat-value" id="habbo-usuario">—</span>
+          </div>
+          <div class="habbo-stat-row">
+            <span class="habbo-stat-label">Miembro desde</span>
+            <span class="habbo-stat-value" id="habbo-fecha">—</span>
+          </div>
+        </div>
+      </div>
+      <div id="habbo-error" class="habbo-error" style="display:none;">
+        Perfil de Habbo privado o no encontrado
+      </div>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+      <span class="form-card-title">✦ Editar Perfil</span>
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert-success">✓ Perfil actualizado correctamente</div>
+      {% endfor %}
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label">Usuario Web</label>
+          <input type="text" class="form-input" value="{{ user.username }}" disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-input" value="{{ user.email }}" placeholder="tu@email.com">
+        </div>
+        <button type="submit" class="btn-guardar">✓ Guardar Cambios</button>
+      </form>
+
+      <a href="/" class="form-back">← Volver al Inicio</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // ── User Menu ──
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+  });
+
+  // ── API Habbo ──
+  const habboUser = "{{ perfil.habbo_username|default:user.username }}";
+
+  async function cargarHabbo() {
+    try {
+      const res = await fetch(`https://www.habbo.es/api/public/users?name=${habboUser}`);
+      if (!res.ok) throw new Error('No encontrado');
+      const data = await res.json();
+
+      const figura = data.figureString || '';
+      document.getElementById('habbo-avatar-img').src =
+        `https://www.habbo.es/habbo-imaging/avatarimage?figure=${figura}&action=std&direction=2&head_direction=2&gesture=sml&size=l`;
+
+      document.getElementById('habbo-nombre').textContent = data.name || habboUser;
+      document.getElementById('habbo-mision').textContent = data.motto || '— Perfil privado —';
+      document.getElementById('habbo-usuario').textContent = data.name || habboUser;
+
+      if (data.memberSince) {
+        const fecha = new Date(data.memberSince);
+        document.getElementById('habbo-fecha').textContent = fecha.toLocaleDateString('es-ES', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+      } else {
+        document.getElementById('habbo-fecha').textContent = '— Privado —';
+      }
+
+      document.getElementById('habbo-loading').style.display = 'none';
+      document.getElementById('habbo-data').style.display = 'block';
+
+    } catch (e) {
+      document.getElementById('habbo-loading').style.display = 'none';
+      document.getElementById('habbo-error').innerHTML = 'Perfil de Habbo privado o no encontrado';
+      document.getElementById('habbo-error').style.display = 'block';
+    }
+  }
+
+  cargarHabbo();
+</script>
+</body>
+</html>

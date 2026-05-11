@@ -7,6 +7,120 @@
 <title>AlCapone Family | Famiglia dei Intoccabili</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  /* ── NOTICIAS ── */
+  .noticias-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
+  .noticias-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.5em; color: rgba(201,168,76,0.6); text-transform: uppercase; display: block; margin-bottom: 1rem; }
+  .section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 3.5vw, 2.8rem); color: var(--gold); }
+  .section-rule { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto 0; }
+  .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .noticia-card { background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; transition: all 0.3s; display: flex; flex-direction: column; }
+  .noticia-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .noticia-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
+  .noticia-img { width: 100%; height: 200px; object-fit: cover; filter: brightness(0.8) sepia(0.2); transition: filter 0.3s; }
+  .noticia-card:hover .noticia-img { filter: brightness(1) sepia(0); }
+  .noticia-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+  .noticia-fecha { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.5); text-transform: uppercase; display: block; margin-bottom: 0.8rem; }
+  .noticia-titulo { font-family: 'Cinzel Decorative', serif; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--gold); line-height: 1.2; margin-bottom: 1rem; }
+  .noticia-contenido { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.5); line-height: 1.8; flex: 1; }
+  .noticia-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.08); }
+  .btn-seguir { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.6rem 1.2rem; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); text-decoration: none; transition: all 0.3s; }
+  .btn-seguir:hover { background: rgba(201,168,76,0.1); color: var(--gold); border-color: var(--gold); }
+  .noticias-empty { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.2); font-size: 1rem; grid-column: 1/-1; }
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+
+  .user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: rgba(201,168,76,0.8);
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .user-btn:hover {
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .user-btn-arrow {
+    font-size: 0.5rem;
+    transition: transform 0.3s;
+  }
+
+  .user-menu.open .user-btn-arrow {
+    transform: rotate(180deg);
+  }
+
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: rgba(12,10,5,0.98);
+    border: 1px solid rgba(201,168,76,0.2);
+    min-width: 180px;
+    display: none;
+    flex-direction: column;
+    z-index: 200;
+  }
+
+  .user-dropdown::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .user-menu.open .user-dropdown {
+    display: flex;
+  }
+
+  .user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,234,208,0.5);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-bottom: 1px solid rgba(201,168,76,0.05);
+  }
+
+  .user-dropdown a:last-child {
+    border-bottom: none;
+  }
+
+  .user-dropdown a:hover {
+    background: rgba(201,168,76,0.06);
+    color: var(--gold);
+  }
+
+  .user-dropdown a.danger {
+    color: rgba(192,57,43,0.6);
+  }
+
+  .user-dropdown a.danger:hover {
+    background: rgba(192,57,43,0.06);
+    color: #c0392b;
+  }
+</style>
 </head>
 <body>
 
@@ -16,8 +130,6 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="/">Inicio</a></li>
     <li><a href="/historia/">Historia</a></li>
-
-    <!-- HISTORIAL BÉLICO CON SUBMENÚ -->
     <li class="has-dropdown">
       <a href="/historia-belico/">Historial Bélico ▾</a>
       <ul class="dropdown">
@@ -25,32 +137,28 @@
         <li><a href="/historia-belico/multimedia/">Multimedia de Pettadas</a></li>
       </ul>
     </li>
-
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="#multimedia">Multimedia</a></li>
+    <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="#noticias">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-    <div style="display:flex;align-items:center;gap:1.5rem;">
-
-    <!-- QUITA ESTO: -->
-    <!-- <div class="nav-social">
-      <a href="#" title="Twitter/X">✕</a>
-      <a href="#" title="YouTube">▶</a>
-    </div> -->
-
-    <!-- PON ESTO: -->
     {% if user.is_authenticated %}
-  <a href="/panel/" class="btn-login" style="background:rgba(201,168,76,0.1);">⚙ Panel</a>
-  <a href="/logout/" class="btn-login">Cerrar Sesión</a>
-{% else %}
-  <a href="/login/" class="btn-login">Iniciar Sesión</a>
-{% endif %}
-
-    <button class="hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
-</div>
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
+    </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -61,127 +169,103 @@
 <section id="inicio">
   <div class="hero-bg"></div>
   <div class="fog"></div>
-
   <span class="hero-ornament">— Famiglia dei Intoccabili — Est. 2008 —</span>
-
   <h1 class="hero-title">AlCapone</h1>
   <p class="hero-sub">Family &nbsp;·&nbsp; Onore &nbsp;·&nbsp; Omertà</p>
   <div class="hero-divider"></div>
   <p class="hero-intro">
-    Web oficial de la AlCapone Family, activa desde 2008. Aquí encontrarás información, 
+    Web oficial de la AlCapone Family, activa desde 2008. Aquí encontrarás información,
     jerarquía y noticias sobre nuestra historia y comunidad.
   </p>
   <div class="hero-cta">
-    <a href="/historia/"class="btn-gold">Nuestra Historia</a>
-    <a href="#school" class="btn-outline">Chicago School</a>
+    <a href="/historia/" class="btn-gold">Nuestra Historia</a>
+    <a href="/chicago-school/" class="btn-outline">Chicago School</a>
   </div>
-
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
+<!-- ── NOTICIAS ── -->
+<section class="noticias-section" id="noticias">
+  <div class="section-header reveal">
+    <span class="section-label">Última Hora</span>
+    <h2 class="section-title">Noticias de la Famiglia</h2>
+    <div class="section-rule"></div>
+  </div>
+  <div class="noticias-grid">
+    {% for noticia in noticias %}
+    <div class="noticia-card reveal">
+      {% if noticia.imagen %}
+      <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-img">
+      {% endif %}
+      <div class="noticia-body">
+        <span class="noticia-fecha">{{ noticia.fecha|date:"d \d\e F \d\e Y" }}</span>
+        <div class="noticia-titulo">{{ noticia.titulo }}</div>
+        <div class="noticia-contenido">{{ noticia.contenido|striptags|truncatewords:25 }}</div>
+        <div class="noticia-footer">
+          <a href="{% url 'noticia_detalle' noticia.id %}" class="btn-seguir">Seguir leyendo →</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="noticias-empty">Aún no hay noticias publicadas.</div>
+    {% endfor %}
+  </div>
+</section>
 
-
-
-
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">AlCapone</div>
+  <div class="footer-sub">Family · Est. 2008 · Omertà</div>
+  <ul class="footer-links">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/historia/">Historia</a></li>
+    <li><a href="/historia-belico/">Bélico</a></li>
+    <li><a href="/chicago-school/">School</a></li>
+    <li><a href="/codigos/">Códigos</a></li>
+  </ul>
+  <div class="footer-copy">
+    &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
+    <em>Chi tradisce la Famiglia, tradisce se stesso.</em>
+  </div>
+</footer>
 
 <script>
-  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
-  // ── Intersection Observer reveal ──
-  const revealEls = document.querySelectorAll('.reveal, .timeline-item, .codigo-item');
+  const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, 100);
+        setTimeout(() => entry.target.classList.add('visible'), 100);
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
-
   revealEls.forEach(el => observer.observe(el));
 
-  // staggered delays for grids
-  document.querySelectorAll('.school-card, .familia-card, .stat-card').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.08}s`;
-  });
-
-  document.querySelectorAll('.timeline-item').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.15}s`;
-  });
-
-  document.querySelectorAll('.codigo-item').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.1}s`;
-  });
-
-  // ── Nav active on scroll ──
-  const sections = document.querySelectorAll('section[id]');
-  const navAs = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-    });
-    navAs.forEach(a => {
-      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
-    });
-  });
-
-  // ── Radio toggle ──
-  let radioOn = false;
-  function toggleRadio() {
-    radioOn = !radioOn;
-    const btn = document.getElementById('radioBtn');
-    const dot = document.getElementById('radioDot');
-    if (radioOn) {
-      dot.style.display = 'inline-block';
-      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:inline-block"></span> ■ En Vivo';
-    } else {
-      btn.innerHTML = '<span class="pulse-dot" id="radioDot" style="display:none"></span> ▶ Transmisión en Vivo';
-    }
-  }
-
-  // ── Horarios dinámicos ──
-  function updateHorarios() {
-    const utc = new Date();
-    const zones = [
-      { id: 0, offset: -5, name: 'México' },
-      { id: 1, offset: -5, name: 'Colombia' },
-      { id: 2, offset: -4, name: 'Chile' },
-      { id: 3, offset: 2, name: 'España' },
-    ];
-    const items = document.querySelectorAll('.horario-item');
-    if (!items.length) return;
-    zones.forEach((z, i) => {
-      const local = new Date(utc.getTime() + z.offset * 3600000);
-      const h = local.getUTCHours().toString().padStart(2, '0');
-      const m = local.getUTCMinutes().toString().padStart(2, '0');
-      if (items[i]) {
-        items[i].innerHTML = `<strong>${z.name}</strong>${h}:${m}`;
-      }
-    });
-  }
-  updateHorarios();
-  setInterval(updateHorarios, 60000);
-
-  // ── Title flicker ──
   const title = document.querySelector('.hero-title');
   if (title) {
     title.style.animation = 'fadeUp 1.4s ease both, flickerGold 8s 3s ease-in-out infinite';
   }
+
+  // ── User Menu ──
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
 </script>
-</body>
-<!-- ── TOAST BIENVENIDA ── -->
+
 {% if messages %}
 {% for message in messages %}
 <div class="toast" id="toast">
@@ -195,48 +279,13 @@
 {% endif %}
 
 <style>
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: rgba(18,14,8,0.97);
-  border: 1px solid rgba(201,168,76,0.3);
-  border-left: 3px solid var(--gold);
-  padding: 1.2rem 1.8rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  z-index: 9999;
-  animation: toastIn 0.5s ease both, toastOut 0.5s ease 3.5s both;
-  min-width: 280px;
-}
+.toast { position: fixed; bottom: 2rem; right: 2rem; background: rgba(18,14,8,0.97); border: 1px solid rgba(201,168,76,0.3); border-left: 3px solid var(--gold); padding: 1.2rem 1.8rem; display: flex; align-items: center; gap: 1rem; z-index: 9999; animation: toastIn 0.5s ease both, toastOut 0.5s ease 3.5s both; min-width: 280px; }
 .toast-icon { font-size: 1.8rem; }
-.toast-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.toast-text strong {
-  font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-.toast-text span {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 0.8rem;
-  color: rgba(245,234,208,0.4);
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(100px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes toastOut {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(100px); }
-}
+.toast-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.toast-text strong { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+.toast-text span { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: rgba(245,234,208,0.4); }
+@keyframes toastIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100px); } }
 </style>
 
 <script>

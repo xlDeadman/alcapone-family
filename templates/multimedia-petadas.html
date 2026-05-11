@@ -8,6 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
+
+  /* ── USER MENU ── */
+  .user-menu { position: relative; }
+  .user-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); color: rgba(201,168,76,0.8); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+  .user-btn:hover { background: rgba(201,168,76,0.15); color: #c9a84c; border-color: #c9a84c; }
+  .user-btn-arrow { font-size: 0.5rem; transition: transform 0.3s; }
+  .user-menu.open .user-btn-arrow { transform: rotate(180deg); }
+  .user-dropdown { position: absolute; top: calc(100% + 0.5rem); right: 0; background: rgba(12,10,5,0.98); border: 1px solid rgba(201,168,76,0.2); min-width: 180px; display: none; flex-direction: column; z-index: 200; }
+  .user-dropdown::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
+  .user-menu.open .user-dropdown { display: flex; }
+  .user-dropdown a { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.2rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.5); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid rgba(201,168,76,0.05); }
+  .user-dropdown a:last-child { border-bottom: none; }
+  .user-dropdown a:hover { background: rgba(201,168,76,0.06); color: #c9a84c; }
+  .user-dropdown a.danger { color: rgba(192,57,43,0.6); }
+  .user-dropdown a.danger:hover { background: rgba(192,57,43,0.06); color: #c0392b; }
+
+  /* ── PAGE HERO ── */
   .page-hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 2rem 5rem; position: relative; overflow: hidden; text-align: center; }
   .page-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 80%, rgba(139,26,26,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(139,105,20,0.08) 0%, transparent 60%), var(--dark2); }
   .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--dark)); }
@@ -15,6 +32,7 @@
   .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.25); position: relative; z-index: 2; animation: fadeUp 1s 0.15s ease both; }
   .page-hero-rule { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.8rem auto 0; position: relative; z-index: 2; }
 
+  /* ── SECCIÓN VIDEOS ── */
   .videos-section { background: var(--dark); padding: 6rem 2rem; }
   .section-header { text-align: center; margin-bottom: 4rem; }
   .section-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; opacity: 0.7; margin-bottom: 1rem; display: block; }
@@ -23,46 +41,18 @@
 
   /* ── VIDEO CARDS ── */
   .videos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-
-  .video-card {
-    background: rgba(10,8,4,0.8);
-    border: 1px solid rgba(201,168,76,0.1);
-    position: relative; overflow: hidden;
-    transition: all 0.3s; text-decoration: none;
-    display: block;
-  }
+  .video-card { background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; transition: all 0.3s; text-decoration: none; display: block; }
   .video-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
   .video-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
-
-  .video-thumb {
-    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
-  }
-  .video-thumb img {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; filter: brightness(0.8); transition: filter 0.3s;
-  }
+  .video-thumb { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .video-thumb img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: filter 0.3s; }
   .video-card:hover .video-thumb img { filter: brightness(1); }
-
-  .video-play-btn {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 60px; height: 60px; border-radius: 50%;
-    background: rgba(201,168,76,0.9);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; color: #0a0804;
-    transition: all 0.3s; z-index: 2;
-  }
+  .video-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(201,168,76,0.9); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #0a0804; transition: all 0.3s; z-index: 2; }
   .video-card:hover .video-play-btn { background: var(--gold); transform: translate(-50%, -50%) scale(1.1); }
-
   .video-info { padding: 1.2rem 1.5rem; }
   .video-titulo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.8); margin-bottom: 0.6rem; }
   .video-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.4); margin-bottom: 0.8rem; }
-  .video-link-btn {
-    display: inline-block;
-    font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em;
-    text-transform: uppercase; padding: 0.5rem 1.2rem;
-    border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7);
-    transition: all 0.3s;
-  }
+  .video-link-btn { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.5rem 1.2rem; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); transition: all 0.3s; }
   .video-card:hover .video-link-btn { border-color: var(--gold); color: var(--gold); }
 
   /* ── CARRUSEL ── */
@@ -99,8 +89,17 @@
   .lightbox-counter { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); margin-top: 0.3rem; }
 
   .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.25); font-size: 1rem; }
-  @media (max-width: 900px) { .carrusel-item { flex: 0 0 calc(33.33% - 3px); } .carrusel-arrow.prev { left: -1.5rem; } .carrusel-arrow.next { right: -1.5rem; } }
-  @media (max-width: 600px) { .carrusel-item { flex: 0 0 calc(50% - 2px); } .videos-grid { grid-template-columns: 1fr; } }
+
+  @media (max-width: 900px) {
+    .carrusel-item { flex: 0 0 calc(33.33% - 3px); }
+    .carrusel-arrow.prev { left: -1.5rem; }
+    .carrusel-arrow.next { right: -1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .carrusel-item { flex: 0 0 calc(50% - 2px); }
+    .videos-grid { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -121,12 +120,25 @@
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/#multimedia">Multimedia</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-    <div class="nav-social">
-      <a href="#" title="Twitter/X">✕</a>
-      <a href="#" title="YouTube">▶</a>
+    {% if user.is_authenticated %}
+    <div class="user-menu" id="userMenu">
+      <button class="user-btn" onclick="toggleUserMenu()">
+        ✦ {{ user.username }}
+        <span class="user-btn-arrow">▼</span>
+      </button>
+      <div class="user-dropdown">
+        {% if user.is_staff %}<a href="/panel/">⚙ Panel</a>{% endif %}
+        <a href="/perfil/">👤 Perfil</a>
+        <a href="/cambiar-contrasena/">🔑 Cambiar Contraseña</a>
+        <a href="/logout/" class="danger">← Cerrar Sesión</a>
+      </div>
     </div>
+    {% else %}
+    <a href="/login/" class="btn-login">Iniciar Sesión</a>
+    {% endif %}
     <button class="hamburger" id="hamburger" aria-label="Menú">
       <span></span><span></span><span></span>
     </button>
@@ -225,6 +237,7 @@
     <li><a href="/historia-belico/">Bélico</a></li>
     <li><a href="/chicago-school/">School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
+    <li><a href="/#noticias">Noticias</a></li>
   </ul>
   <div class="footer-copy">
     &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
@@ -233,18 +246,32 @@
 </footer>
 
 <script>
+  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
+  // ── User Menu ──
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) menu.classList.remove('open');
+  });
+
+  // ── Reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── CARRUSEL ──
+  // ── Carrusel ──
   const track = document.getElementById('carruselTrack');
   const items = track ? track.querySelectorAll('.carrusel-item') : [];
   const visibles = 4;
@@ -268,7 +295,7 @@
 
   if (total > 0) actualizarContador();
 
-  // ── LIGHTBOX ──
+  // ── Lightbox ──
   const fotos = [
     {% for foto in fotos %}
     { url: "{{ foto.imagen.url|escapejs }}", titulo: "{{ foto.titulo|escapejs }}" },
