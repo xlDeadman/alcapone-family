@@ -51,7 +51,7 @@
   .video-card:hover .video-play-btn { background: var(--gold); transform: translate(-50%, -50%) scale(1.1); }
   .video-info { padding: 1.2rem 1.5rem; }
   .video-titulo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.8); margin-bottom: 0.6rem; }
-  .video-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.4); margin-bottom: 0.8rem; }
+  .video-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.72); margin-bottom: 0.8rem; }
   .video-link-btn { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.5rem 1.2rem; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); transition: all 0.3s; }
   .video-card:hover .video-link-btn { border-color: var(--gold); color: var(--gold); }
 
@@ -71,7 +71,7 @@
   .carrusel-item-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 0.8rem; }
   .carrusel-item:hover .carrusel-item-overlay { opacity: 1; }
   .carrusel-item-titulo { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); }
-  .carrusel-counter { text-align: center; margin-top: 1.5rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.25); text-transform: uppercase; }
+  .carrusel-counter { text-align: center; margin-top: 1.5rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.6); text-transform: uppercase; }
 
   /* ── LIGHTBOX ── */
   .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 9999; display: none; align-items: center; justify-content: center; }
@@ -86,9 +86,9 @@
   .lightbox-img { max-width: 100%; max-height: 85vh; object-fit: contain; border: 1px solid rgba(201,168,76,0.2); transition: opacity 0.2s; }
   .lightbox-info { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
   .lightbox-titulo { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.8); text-transform: uppercase; }
-  .lightbox-counter { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); margin-top: 0.3rem; }
+  .lightbox-counter { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.65); margin-top: 0.3rem; }
 
-  .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.25); font-size: 1rem; }
+  .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.6); font-size: 1rem; }
 
   @media (max-width: 900px) {
     .carrusel-item { flex: 0 0 calc(33.33% - 3px); }
@@ -120,7 +120,7 @@
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/multimedia/">Multimedia</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     {% if user.is_authenticated %}
@@ -237,7 +237,7 @@
     <li><a href="/historia-belico/">Bélico</a></li>
     <li><a href="/chicago-school/">School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div class="footer-copy">
     &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;

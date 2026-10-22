@@ -14,11 +14,11 @@
   .sidebar { width: 260px; min-height: 100vh; background: rgba(12,10,5,0.98); border-right: 1px solid rgba(201,168,76,0.12); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; overflow-y: auto; }
   .sidebar-logo { padding: 2rem 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.1); text-align: center; }
   .sidebar-logo-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: #c9a84c; display: block; }
-  .sidebar-logo-sub { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.35); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .sidebar-logo-sub { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.7); text-transform: uppercase; margin-top: 0.3rem; display: block; }
   .sidebar-rule { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); margin: 0.8rem auto 0; }
   .sidebar-section { padding: 1.5rem 1rem 0.5rem; }
-  .sidebar-section-label { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.3); text-transform: uppercase; padding: 0 0.5rem; margin-bottom: 0.5rem; display: block; }
-  .sidebar-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 0.8rem; color: rgba(245,234,208,0.4); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; border-left: 2px solid transparent; cursor: pointer; background: none; border-right: none; border-top: none; border-bottom: none; width: 100%; text-align: left; }
+  .sidebar-section-label { font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,168,76,0.65); text-transform: uppercase; padding: 0 0.5rem; margin-bottom: 0.5rem; display: block; }
+  .sidebar-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 0.8rem; color: rgba(245,234,208,0.72); text-decoration: none; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; border-left: 2px solid transparent; cursor: pointer; background: none; border-right: none; border-top: none; border-bottom: none; width: 100%; text-align: left; }
   .sidebar-item:hover, .sidebar-item.active { color: #c9a84c; border-left-color: #c9a84c; background: rgba(201,168,76,0.04); }
   .sidebar-item.danger-item:hover, .sidebar-item.danger-item.active { color: #c0392b; border-left-color: #c0392b; background: rgba(192,57,43,0.04); }
   .sidebar-item-icon { font-size: 1rem; width: 20px; text-align: center; }
@@ -26,28 +26,28 @@
   .sidebar-item.open .sidebar-item-arrow { transform: rotate(90deg); }
   .sidebar-submenu { display: none; padding-left: 1rem; border-left: 1px solid rgba(201,168,76,0.08); margin-left: 1.8rem; }
   .sidebar-submenu.open { display: block; }
-  .sidebar-subitem { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.8rem; color: rgba(245,234,208,0.3); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; background: none; border: none; width: 100%; text-align: left; transition: all 0.3s; border-left: 2px solid transparent; }
+  .sidebar-subitem { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.8rem; color: rgba(245,234,208,0.65); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; background: none; border: none; width: 100%; text-align: left; transition: all 0.3s; border-left: 2px solid transparent; }
   .sidebar-subitem:hover, .sidebar-subitem.active { color: #c9a84c; border-left-color: rgba(201,168,76,0.4); }
   .sidebar-bottom { margin-top: auto; padding: 1.5rem; border-top: 1px solid rgba(201,168,76,0.08); }
   .sidebar-user { font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.5); margin-bottom: 1rem; display: block; }
-  .sidebar-logout { display: block; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(245,234,208,0.25); text-decoration: none; transition: color 0.3s; }
+  .sidebar-logout { display: block; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(245,234,208,0.6); text-decoration: none; transition: color 0.3s; }
   .sidebar-logout:hover { color: #c9a84c; }
   .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; }
   .topbar { background: rgba(12,10,5,0.95); border-bottom: 1px solid rgba(201,168,76,0.1); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-  .topbar-breadcrumb { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); text-transform: uppercase; }
+  .topbar-breadcrumb { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.65); text-transform: uppercase; }
   .topbar-breadcrumb span { color: #c9a84c; }
   .topbar-right { display: flex; align-items: center; gap: 1.5rem; }
   .topbar-user { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(201,168,76,0.6); }
-  .topbar-home { font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(245,234,208,0.25); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
+  .topbar-home { font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(245,234,208,0.6); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
   .topbar-home:hover { color: #c9a84c; }
   .content { padding: 2rem; flex: 1; }
   .content-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.08); display: flex; align-items: center; justify-content: space-between; }
   .content-title { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: #c9a84c; }
-  .content-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.3); margin-top: 0.3rem; }
+  .content-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.65); margin-top: 0.3rem; }
   .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-bottom: 2rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08); }
   .stat-box { background: rgba(12,10,5,0.9); padding: 1.5rem; text-align: center; }
   .stat-num { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #c9a84c; display: block; }
-  .stat-label { font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.25); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .stat-label { font-size: 0.55rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.6); text-transform: uppercase; margin-top: 0.3rem; display: block; }
   .table-box { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; margin-bottom: 2rem; }
   .table-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
   .table-toolbar { padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.08); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
@@ -82,18 +82,18 @@
   .section-panel.active { display: block; }
   .contador-info { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2rem; margin-bottom: 2rem; }
   .contador-info::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
-  .contador-nota { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.4); line-height: 1.8; margin-bottom: 1.5rem; }
+  .contador-nota { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.72); line-height: 1.8; margin-bottom: 1.5rem; }
   .contador-ranking { margin-top: 1.5rem; }
   .ranking-row { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid rgba(201,168,76,0.05); }
   .ranking-row:last-child { border-bottom: none; }
-  .ranking-pos { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: rgba(201,168,76,0.3); min-width: 2rem; text-align: right; }
+  .ranking-pos { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: rgba(201,168,76,0.65); min-width: 2rem; text-align: right; }
   .ranking-pos.top { color: #c9a84c; }
   .ranking-name { flex: 1; font-size: 0.72rem; letter-spacing: 0.1em; color: rgba(245,234,208,0.6); }
   .ranking-num { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: #c9a84c; }
   .user-active { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(39,174,96,0.4); color: #27ae60; }
   .user-inactive { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(192,57,43,0.4); color: #c0392b; }
   .user-staff { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(201,168,76,0.4); color: #c9a84c; }
-  .user-nostaff { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(245,234,208,0.1); color: rgba(245,234,208,0.2); }
+  .user-nostaff { display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.7rem; border: 1px solid rgba(245,234,208,0.1); color: rgba(245,234,208,0.55); }
   .mant-card { background: rgba(12,10,5,0.9); border: 1px solid rgba(201,168,76,0.1); position: relative; overflow: hidden; padding: 2.5rem; margin-bottom: 2rem; }
   .mant-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, transparent); }
   .mant-card.active-mant { border-color: rgba(192,57,43,0.3); }
@@ -105,8 +105,8 @@
   @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
   .mant-status-text { flex: 1; }
   .mant-status-title { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,234,208,0.7); display: block; margin-bottom: 0.3rem; }
-  .mant-status-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.35); }
-  .mant-info { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.4); line-height: 1.9; margin-bottom: 2rem; }
+  .mant-status-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: rgba(245,234,208,0.7); }
+  .mant-info { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.72); line-height: 1.9; margin-bottom: 2rem; }
   .mant-info strong { color: #c9a84c; font-style: normal; }
   .ql-toolbar { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.15) !important; border-bottom: none !important; }
   .ql-toolbar .ql-stroke { stroke: rgba(201,168,76,0.6); }
@@ -117,7 +117,7 @@
   .ql-toolbar button:hover .ql-fill { fill: #c9a84c; }
   .ql-container { background: rgba(10,8,4,0.8); border: 1px solid rgba(201,168,76,0.15) !important; min-height: 180px; }
   .ql-editor { color: #f5ead0; font-family: 'IM Fell English', serif; font-size: 0.95rem; line-height: 1.8; min-height: 180px; }
-  .ql-editor.ql-blank::before { color: rgba(245,234,208,0.3); font-style: italic; }
+  .ql-editor.ql-blank::before { color: rgba(245,234,208,0.65); font-style: italic; }
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
   .modal-box { background: rgba(18,14,8,0.98); border: 1px solid rgba(201,168,76,0.2); max-width: 420px; width: 100%; padding: 2.5rem; text-align: center; position: relative; transform: translateY(20px); transition: transform 0.3s; }
@@ -128,7 +128,7 @@
   .modal-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.95rem; color: rgba(245,234,208,0.5); line-height: 1.8; margin-bottom: 2rem; }
   .modal-text strong { color: #c9a84c; font-style: normal; }
   .modal-btns { display: flex; gap: 1rem; justify-content: center; }
-  .modal-btn-cancel { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.7rem 1.5rem; background: transparent; border: 1px solid rgba(201,168,76,0.2); color: rgba(245,234,208,0.4); cursor: pointer; transition: all 0.3s; }
+  .modal-btn-cancel { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.7rem 1.5rem; background: transparent; border: 1px solid rgba(201,168,76,0.2); color: rgba(245,234,208,0.72); cursor: pointer; transition: all 0.3s; }
   .modal-btn-cancel:hover { border-color: rgba(201,168,76,0.5); color: rgba(245,234,208,0.7); }
   .modal-btn-confirm { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; padding: 0.7rem 1.5rem; background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.4); color: #c0392b; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
   .modal-btn-confirm:hover { background: #c0392b; color: #fff; border-color: #c0392b; }
@@ -310,7 +310,7 @@
           <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-left:3px solid #c9a84c;padding:1.2rem 1.5rem;margin-bottom:1.5rem;">
             <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(201,168,76,0.8);text-transform:uppercase;margin-bottom:0.5rem;">ℹ️ Información importante</p>
             <p class="contador-nota" style="margin-bottom:0.8rem;">Este contador se actualiza automáticamente. No necesita gestión manual.</p>
-            <p style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;color:rgba(245,234,208,0.35);">
+            <p style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;color:rgba(245,234,208,0.7);">
               Para <strong style="color:#c9a84c;">agregar</strong>, <strong style="color:#c9a84c;">editar</strong> o <strong style="color:#c0392b;">eliminar</strong> pettadas → ve a la sección
               <button onclick="showSection('conquistas', null); document.getElementById('breadcrumb-sub').textContent='/ Historial Bélico / Conquistas';"
               style="background:none;border:none;color:#c9a84c;font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.1em;cursor:pointer;text-decoration:underline;">
@@ -389,7 +389,7 @@
                   </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin videos aún</td></tr>
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.55);font-style:italic;">Sin videos aún</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -431,7 +431,7 @@
                   </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin fotos aún</td></tr>
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.55);font-style:italic;">Sin fotos aún</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -487,7 +487,7 @@
                   </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin lecciones aún</td></tr>
+                <tr><td colspan="4" style="text-align:center;color:rgba(245,234,208,0.55);font-style:italic;">Sin lecciones aún</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -500,56 +500,13 @@
         <div class="content-header">
           <div>
             <div class="content-title">Noticias</div>
-            <div class="content-sub">Publica noticias en la página de inicio</div>
+            <div class="content-sub">Las noticias de la famiglia ahora se publican en el Chicago Daily News</div>
           </div>
-        </div>
-        <div class="stats-strip">
-          <div class="stat-box"><span class="stat-num">{{ noticias.count }}</span><span class="stat-label">Noticias</span></div>
-          <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">Máx. en inicio</span></div>
-          <div class="stat-box"><span class="stat-num">📰</span><span class="stat-label">Publicadas</span></div>
-          <div class="stat-box"><span class="stat-num">✦</span><span class="stat-label">AlCapone</span></div>
         </div>
         <div class="table-box">
-          <div class="table-toolbar">
-            <span class="table-toolbar-title">📰 Publicar Noticia</span>
-          </div>
-          <div style="padding:1.5rem;">
-            <form id="form-noticia" method="POST" action="{% url 'panel_noticia_agregar' %}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:1.5rem;">
-              {% csrf_token %}
-              <div>
-                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Título</label>
-                <input type="text" name="titulo" placeholder="Título de la noticia" required style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.75rem;padding:0.7rem 1rem;outline:none;width:100%;">
-              </div>
-              <div>
-                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Contenido</label>
-                <div id="quill-editor"></div>
-                <input type="hidden" name="contenido" id="contenido-input">
-              </div>
-              <div>
-                <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(201,168,76,0.6);text-transform:uppercase;display:block;margin-bottom:0.4rem;">Imagen (opcional)</label>
-                <input type="file" name="imagen" accept="image/*" style="background:rgba(10,8,4,0.8);border:1px solid rgba(201,168,76,0.15);color:#f5ead0;font-family:'Cinzel',serif;font-size:0.7rem;padding:0.7rem 1rem;outline:none;width:100%;">
-              </div>
-              <button type="submit" class="btn-editar" style="align-self:flex-start;">+ Publicar Noticia</button>
-            </form>
-            <table>
-              <thead><tr><th>Título</th><th>Fecha</th><th>Acciones</th></tr></thead>
-              <tbody>
-                {% for n in noticias %}
-                <tr>
-                  <td><span class="era-nombre">{{ n.titulo }}</span></td>
-                  <td style="color:rgba(245,234,208,0.4);">{{ n.fecha|date:"d/m/Y H:i" }}</td>
-                  <td>
-                    <div class="actions">
-                      <a href="{% url 'panel_noticia_editar' n.id %}" class="btn-editar">Editar</a>
-                      <a href="{% url 'panel_noticia_eliminar' n.id %}" class="btn-danger">Eliminar</a>
-                    </div>
-                  </td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="3" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin noticias aún</td></tr>
-                {% endfor %}
-              </tbody>
-            </table>
+          <div style="padding:2.5rem 1.5rem;text-align:center;">
+            <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;line-height:1.8;color:rgba(245,234,208,0.75);margin-bottom:1.5rem;">Para publicar o editar noticias, entra al panel del periódico.<br>El botón "Noticias" del menú de esta web ya lleva a los lectores al Chicago Daily News.</p>
+            <a href="https://chicagodailynews.net/panel/" target="_blank" rel="noopener" class="btn-editar">Ir al panel del Chicago Daily News →</a>
           </div>
         </div>
       </div>
@@ -583,7 +540,7 @@
                   <span class="era-nombre">{{ u.username }}</span>
                   {% if u.is_superuser %}<span style="font-size:0.5rem;letter-spacing:0.2em;color:#c9a84c;margin-left:0.5rem;">★ ADMIN</span>{% endif %}
                 </td>
-                <td style="color:rgba(245,234,208,0.4);">{{ u.date_joined|date:"d/m/Y" }}</td>
+                <td style="color:rgba(245,234,208,0.72);">{{ u.date_joined|date:"d/m/Y" }}</td>
                 <td>
                   {% if u.is_active %}<span class="user-active">Activo</span>
                   {% else %}<span class="user-inactive">Inactivo</span>{% endif %}
@@ -605,13 +562,13 @@
                       Eliminar
                     </button>
                     {% else %}
-                    <span style="font-size:0.6rem;color:rgba(245,234,208,0.2);letter-spacing:0.1em;">Tu cuenta</span>
+                    <span style="font-size:0.6rem;color:rgba(245,234,208,0.55);letter-spacing:0.1em;">Tu cuenta</span>
                     {% endif %}
                   </div>
                 </td>
               </tr>
               {% empty %}
-              <tr><td colspan="5" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin usuarios</td></tr>
+              <tr><td colspan="5" style="text-align:center;color:rgba(245,234,208,0.55);font-style:italic;">Sin usuarios</td></tr>
               {% endfor %}
             </tbody>
           </table>
@@ -664,7 +621,7 @@
                   </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="3" style="text-align:center;color:rgba(245,234,208,0.2);font-style:italic;">Sin fotos aún</td></tr>
+                <tr><td colspan="3" style="text-align:center;color:rgba(245,234,208,0.55);font-style:italic;">Sin fotos aún</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -740,26 +697,7 @@
   </div>
 </div>
 
-<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
-  const quill = new Quill('#quill-editor', {
-    theme: 'snow',
-    placeholder: 'Escribe el contenido de la noticia...',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ 'color': [] }],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['link', 'image'],
-        ['clean']
-      ]
-    }
-  });
-
-  document.getElementById('form-noticia').addEventListener('submit', function() {
-    document.getElementById('contenido-input').value = quill.root.innerHTML;
-  });
-
   const breadcrumbs = {
     historia: '/ Historia',
     conquistas: '/ Historial Bélico / Conquistas',

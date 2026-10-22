@@ -162,7 +162,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.65rem;
     letter-spacing: 0.5em;
-    color: rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.65);
     text-transform: uppercase;
   }
 
@@ -290,7 +290,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.55rem;
     letter-spacing: 0.4em;
-    color: rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.65);
     text-transform: uppercase;
   }
   .scroll-line {
@@ -415,7 +415,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.65rem;
     letter-spacing: 0.3em;
-    color: rgba(245,234,208,0.4);
+    color: rgba(245,234,208,0.72);
     text-transform: uppercase;
     margin-top: 0.5rem;
     display: block;
@@ -495,7 +495,7 @@
 
   .badge-victoria { color: var(--gold); border-color: rgba(201,168,76,0.4); }
   .badge-derrota { color: #c0392b; border-color: rgba(192,57,43,0.4); }
-  .badge-empate { color: rgba(245,234,208,0.4); border-color: rgba(245,234,208,0.15); }
+  .badge-empate { color: rgba(245,234,208,0.72); border-color: rgba(245,234,208,0.15); }
 
   /* ── CHICAGO SCHOOL ── */
   #school {
@@ -591,7 +591,7 @@
   .codigo-num {
     font-family: 'Cinzel Decorative', serif;
     font-size: 1.5rem;
-    color: rgba(201,168,76,0.3);
+    color: rgba(201,168,76,0.65);
     min-width: 3rem;
     text-align: right;
   }
@@ -642,7 +642,7 @@
 
   .media-icon {
     width: 48px; height: 48px;
-    color: rgba(201,168,76,0.4);
+    color: rgba(201,168,76,0.72);
     transition: all 0.4s;
   }
 
@@ -652,7 +652,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.65rem;
     letter-spacing: 0.3em;
-    color: rgba(245,234,208,0.35);
+    color: rgba(245,234,208,0.7);
     text-transform: uppercase;
   }
 
@@ -687,7 +687,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.65rem;
     letter-spacing: 0.4em;
-    color: rgba(245,234,208,0.35);
+    color: rgba(245,234,208,0.7);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
   }
@@ -759,7 +759,7 @@
 
   .familia-desc {
     font-size: 0.85rem;
-    color: rgba(245,234,208,0.35);
+    color: rgba(245,234,208,0.7);
     line-height: 1.6;
   }
 
@@ -818,7 +818,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.6rem;
     letter-spacing: 0.5em;
-    color: rgba(245,234,208,0.2);
+    color: rgba(245,234,208,0.55);
     text-transform: uppercase;
     margin-bottom: 2rem;
   }
@@ -836,7 +836,7 @@
     font-family: 'Cinzel', serif;
     font-size: 0.65rem;
     letter-spacing: 0.25em;
-    color: rgba(245,234,208,0.3);
+    color: rgba(245,234,208,0.65);
     text-decoration: none;
     text-transform: uppercase;
     transition: color 0.3s;
@@ -846,7 +846,7 @@
 
   .footer-copy {
     font-size: 0.8rem;
-    color: rgba(245,234,208,0.2);
+    color: rgba(245,234,208,0.55);
     border-top: 1px solid rgba(201,168,76,0.08);
     padding-top: 2rem;
     margin-top: 1rem;
@@ -871,7 +871,7 @@
     font-family: 'Oswald', sans-serif;
     font-size: 3rem;
     letter-spacing: 0.5em;
-    color: rgba(201,168,76,0.2);
+    color: rgba(201,168,76,0.55);
     font-weight: 300;
   }
 

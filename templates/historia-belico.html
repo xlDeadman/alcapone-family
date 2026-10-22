@@ -81,7 +81,7 @@
     font-family: 'Cinzel', serif;
     font-size: clamp(0.65rem, 1.5vw, 0.85rem);
     letter-spacing: 0.5em;
-    color: rgba(245,234,208,0.35);
+    color: rgba(245,234,208,0.7);
     text-transform: uppercase;
     margin-top: 1.2rem;
     position: relative;
@@ -104,7 +104,7 @@
     font-family: 'IM Fell English', serif;
     font-style: italic;
     font-size: 1.05rem;
-    color: rgba(245,234,208,0.45);
+    color: rgba(245,234,208,0.75);
     line-height: 1.9;
     margin-top: 1.5rem;
     position: relative;
@@ -152,13 +152,13 @@
   .conquistas-counter { display: flex; justify-content: center; gap: 4rem; margin: 4rem auto 0; max-width: 700px; flex-wrap: wrap; }
   .counter-item { text-align: center; }
   .counter-num { font-family: 'Cinzel Decorative', serif; font-size: 3rem; color: var(--gold); display: block; text-shadow: 0 0 20px rgba(201,168,76,0.2); }
-  .counter-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.3); text-transform: uppercase; margin-top: 0.3rem; display: block; }
+  .counter-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(245,234,208,0.65); text-transform: uppercase; margin-top: 0.3rem; display: block; }
 
   /* ── CIERRE ── */
   .belico-cierre { background: var(--dark); border-top: 1px solid rgba(201,168,76,0.12); padding: 5rem 2rem; text-align: center; }
   .cierre-glyph { font-family: 'Cinzel Decorative', serif; font-size: 3rem; color: rgba(201,168,76,0.08); margin-bottom: 1rem; display: block; }
   .cierre-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--gold); margin-bottom: 1rem; }
-  .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.4); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
+  .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.72); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 700px) {
@@ -188,7 +188,7 @@
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/multimedia/">Multimedia</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     {% if user.is_authenticated %}
@@ -349,7 +349,7 @@
     <li><a href="/historia-belico/">Bélico</a></li>
     <li><a href="/chicago-school/">School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div class="footer-copy">
     &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;

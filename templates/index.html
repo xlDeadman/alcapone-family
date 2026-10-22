@@ -5,12 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AlCapone Family | Famiglia dei Intoccabili</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
-  /* ── NOTICIAS ── */
-  .noticias-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
-  .noticias-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
   .section-header { text-align: center; margin-bottom: 4rem; }
   .section-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.5em; color: rgba(201,168,76,0.6); text-transform: uppercase; display: block; margin-bottom: 1rem; }
   .section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.6rem, 3.5vw, 2.8rem); color: var(--gold); }
@@ -28,7 +25,13 @@
   .noticia-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.08); }
   .btn-seguir { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.6rem 1.2rem; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); text-decoration: none; transition: all 0.3s; }
   .btn-seguir:hover { background: rgba(201,168,76,0.1); color: var(--gold); border-color: var(--gold); }
-  .noticias-empty { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.2); font-size: 1rem; grid-column: 1/-1; }
+  /* ── CHICAGO DAILY NEWS ── */
+  .periodico-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
+  .periodico-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+  .periodico-box { max-width: 720px; margin: 0 auto; text-align: center; border: 1px solid rgba(201,168,76,0.25); outline: 1px solid rgba(201,168,76,0.12); outline-offset: 6px; padding: 3rem 2rem; background: rgba(10,8,4,0.6); }
+  .periodico-nombre { font-family: 'UnifrakturMaguntia', 'Cinzel Decorative', serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.6rem); color: var(--gold); line-height: 1.1; margin: 0.6rem 0 0.4rem; }
+  .periodico-texto { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; line-height: 1.8; color: rgba(245,234,208,0.75); margin: 1.5rem auto 2rem; }
+  .noticias-empty { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.55); font-size: 1rem; grid-column: 1/-1; }
 
   /* ── USER MENU ── */
   .user-menu { position: relative; }
@@ -64,7 +67,7 @@
     <li><a href="/chicago-school/">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/multimedia/">Multimedia</a></li>
-    <li><a href="#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     {% if user.is_authenticated %}
@@ -99,7 +102,7 @@
   <div class="hero-divider"></div>
   <p class="hero-intro">
     Web oficial de la AlCapone Family, activa desde 2008. Aquí encontrarás información,
-    jerarquía y noticias sobre nuestra historia y comunidad.
+    jerarquía e historia de nuestra comunidad.
   </p>
   <div class="hero-cta">
     <a href="/historia/" class="btn-gold">Nuestra Historia</a>
@@ -126,31 +129,14 @@
   </div>
 </section>
 
-<!-- ── NOTICIAS ── -->
-<section class="noticias-section" id="noticias">
-  <div class="section-header reveal">
-    <span class="section-label">Última Hora</span>
-    <h2 class="section-title">Noticias de la Famiglia</h2>
+<!-- ── NOTICIAS: CHICAGO DAILY NEWS ── -->
+<section class="periodico-section" id="noticias">
+  <div class="periodico-box reveal">
+    <span class="section-label">Noticias de la Famiglia</span>
+    <h2 class="periodico-nombre">Chicago Daily News</h2>
     <div class="section-rule"></div>
-  </div>
-  <div class="noticias-grid">
-    {% for noticia in noticias %}
-    <div class="noticia-card reveal">
-      {% if noticia.imagen %}
-      <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-img">
-      {% endif %}
-      <div class="noticia-body">
-        <span class="noticia-fecha">{{ noticia.fecha|date:"d \d\e F \d\e Y" }}</span>
-        <div class="noticia-titulo">{{ noticia.titulo }}</div>
-        <div class="noticia-contenido">{{ noticia.contenido|striptags|truncatewords:25 }}</div>
-        <div class="noticia-footer">
-          <a href="{% url 'noticia_detalle' noticia.id %}" class="btn-seguir">Seguir leyendo →</a>
-        </div>
-      </div>
-    </div>
-    {% empty %}
-    <div class="noticias-empty">Aún no hay noticias publicadas.</div>
-    {% endfor %}
+    <p class="periodico-texto">Eventos, salas, aniversarios, homenajes y comunicados oficiales.<br>Todas las noticias de AlCapone, en el diario oficial de la familia.</p>
+    <a href="https://chicagodailynews.net/" target="_blank" rel="noopener" class="btn-gold">Leer el periódico →</a>
   </div>
 </section>
 
@@ -221,7 +207,7 @@
 .toast-icon { font-size: 1.8rem; }
 .toast-text { display: flex; flex-direction: column; gap: 0.2rem; }
 .toast-text strong { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
-.toast-text span { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: rgba(245,234,208,0.4); }
+.toast-text span { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: rgba(245,234,208,0.72); }
 @keyframes toastIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100px); } }
 </style>

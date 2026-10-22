@@ -21,14 +21,13 @@ def check_mantenimiento(request):
 def inicio(request):
     m = check_mantenimiento(request)
     if m: return m
-    noticias = Noticia.objects.all()[:3]
-    return render(request, 'index.html', {'noticias': noticias})
+    return render(request, 'index.html')
 
 def noticia_detalle(request, noticia_id):
     m = check_mantenimiento(request)
     if m: return m
-    noticia = get_object_or_404(Noticia, id=noticia_id)
-    return render(request, 'noticia.html', {'noticia': noticia})
+    # Las noticias ahora viven en el Chicago Daily News
+    return redirect('https://chicagodailynews.net/noticias/')
 
 def historia(request):
     m = check_mantenimiento(request)

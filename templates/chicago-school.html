@@ -30,7 +30,7 @@
   .page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--dark)); }
   .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.6em; color: rgba(201,168,76,0.5); text-transform: uppercase; margin-bottom: 1.5rem; position: relative; z-index: 2; animation: fadeUp 1s ease both; }
   .page-hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 6vw, 5.5rem); color: var(--gold); line-height: 1; text-shadow: 0 0 60px rgba(201,168,76,0.25); position: relative; z-index: 2; animation: fadeUp 1s 0.15s ease both; }
-  .page-hero-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(245,234,208,0.4); margin-top: 1.2rem; position: relative; z-index: 2; animation: fadeUp 1s 0.3s ease both; }
+  .page-hero-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(245,234,208,0.72); margin-top: 1.2rem; position: relative; z-index: 2; animation: fadeUp 1s 0.3s ease both; }
   .page-hero-rule { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.8rem auto 0; position: relative; z-index: 2; }
 
   /* ── LECCIONES ── */
@@ -57,8 +57,8 @@
   .school-cierre { background: var(--dark2); border-top: 1px solid rgba(201,168,76,0.12); padding: 5rem 2rem; text-align: center; }
   .cierre-glyph { font-family: 'Cinzel Decorative', serif; font-size: 3rem; color: rgba(201,168,76,0.08); margin-bottom: 1rem; display: block; }
   .cierre-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--gold); margin-bottom: 1rem; }
-  .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.4); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
-  .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.25); font-size: 1rem; }
+  .cierre-text { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: rgba(245,234,208,0.72); max-width: 500px; margin: 0 auto 2rem; line-height: 1.9; }
+  .empty-msg { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.6); font-size: 1rem; }
 
   @media (max-width: 600px) {
     .leccion-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
@@ -85,7 +85,7 @@
     <li><a href="/chicago-school/" class="nav-active">Chicago School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
     <li><a href="/multimedia/">Multimedia</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     {% if user.is_authenticated %}
@@ -179,7 +179,7 @@
     <li><a href="/historia-belico/">Bélico</a></li>
     <li><a href="/chicago-school/">School</a></li>
     <li><a href="/codigos/">Códigos</a></li>
-    <li><a href="/#noticias">Noticias</a></li>
+    <li><a href="https://chicagodailynews.net/" target="_blank" rel="noopener">Noticias</a></li>
   </ul>
   <div class="footer-copy">
     &copy; 2008–2026 AlCapone Family. Tutti i diritti riservati. &nbsp;|&nbsp;
