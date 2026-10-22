@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AlCapone Family | Famiglia dei Intoccabili</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
   .section-header { text-align: center; margin-bottom: 4rem; }
@@ -25,12 +25,6 @@
   .noticia-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.08); }
   .btn-seguir { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.6rem 1.2rem; border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.7); text-decoration: none; transition: all 0.3s; }
   .btn-seguir:hover { background: rgba(201,168,76,0.1); color: var(--gold); border-color: var(--gold); }
-  /* ── CHICAGO DAILY NEWS ── */
-  .periodico-section { background: var(--dark2); padding: 6rem 2rem; position: relative; }
-  .periodico-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
-  .periodico-box { max-width: 720px; margin: 0 auto; text-align: center; border: 1px solid rgba(201,168,76,0.25); outline: 1px solid rgba(201,168,76,0.12); outline-offset: 6px; padding: 3rem 2rem; background: rgba(10,8,4,0.6); }
-  .periodico-nombre { font-family: 'UnifrakturMaguntia', 'Cinzel Decorative', serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.6rem); color: var(--gold); line-height: 1.1; margin: 0.6rem 0 0.4rem; }
-  .periodico-texto { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; line-height: 1.8; color: rgba(245,234,208,0.75); margin: 1.5rem auto 2rem; }
   .noticias-empty { text-align: center; padding: 4rem; font-family: 'IM Fell English', serif; font-style: italic; color: rgba(245,234,208,0.55); font-size: 1rem; grid-column: 1/-1; }
 
   /* ── USER MENU ── */
@@ -126,17 +120,6 @@
   <div class="scroll-hint">
     <span>Scroll</span>
     <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- ── NOTICIAS: CHICAGO DAILY NEWS ── -->
-<section class="periodico-section" id="noticias">
-  <div class="periodico-box reveal">
-    <span class="section-label">Noticias de la Famiglia</span>
-    <h2 class="periodico-nombre">Chicago Daily News</h2>
-    <div class="section-rule"></div>
-    <p class="periodico-texto">Eventos, salas, aniversarios, homenajes y comunicados oficiales.<br>Todas las noticias de AlCapone, en el diario oficial de la familia.</p>
-    <a href="https://chicagodailynews.net/" target="_blank" rel="noopener" class="btn-gold">Leer el periódico →</a>
   </div>
 </section>
 
